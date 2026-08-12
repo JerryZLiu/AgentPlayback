@@ -1,0 +1,16 @@
+.DS_Store
+.env
+.env.*
+
+node_modules/
+dist/
+
+.claude/
+artifacts/
+animation/
+scripts/.scan-cache/
+ui/public/day*.json
+
+__pycache__/
+*.pyc
+*.zip
