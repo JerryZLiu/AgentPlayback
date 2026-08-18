@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dayflow — Color Lab</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { height: 100%; }
+      body {
+        font-family: -apple-system, 'SF Pro Text', 'Helvetica Neue', sans-serif;
+        background: #f3efe9;
+        color: #2b2b2b;
+        display: flex;
+        overflow: hidden;
+      }
+
+      #rail {
+        width: 300px;
+        flex: 0 0 300px;
+        height: 100%;
+        overflow-y: auto;
+        padding: 22px 18px 40px;
+        border-right: 1px solid rgba(128, 118, 104, 0.25);
+        background: #f3efe9;
+        z-index: 2;
+      }
+      #rail h1 { font-size: 15px; font-weight: 600; letter-spacing: 0.02em; margin-bottom: 2px; }
+      #rail .sub { font-size: 11.5px; opacity: 0.55; margin-bottom: 18px; }
+      #rail h2 {
+        font-size: 10.5px; font-weight: 600; text-transform: uppercase;
+        letter-spacing: 0.09em; opacity: 0.5; margin: 18px 0 8px;
+      }
+
+      .seg { display: flex; gap: 4px; flex-wrap: wrap; }
+      .seg button {
+        font: inherit; font-size: 12px; padding: 5px 10px; border-radius: 7px;
+        border: 1px solid rgba(128, 118, 104, 0.3); background: transparent;
+        color: inherit; cursor: pointer;
+      }
+      .seg button.on { background: #2b2b2b; color: #f3efe9; border-color: #2b2b2b; }
+
+      .ghead {
+        font-size: 10px; font-weight: 600; text-transform: uppercase;
+        letter-spacing: 0.09em; opacity: 0.45; margin: 14px 2px 5px;
+      }
+      .pal {
+        display: block; width: 100%; text-align: left; font: inherit; color: inherit;
+        background: transparent; border: 1px solid transparent; border-radius: 8px;
+        padding: 5px 7px; cursor: pointer; margin-bottom: 2px;
+      }
+      .pal:hover { border-color: rgba(128, 118, 104, 0.25); }
+      .pal.on { border-color: #2b2b2b; }
+      .pal.dim { opacity: 0.3; }
+      .pal.dim.on { opacity: 0.75; }
+      .pal .row { display: flex; align-items: baseline; gap: 6px; margin-bottom: 4px; }
+      .pal .idx { font-size: 10px; font-family: ui-monospace, monospace; opacity: 0.4; min-width: 18px; }
+      .pal .name { font-size: 12px; font-weight: 600; flex: 1; }
+      .pal .star { font-size: 11px; color: #b08d1f; }
+      .pal .strip { display: flex; height: 10px; border-radius: 4px; overflow: hidden; }
+      .pal .strip i { flex: 1; }
+
+      #actions { display: flex; gap: 6px; margin-top: 14px; }
+      #actions button {
+        flex: 1; font: inherit; font-size: 12px; padding: 7px 0; border-radius: 8px;
+        border: 1px solid rgba(128, 118, 104, 0.3); background: transparent;
+        color: inherit; cursor: pointer;
+      }
+      .hint { font-size: 10.5px; opacity: 0.45; margin-top: 12px; line-height: 1.5; }
+
+      #main { flex: 1; height: 100%; display: flex; flex-direction: column; min-width: 0; }
+      #app {
+        flex: 1; width: 100%; border: 0; display: block; min-height: 0;
+        background: transparent;
+      }
+      #swatches {
+        flex: 0 0 auto; display: flex; gap: 6px; padding: 10px 16px 14px;
+        justify-content: center; max-width: 100%; overflow-x: auto;
+        background: #f3efe9; border-top: 1px solid rgba(128, 118, 104, 0.2);
+      }
+      .sw { text-align: center; cursor: pointer; }
+      .sw .chip { width: 58px; height: 30px; border-radius: 7px; margin-bottom: 4px; border: 1px solid rgba(0,0,0,0.08); }
+      .sw .hex { font-size: 10px; font-family: ui-monospace, monospace; opacity: 0.8; }
+      .sw .lch { font-size: 9px; font-family: ui-monospace, monospace; opacity: 0.45; white-space: nowrap; }
+    </style>
+  </head>
+  <body>
+    <aside id="rail">
+      <h1>Color Lab</h1>
+      <div class="sub" id="sub">10 curated options &mdash; rendered by the real app</div>
+      <h2>Skin</h2>
+      <div class="seg" id="skins"></div>
+      <h2>Data</h2>
+      <div class="seg" id="datas"></div>
+      <h2>Show</h2>
+      <div class="seg" id="fits"></div>
+      <h2>Palettes</h2>
+      <div id="pals"></div>
+      <div id="actions">
+        <button id="shuffle">Shuffle assignment</button>
+      </div>
+      <div class="hint">
+        <b>a</b> toggles fit-filter (dimmed sets are tagged for the other
+        ground &mdash; light paper/glass vs dark vinyl/electric) &middot;
+        <b>&uarr;&darr;</b> or <b>j/k</b> palette &middot; <b>&larr;&rarr;</b> or
+        <b>h/l</b> skin &middot; <b>[ ]</b> jump group &middot; type a number
+        (1&ndash;100) to jump &middot; <b>f</b> star a favorite, <b>. ,</b> hop
+        between stars &middot; <b>m</b> mock/real data
+        &middot; <b>space</b> reshuffles which thread gets which color &middot;
+        click a swatch to copy its hex. The seed is shared across palettes and
+        skins so comparisons stay fair.
+      </div>
+    </aside>
+    <div id="main">
+      <iframe id="app" title="Dayflow preview"></iframe>
+      <div id="swatches"></div>
+    </div>
+    <script type="module" src="/src/lab.ts"></script>
+  </body>
+</html>
