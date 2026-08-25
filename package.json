@@ -1,0 +1,41 @@
+{
+  "name": "agentplayback",
+  "version": "0.0.1",
+  "description": "See what your coding agents actually did all day. Claude Code and Codex sessions on a 24h dial \u2014 grouped, timed, priced, and flagged when one is waiting on you. Local only.",
+  "type": "module",
+  "bin": {
+    "agentplayback": "bin/cli.js"
+  },
+  "files": [
+    "bin",
+    "scripts/scan-day.mjs",
+    "scripts/lib",
+    "scripts/providers",
+    "scripts/model-prices-cache.json",
+    "ui/dist",
+    "!ui/dist/day*.json",
+    "!ui/dist/days.json",
+    "!ui/dist/lab.html",
+    "!ui/dist/assets/lab-*.js"
+  ],
+  "scripts": {
+    "build": "npm --prefix ui run build",
+    "start": "node bin/cli.js",
+    "dev": "npm --prefix ui run dev",
+    "prepublishOnly": "npm --prefix ui ci && npm --prefix ui run build"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "claude-code",
+    "codex",
+    "agents",
+    "ai-agents",
+    "agent-observability",
+    "timeline",
+    "dayflow"
+  ],
+  "homepage": "https://dayflow.so",
+  "license": "MIT"
+}
