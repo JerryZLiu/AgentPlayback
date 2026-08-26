@@ -8,6 +8,7 @@ dist/
 .claude/
 artifacts/
 animation/
+scripts/tween-parity.mjs
 scripts/.scan-cache/
 ui/public/day*.json
 
