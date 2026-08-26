@@ -408,7 +408,7 @@ function compactDuration(hours: number): string {
 function buildPlaybackBrand(): HTMLElement {
   const brand = document.createElement('a')
   brand.className = 'playback-brand'
-  brand.href = 'https://dayflow.so'
+  brand.href = 'https://dayflow.so/?utm_source=agentplayback&utm_medium=referral'
   brand.target = '_blank'
   brand.rel = 'noopener noreferrer'
   brand.textContent = 'AgentPlayback by Dayflow'
