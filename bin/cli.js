@@ -40,7 +40,7 @@ const portArg = args.indexOf('--port')
 const port = portArg >= 0 ? Number(args[portArg + 1]) || 0 : 0
 
 if (!existsSync(join(DIST, 'index.html'))) {
-  console.error(`dashboard build missing at ${DIST} — run \`npm --prefix ui run build\` first`)
+  console.error(`dashboard build missing at ${DIST} — run \`npm install && npm run build\` first`)
   process.exit(1)
 }
 mkdirSync(DATA, { recursive: true })
