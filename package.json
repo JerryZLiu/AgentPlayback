@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "See what your coding agents actually did all day. Claude Code and Codex sessions on a 24h dial \u2014 grouped, timed, priced, and flagged when one is waiting on you. Local only.",
   "type": "module",
+  "workspaces": [
+    "ui"
+  ],
   "bin": {
     "agentplayback": "bin/cli.js"
   },
@@ -19,10 +22,10 @@
     "!ui/dist/assets/lab-*.js"
   ],
   "scripts": {
-    "build": "npm --prefix ui run build",
+    "build": "npm run build --workspace=agentplayback-ui",
     "start": "node bin/cli.js",
-    "dev": "npm --prefix ui run dev",
-    "prepublishOnly": "npm --prefix ui ci && npm --prefix ui run build"
+    "dev": "npm run dev --workspace=agentplayback-ui",
+    "prepublishOnly": "npm run build"
   },
   "engines": {
     "node": ">=20"
