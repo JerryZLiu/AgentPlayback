@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AgentPlayback</title>
+  </head>
+  <body data-skin="paper">
+    <div id="stage">
+      <!-- the intro tweens write their own inline transform on the canvas;
+           #dial wraps it so any outer transform composes cleanly -->
+      <div id="dial">
+        <canvas id="gl"></canvas>
+        <svg id="callouts" xmlns="http://www.w3.org/2000/svg"></svg>
+      </div>
+      <div id="overlay"></div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
