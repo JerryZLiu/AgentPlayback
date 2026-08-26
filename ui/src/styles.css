@@ -1,0 +1,1678 @@
+@import '@fontsource/geist-sans/400.css';
+@import '@fontsource/geist-sans/500.css';
+@import '@fontsource/nunito/latin-400.css';
+@import '@fontsource/nunito/latin-600.css';
+
+:root {
+  --stage-w: 1842;
+  --stage-h: 1197;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Geist Sans', -apple-system, sans-serif;
+}
+
+#stage {
+  position: absolute;
+  width: calc(var(--stage-w) * 1px);
+  height: calc(var(--stage-h) * 1px);
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(var(--stage-scale, 1));
+  transform-origin: center;
+}
+
+#dial, #gl, #callouts, #overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#dial, #callouts, #overlay { pointer-events: none; }
+#gl { pointer-events: auto; }
+#overlay .clickable { pointer-events: auto; cursor: pointer; }
+
+/* ---------- skin variables ---------- */
+
+body[data-skin='paper'] {
+  /* Jerry's paper wash (original uncompressed png) */
+  --bg: #f3efe9 url('/assets/agent-paper-bg.jpg') center / cover no-repeat;
+  --bg-texture: none;
+  --text-strong: #333333;
+  --text-mid: #4f4f4f;
+  --text-dim: #7e7e7e;
+  --card-bg: rgba(242, 239, 238, 0.5);
+  --card-border: #c8c4be;
+  --card-radius: 8px;
+  --card-blur: 18px;
+  --btn-bg: rgba(255, 255, 255, 0.9);
+  --btn-border: #888888;
+  --btn-text: #000000;
+  --btn-shadow: 0 4px 12px 0 #ffffff;
+  --nav-btn-bg: rgba(233, 233, 233, 0.7);
+  --nav-btn-border: #e0e0e0;
+  --tooltip-bg: #ffffff;
+  --tooltip-text: #333333;
+  --chip-bg: #dfe3ff;
+  --chip-text: #4d5bd8;
+  --toggle-bg: #e7e2da;
+  --toggle-active-bg: #ffffff;
+  --toggle-text: #8a8579;
+  --toggle-active-text: #333333;
+  --accent: #ff6c52;
+}
+
+body[data-skin='vinyl'] {
+  --bg: #eae5df;
+  --bg-texture: none;
+  --text-strong: #333333;
+  --text-mid: #4f4f4f;
+  --text-dim: #7e7e7e;
+  --card-bg: rgba(250, 248, 245, 0.85);
+  --card-border: #d8d3cb;
+  --card-radius: 10px;
+  --card-blur: 18px;
+  --btn-bg: #f4813f;
+  --btn-border: #e06a28;
+  --btn-text: #ffffff;
+  --btn-shadow: 0 6px 16px rgba(224, 106, 40, 0.35);
+  --nav-btn-bg: rgba(233, 233, 233, 0.7);
+  --nav-btn-border: #e0e0e0;
+  --tooltip-bg: #ffffff;
+  --tooltip-text: #333333;
+  --chip-bg: #dfe3ff;
+  --chip-text: #4d5bd8;
+  --toggle-bg: #e0dbd2;
+  --toggle-active-bg: #ffffff;
+  --toggle-text: #8a8579;
+  --toggle-active-text: #333333;
+  --accent: #f4813f;
+  --startend: #a08a7a;
+}
+
+body[data-skin='electric'] {
+  --bg: #0e1927;
+  --bg-texture: none;
+  --text-strong: #cfe9ff;
+  --text-mid: #9fd4f5;
+  --text-dim: #5d8cab;
+  --card-bg: rgba(4, 22, 42, 0.75);
+  --card-border: #1d6ea0;
+  --card-radius: 0px;
+  --card-blur: 6px;
+  --btn-bg: rgba(48, 20, 2, 0.85);
+  --btn-border: #f08b3e;
+  --btn-text: #f5a35c;
+  --btn-shadow: 0 0 18px rgba(240, 139, 62, 0.35);
+  --nav-btn-bg: rgba(9, 38, 66, 0.8);
+  --nav-btn-border: #1d6ea0;
+  --tooltip-bg: rgba(4, 22, 42, 0.85);
+  --tooltip-text: #cfe9ff;
+  --chip-bg: rgba(29, 110, 160, 0.4);
+  --chip-text: #6fc6f2;
+  --toggle-bg: rgba(9, 38, 66, 0.8);
+  --toggle-active-bg: rgba(29, 110, 160, 0.5);
+  --toggle-text: #4d7d9e;
+  --toggle-active-text: #9fdcff;
+  --accent: #f08b3e;
+}
+
+body[data-skin='glass'] {
+  --bg: #aab2d6;
+  --bg-texture: none;
+  --text-strong: #3f4364;
+  --text-mid: #565b7e;
+  --text-dim: #5d6285;
+  --card-bg: rgba(255, 255, 255, 0.38);
+  --card-border: rgba(255, 255, 255, 0.7);
+  --card-radius: 12px;
+  --card-blur: 24px;
+  --btn-bg: rgba(255, 255, 255, 0.5);
+  --btn-border: rgba(255, 255, 255, 0.85);
+  --btn-text: #3f4364;
+  --btn-shadow: 0 8px 24px rgba(80, 90, 140, 0.25);
+  --nav-btn-bg: rgba(255, 255, 255, 0.4);
+  --nav-btn-border: rgba(255, 255, 255, 0.6);
+  --tooltip-bg: rgba(255, 255, 255, 0.55);
+  --tooltip-text: #3f4364;
+  --chip-bg: rgba(120, 130, 220, 0.25);
+  --chip-text: #4d5bd8;
+  --toggle-bg: rgba(255, 255, 255, 0.3);
+  --toggle-active-bg: rgba(255, 255, 255, 0.78);
+  --toggle-text: #6a6f92;
+  --toggle-active-text: #3f4364;
+  --accent: #f0a9a0;
+}
+
+/* One post-value request, shown after 60 seconds of visible use. It lives in
+   the authored stage so browser zoom cannot make it dwarf the dashboard. */
+.github-star-prompt {
+  position: absolute;
+  right: 24px;
+  bottom: 24px;
+  z-index: 100;
+  width: 345px;
+  height: 267px;
+  padding: 25px 24px 34px;
+  color: #000;
+  background: rgba(250, 250, 250, 0.7);
+  border: 1px solid #e3dad1;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  backdrop-filter: blur(32px);
+  opacity: 0;
+  transform: translateY(12px) scale(0.98);
+  transform-origin: right bottom;
+  transition:
+    opacity 220ms cubic-bezier(0.23, 1, 0.32, 1),
+    transform 220ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.github-star-prompt[data-open='true'] {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.github-star-prompt__close {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  color: #c8c1bb;
+  background: transparent;
+  border: 0;
+  border-radius: 4px;
+  font: 400 17px/16px 'Geist Sans', sans-serif;
+  cursor: pointer;
+}
+
+.github-star-prompt__close:hover { color: #80796f; }
+
+.github-star-prompt p {
+  width: 297px;
+  height: 63px;
+  margin: 0 0 24px;
+  color: #000;
+  font-size: 16px;
+  line-height: 21px;
+  font-weight: 400;
+}
+
+.github-star-prompt__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.github-star-prompt__actions button {
+  width: 297px;
+  height: 53px;
+  flex: 0 0 53px;
+  border: 1px solid #d7c4bb;
+  border-radius: 12px;
+  font: 400 16px/21px 'Geist Sans', sans-serif;
+  cursor: pointer;
+  transition:
+    background-color 160ms ease,
+    transform 140ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.github-star-prompt__actions button:active { transform: scale(0.97); }
+
+.github-star-prompt__star {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: #fff;
+  background: #ff8d41;
+  box-shadow:
+    inset 2px -2px 4px #ff8534,
+    inset -2.5px 4px 4px #ffb07b,
+    0 2px 8px #e6dcd1;
+}
+
+.github-star-prompt__star span { font-size: 16px; line-height: 1; }
+.github-star-prompt__star:hover { background: #f98538; }
+.github-star-prompt__star:disabled { cursor: default; opacity: 0.72; }
+
+.github-star-prompt__later {
+  color: #80796f;
+  background: #e3dad1;
+}
+
+.github-star-prompt__later:hover { background: #ddd3c9; }
+
+@media (prefers-reduced-motion: reduce) {
+  .github-star-prompt { transition: opacity 120ms linear; transform: none; }
+}
+
+body {
+  background: var(--bg);
+}
+
+body[data-skin='electric'] {
+  background:
+    radial-gradient(780px 690px at 50.3% 50.5%, rgba(0, 92, 151, 0.09), transparent 72%),
+    #0e1927;
+}
+
+body[data-skin='glass'] {
+  background:
+    radial-gradient(700px 520px at 50% 32%, rgba(255, 255, 255, 0.28), transparent 70%),
+    radial-gradient(420px 380px at 4% 18%, rgba(238, 190, 175, 0.65), transparent 70%),
+    radial-gradient(360px 340px at 99% 30%, rgba(240, 190, 185, 0.6), transparent 70%),
+    radial-gradient(500px 300px at 8% 96%, rgba(235, 180, 150, 0.6), transparent 70%),
+    radial-gradient(460px 300px at 92% 98%, rgba(230, 170, 140, 0.55), transparent 70%),
+    radial-gradient(1000px 760px at 88% 92%, rgba(88, 92, 138, 0.4), transparent 75%),
+    linear-gradient(165deg, #c9cce8 0%, #aeb5d9 45%, #8f95c4 100%);
+}
+
+/* floor shadow + sheen the glass dial rests on */
+body[data-skin='glass'] #stage::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 1030px;
+  width: 1150px;
+  height: 130px;
+  transform: translateX(-50%);
+  background: radial-gradient(50% 55% at 50% 40%, rgba(58, 62, 105, 0.42), transparent 75%);
+  filter: blur(8px);
+  pointer-events: none;
+}
+
+.cat-legend-row {
+  position: absolute;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-size: 15px;
+  color: var(--text-strong);
+  white-space: nowrap;
+}
+.cat-bullet {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  box-shadow: inset -1px -1.5px 2px rgba(0, 0, 0, 0.25), inset 1px 1.5px 2px rgba(255, 255, 255, 0.7);
+}
+
+.pct-label {
+  position: absolute;
+  font-size: 13px;
+  color: #5d6285;
+}
+.pct-label.pct-warm { color: #a05a50; }
+
+.fx-toggle { width: 200px; }
+.fx-toggle button { font-size: 13px; }
+
+/* ---------- overlay chrome ---------- */
+
+.header-left {
+  position: absolute;
+  left: 40px;
+  top: 34px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 217px;
+}
+
+.date-row { display: flex; gap: 10px; align-items: center; height: 31px; }
+.date-nav { display: flex; gap: 4px; align-items: center; }
+.date-nav button {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--nav-btn-bg);
+  border: 0.5px solid var(--nav-btn-border);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-mid);
+  font-size: 16px;
+}
+.date-title { font-size: 26px; line-height: 31px; font-weight: 400; color: var(--text-strong); white-space: nowrap; }
+.date-display {
+  border: 0;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: inherit;
+  font-family: inherit;
+}
+.calendar-icon {
+  display: block;
+  width: 34px;
+  height: 28px;
+  flex: 0 0 auto;
+}
+
+.skin-toggle {
+  display: flex;
+  background: var(--toggle-bg);
+  border-radius: 8px;
+  padding: 3px;
+  width: 260px;
+  border: 0.5px solid var(--card-border);
+}
+.skin-toggle button {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: var(--toggle-text);
+  font-size: 14px;
+  font-family: inherit;
+  padding: 6px 0;
+  border-radius: 6px;
+}
+.skin-toggle button.active {
+  background: var(--toggle-active-bg);
+  color: var(--toggle-active-text);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+.vinyl-variants {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  width: 260px;
+  margin-top: 8px;
+  padding: 3px;
+  background: var(--toggle-bg);
+  border: 0.5px solid var(--card-border);
+  border-radius: 8px;
+}
+.vinyl-variants button {
+  min-width: 0;
+  padding: 5px 2px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--toggle-text);
+  font-size: 11px;
+  font-family: inherit;
+}
+.vinyl-variants button.active {
+  background: var(--toggle-active-bg);
+  color: var(--toggle-active-text);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+.groove-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 260px;
+  font-size: 13px;
+  color: var(--text-mid);
+}
+.gc-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.groove-controls .pack-btn,
+.groove-controls .tick-btn,
+.groove-controls .intro-btn,
+.groove-controls .look-btn {
+  border: 0.5px solid var(--card-border);
+  background: var(--toggle-bg);
+  color: var(--toggle-text);
+  font-size: 13px;
+  font-family: inherit;
+  padding: 5px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+.groove-controls .pack-btn.active,
+.groove-controls .tick-btn.active,
+.groove-controls .look-btn.active {
+  background: var(--toggle-active-bg);
+  color: var(--toggle-active-text);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+.spacing-row { display: flex; gap: 6px; align-items: center; min-width: 0; }
+.spacing-row input { flex: 1; min-width: 0; accent-color: var(--text-mid); }
+.spacing-val { font-variant-numeric: tabular-nums; width: 34px; text-align: right; }
+.gc-lbl { width: 50px; flex: 0 0 auto; }
+.tick-panel {
+  backdrop-filter: blur(var(--card-blur));
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--card-radius);
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.tick-panel[hidden] { display: none; }
+
+.legend-card {
+  backdrop-filter: blur(var(--card-blur));
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--card-radius);
+  padding: 16px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: max-content;
+}
+.legend-row { white-space: nowrap; }
+.legend-row { display: flex; gap: 8px; align-items: center; font-size: 16px; color: var(--text-strong); }
+.legend-swatch { flex: 0 0 auto; width: 16px; height: 16px; }
+.sw-begin { border-radius: 50%; background: rgba(208, 201, 201, 0.5); border: 1.5px solid #b1adad; }
+.sw-active {
+  height: 10px; width: 20px;
+  border-radius: 10px 10px 0 0;
+  border: 2px solid #a5adfa; border-bottom: none;
+  background: transparent;
+}
+.sw-sub { display: flex; gap: 3px; align-items: center; }
+.sw-sub::before, .sw-sub::after {
+  content: ''; width: 6px; height: 6px; border-radius: 50%; background: #8f8a84; display: block;
+}
+.sw-unfinished { border-radius: 50%; background: #eeddd7; border: 1px dashed #ff6c52; }
+.sw-blocked {
+  width: 18px; height: 14px; border-radius: 2px;
+  background: repeating-linear-gradient(45deg, #eeddd7 0 2.5px, #ff6c52 2.5px 4px);
+  border: 1px solid #ff6c52;
+}
+body[data-skin='electric'] .sw-begin { background: rgba(95, 196, 242, 0.25); border-color: #5fc4f2; }
+body[data-skin='electric'] .sw-active { border-color: #5fc4f2; }
+body[data-skin='electric'] .sw-unfinished { background: rgba(240, 139, 62, 0.2); border-color: #f08b3e; }
+body[data-skin='electric'] .sw-blocked {
+  background: repeating-linear-gradient(45deg, rgba(240,139,62,.15) 0 2.5px, #f08b3e 2.5px 4px);
+  border-color: #f08b3e;
+}
+
+/* chamfered corners for electric HUD cards */
+body[data-skin='electric'] .legend-card,
+body[data-skin='electric'] .tooltip-card {
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 14px 100%, 0 100%);
+}
+.hour-label {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  font-size: 16px;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+.start-end-label {
+  position: absolute;
+  transform: translateX(-50%);
+  font-size: 16px;
+  color: var(--startend, var(--text-dim));
+  text-align: center;
+  line-height: 1.3;
+}
+body:is([data-skin='vinyl'], [data-skin='paper'], [data-skin='electric']) .start-end-label.se-end { transform: translateX(-100%); text-align: right; }
+body:is([data-skin='vinyl'], [data-skin='paper'], [data-skin='electric']) .start-end-label.se-start { transform: none; text-align: left; }
+.start-end-label .tag { opacity: 0.75; }
+
+/* the OpenAI knot is inked dark charcoal in the asset itself */
+.knot-logo { opacity: 0.92; }
+
+.callout-label {
+  position: absolute;
+  font-size: 16px;
+  color: var(--text-strong);
+  white-space: nowrap;
+}
+/* callout labels land on the black disc on vinyl — use light ink there,
+   with the leader lines in white so they read against the platter */
+body[data-skin='vinyl'] .callout-label { color: #d9d5cf; }
+body[data-skin='vinyl'] { --callout-line: #ffffff; }
+
+.tooltip-card {
+  position: absolute;
+  width: 208px;
+  backdrop-filter: blur(var(--card-blur));
+  background: var(--tooltip-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--card-radius);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  color: var(--tooltip-text);
+}
+.hover-tip { pointer-events: none; z-index: 20; }
+.tooltip-head { display: flex; gap: 6px; align-items: center; }
+.tooltip-chip {
+  background: var(--chip-bg);
+  color: var(--chip-text);
+  font-size: 12px;
+  padding: 1px 8px;
+  border-radius: 4px;
+}
+.tooltip-time { font-size: 12px; color: var(--text-dim); display: flex; justify-content: space-between; gap: 18px; }
+/* thread cost rides the time line's right edge, in its exact type and color */
+.tooltip-cost { font-variant-numeric: tabular-nums; }
+
+#callouts line, #callouts path { stroke: var(--callout-line, var(--text-mid)); stroke-width: 1; fill: none; }
+body[data-skin='paper'] { --callout-line: #b3aca4; }
+body[data-skin='vinyl'] { --callout-line: #ffffff; }
+body[data-skin='glass'] { --callout-line: rgba(90, 95, 130, 0.5); }
+#callouts path.tp { stroke: none !important; }
+#callouts text { fill: var(--text-mid); font-size: 14px; font-family: 'Geist Sans', sans-serif; }
+#callouts .gauge-text { font-size: 13px; fill: var(--text-strong); }
+
+/* ==========================================================================
+   Pinned to the Figma master frame, node 517:659.
+
+   That frame is 1842x1197 — the same box as #stage — so every number below is
+   the measured value off the file rather than an approximation of it: the
+   design reproduces the frame position for position.
+   ========================================================================== */
+
+body[data-skin='vinyl'] {
+  --bg: #f0eae4;
+  --card-border: #e3dad1;
+  --card-radius: 8px;
+  --card-bg: linear-gradient(180deg, #fafafa 0%, rgba(250, 250, 250, 0.7) 100%);
+  --toggle-bg: #e3dad1;
+  --toggle-active-bg: #fafafa;
+  --toggle-text: #92908d;
+  --toggle-active-text: #000000;
+  --nav-btn-bg: #ffffff;
+  --nav-btn-border: #e3dad1;
+  --text-strong: #333333;
+  --text-dim: #7e7e7e;
+  --startend: #bf998c;
+}
+
+/* header column: the frame stacks date (top 41), toggle (92) and legend (148),
+   which is a 20px gap then a 13px one — not one uniform rhythm */
+body[data-skin] .header-left { left: 40px; top: 41px; gap: 0; width: 238px; }
+body[data-skin] .header-left > * + * { margin-top: 9px; }
+body[data-skin] .skin-toggle { margin-top: 20px; }
+
+/* Figma frame 1140:25038 is a 280 x 31 date-navigation row. Its two-button
+   cluster and the calendar/date cluster are separated by a fixed 10px gap. */
+body[data-skin] .date-row { gap: 10px; }
+body[data-skin] .date-nav { gap: 4px; }
+body[data-skin] .date-nav button {
+  width: 28px;
+  height: 28px;
+  background: #ffffff;
+  border-width: 1px;
+  font-size: 16px;
+}
+body[data-skin] .date-display { gap: 10px; }
+body[data-skin] .date-title { font-size: 26px; }
+
+/* Electric frame 1169:32468 keeps the same 31px row height but enlarges the
+   two nav circles and uses the authored blue HUD button treatment. */
+body[data-skin='electric'] .date-row { gap: 12px; }
+body[data-skin='electric'] .date-nav { gap: 4px; }
+body[data-skin='electric'] .date-nav button {
+  width: 28px;
+  height: 28px;
+  color: #2e87d6;
+  background: rgba(0, 106, 199, .10);
+  border: 1px solid rgba(46, 135, 214, .78);
+  font-size: 16px;
+  box-shadow: inset 0 0 9px 3px rgba(0, 136, 255, .18);
+}
+body[data-skin='electric'] .date-display { gap: 12px; }
+body[data-skin='electric'] .date-title { color: #b6e7ff; }
+
+body[data-skin] .skin-toggle {
+  width: 238px;
+  height: auto;
+  padding: 4px;
+  gap: 2px;
+  border: 0;
+  border-radius: 8px;
+  backdrop-filter: blur(18px);
+}
+body[data-skin] .skin-toggle button { font-size: 16px; padding: 8px 0; }
+body[data-skin] .skin-toggle button.active { box-shadow: inset 0.5px -2px 4px 0 #f0e9e2; }
+
+body[data-skin] .legend-card {
+  width: 236px;
+  padding: 16px 24px;
+  gap: 8px;
+  border-radius: 8px;
+}
+body[data-skin] .legend-row { font-size: 16px; }
+body[data-skin='vinyl'] .legend-row { color: #000000; }
+/* the frame's two dots sit at the far ends of a 20px slot, not shoulder to
+   shoulder in the middle */
+body[data-skin] .sw-sub { width: 20px; justify-content: space-between; }
+body[data-skin] .sw-unfinished { border-width: 1.5px; }
+
+
+/* callout labels on the frame are 14px and pure white on the black disc */
+/* Paper keeps its own legend and CTA treatment, while the date row and skin
+   picker use the shared geometry above so switching skins does not jump. */
+body[data-skin='paper'] .legend-card,
+body[data-skin='vinyl'] .legend-card {
+  width: 217px;
+  padding: 16px 20px;
+}
+/* Electric's master frame cuts opposite corners off every panel and runs a lit
+   keyline round the cut silhouette. clip-path slices through a border and an
+   outer box-shadow alike, so the keyline is painted as the element's own
+   background with the fill on a 1.5px-inset pseudo underneath, and the glow
+   moves to a filter, which runs after the clip and follows the cut edge. */
+body[data-skin='electric'] .legend-card,
+body[data-skin='electric'] .tooltip-card,
+body[data-skin='electric'] .skin-toggle {
+  position: relative;
+  isolation: isolate;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+body[data-skin='electric'] .legend-card::before,
+body[data-skin='electric'] .tooltip-card::before,
+body[data-skin='electric'] .skin-toggle::before {
+  content: '';
+  position: absolute;
+  inset: 1.5px;
+  z-index: -1;
+}
+/* The frame's page is pure black right up to each keyline: there is no outer
+   glow anywhere. What reads as glow is a 2px keyline with the light falling
+   INWARD over about 8px, so the fill pseudo carries an inset shadow and
+   nothing casts outward. The chamfers are not 45° either — the horizontal leg
+   runs 1.4 to 2 times the vertical one. */
+body[data-skin='electric'] .legend-card,
+body[data-skin='electric'] .tooltip-card {
+  background: linear-gradient(150deg, #1e7fd0 0%, #7fdcff 45%, #1e7fd0 100%);
+}
+body[data-skin='electric'] .legend-card::before,
+body[data-skin='electric'] .tooltip-card::before {
+  inset: 2px;
+  background: #00060b;
+  box-shadow: inset 0 0 12px rgba(30, 127, 208, 0.75);
+}
+body[data-skin='electric'] .legend-card {
+  width: 238px;
+  padding: 22px 24px;
+  clip-path: polygon(0 0, calc(100% - 37px) 0, 100% 21px, 100% 100%, 36px 100%, 0 calc(100% - 22px));
+}
+body[data-skin='electric'] .legend-card::before {
+  clip-path: polygon(0 0, calc(100% - 36px) 0, 100% 20px, 100% 100%, 35px 100%, 0 calc(100% - 21px));
+}
+body[data-skin='electric'] .tooltip-card {
+  clip-path: polygon(0 0, calc(100% - 33px) 0, 100% 16px, 100% 100%, 30px 100%, 0 calc(100% - 14px));
+}
+body[data-skin='electric'] .tooltip-card::before {
+  clip-path: polygon(0 0, calc(100% - 32px) 0, 100% 15px, 100% 100%, 29px 100%, 0 calc(100% - 13px));
+}
+
+/* the toggle is a plain 8px rounded rect in the frame — no chamfer — lit from
+   inside rather than shadowed from outside */
+body[data-skin='electric'] .skin-toggle {
+  background: rgba(0, 106, 199, 0.1);
+  box-shadow: inset 0 0 8px 0 #0088ff;
+}
+body[data-skin='electric'] .skin-toggle::before { content: none; }
+body[data-skin='electric'] .skin-toggle button {
+  background: rgba(0, 0, 0, 0.5);
+  color: #004582;
+}
+body[data-skin='electric'] .skin-toggle button.active {
+  background: rgba(0, 136, 255, 0.2);
+  box-shadow: inset 0 0 4px 0 #00b7ff;
+  color: #88eaff;
+}
+
+body[data-skin='electric'] .header-left { top: 49px; }
+body[data-skin='electric'] .callout-label { color: #a8dcf0; }
+body[data-skin='electric'] { --callout-line: #2f86c8; }
+body[data-skin='electric'] .legend-row { color: #b6e7ff; }
+body[data-skin='electric'] .tooltip-chip {
+  border-radius: 0;
+  padding: 6px 8px;
+  background: rgba(2, 198, 252, 0.25);
+  color: #02c6fc;
+}
+body[data-skin='electric'] .tooltip-card { color: #ffffff; }
+body[data-skin='electric'] .tooltip-time { color: #88eaff; }
+body[data-skin='electric'] .sw-sub::before,
+body[data-skin='electric'] .sw-sub::after { background: #6fd2fa; }
+body[data-skin='electric'] .sw-unfinished {
+  background: none;
+  border: 2.5px solid #f08b3e;
+  box-shadow: 0 0 6px rgba(240, 139, 62, 0.8);
+}
+body[data-skin='electric'] .sw-active {
+  background: #9fdcff;
+  border: 0;
+  height: 9px;
+  border-radius: 10px 10px 0 0;
+}
+
+/* Electric master frame 733:17057. This frame intentionally replaces the
+   tuning rail and analytics cards with the two authored right-side notices. */
+body[data-skin='electric'] .header-left {
+  left: 40px;
+  top: 41px;
+}
+body[data-skin='electric'] .header-left > .skin-toggle { margin-top: 20px; }
+body[data-skin='electric'] .header-left > .legend-card { margin-top: 14px; }
+body[data-skin='electric'] .skin-toggle { width: 238px; height: auto; }
+body[data-skin='electric'] .legend-card {
+  width: 238px;
+  min-height: 0;
+  padding: 22px 24px 20px;
+  gap: 10px;
+}
+body[data-skin='electric'] .legend-divider {
+  margin: 12px -24px 7px;
+  background: #075388;
+}
+body[data-skin='electric'] .delay-toggle { gap: 9px; }
+body[data-skin='electric'] .switch {
+  width: 36px;
+  height: 19px;
+  background: #07355a;
+  border-color: #1184bd;
+}
+
+.electric-status {
+  position: absolute;
+  left: 1527px;
+  top: 47px;
+  width: 276px;
+  color: #dceeff;
+  font-size: 12px;
+  line-height: 1.26;
+}
+body[data-skin='electric'] .electric-status {
+  left: auto;
+  right: 26px;
+  top: 116px;
+}
+.electric-status-pill {
+  position: relative;
+  width: 245px;
+  height: 54px;
+  margin-left: 29px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 18px 0 27px;
+  color: #a9a9a9;
+  background: linear-gradient(180deg, #161616, #050505);
+  border: 1px solid #858585;
+  box-shadow: inset 0 0 18px rgba(255,255,255,.17), 0 6px 22px rgba(0,0,0,.5);
+  clip-path: polygon(0 0, calc(100% - 36px) 0, 100% 20px, 100% 100%, 33px 100%, 0 calc(100% - 20px));
+}
+.electric-status-spark { color: #ffd66f; font-size: 19px; transform: rotate(-32deg); }
+.electric-status-copy {
+  margin-top: 11px;
+  min-height: 77px;
+  padding: 13px 12px;
+  color: #dceeff;
+  background: #06223a;
+  border: 1px solid #287ab3;
+  border-radius: 7px;
+  box-shadow: inset 0 0 18px rgba(19, 87, 132, .25);
+}
+
+.dayflow-promo {
+  position: absolute;
+  z-index: 30;
+  left: 1380px;
+  top: 688px;
+  width: 414px;
+  height: 465px;
+  padding: 26px 24px 24px;
+  color: #fff;
+  background: linear-gradient(180deg, #061523, #03101b);
+  border: 1px solid #2184c5;
+  border-radius: 8px;
+  box-shadow: inset 0 0 26px rgba(18, 85, 131, .22), 0 8px 30px rgba(0,0,0,.45);
+  text-align: center;
+  font-size: 14px;
+  pointer-events: auto;
+}
+.dayflow-promo-close {
+  position: absolute;
+  right: 8px;
+  top: 5px;
+  border: 0;
+  background: none;
+  color: #68c9ff;
+  font: 20px/1 inherit;
+}
+.dayflow-promo strong { display: block; font-size: 16px; line-height: 1.35; }
+.dayflow-promo p { margin-top: 10px; text-align: left; line-height: 1.25; font-weight: 400; }
+.dayflow-preview {
+  position: relative;
+  height: 253px;
+  margin-top: 9px;
+  overflow: hidden;
+  border-radius: 3px;
+  background:
+    radial-gradient(ellipse at 50% 110%, rgba(255, 239, 215, .9) 0 43%, transparent 44%),
+    linear-gradient(155deg, #91b9ff 0%, #c6d7ff 34%, #ffd5ad 72%, #f4a878 100%);
+}
+.preview-sun {
+  position: absolute;
+  left: -40px;
+  bottom: -100px;
+  width: 270px;
+  height: 270px;
+  border-radius: 50%;
+  background: rgba(255, 237, 213, .64);
+}
+.preview-window {
+  position: absolute;
+  left: 101px;
+  top: 42px;
+  width: 177px;
+  height: 178px;
+  padding: 13px 12px;
+  border-radius: 4px;
+  background: rgba(255,255,255,.94);
+  box-shadow: 0 3px 12px rgba(66,44,30,.18);
+  color: #8d8781;
+  text-align: left;
+  font-size: 6px;
+}
+.preview-title { padding-bottom: 10px; border-bottom: 1px solid #eee7e1; }
+.preview-window i {
+  position: absolute;
+  left: 13px;
+  right: 12px;
+  top: var(--y);
+  height: 11px;
+  border-left: 3px solid var(--c);
+  border-bottom: 1px solid #eee9e5;
+  background: linear-gradient(90deg, rgba(244,241,238,.85), transparent);
+}
+.preview-card {
+  position: absolute;
+  left: 118px;
+  top: 80px;
+  width: 92px;
+  height: 87px;
+  border-radius: 4px;
+  background: rgba(255,255,255,.97);
+  box-shadow: 0 3px 11px rgba(45,36,29,.24);
+  border: 1px solid #eee4dc;
+}
+.dayflow-promo-cta {
+  width: 100%;
+  height: 46px;
+  margin-top: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  color: #fff;
+  background: linear-gradient(180deg, #07558d, #063d68);
+  border: 1px solid #22c4ff;
+  border-radius: 6px;
+  box-shadow: inset 0 0 14px rgba(31,155,224,.34);
+  font: 16px inherit;
+  text-decoration: none;
+}
+.dayflow-promo-cta span { font-size: 20px; vertical-align: -2px; }
+body[data-skin='electric'] .sw-unfinished {
+  width: 14px;
+  height: 14px;
+  margin: 0 1px;
+  border: 2.5px solid #f08b3e;
+  border-radius: 50%;
+  background: transparent;
+  box-shadow: 0 0 6px rgba(240, 139, 62, 0.8);
+}
+
+/* the frame inverts the emphasis: the tag is the rose one, the time is neutral */
+body[data-skin] .start-end-label { color: var(--text-dim); }
+body[data-skin] .start-end-label .tag { opacity: 1; color: var(--startend); }
+body[data-skin] .se-end .tag { text-align: right; }
+body[data-skin] .se-start .tag { text-align: left; }
+
+body #callouts .gauge-text { font-size: 17px; }
+/* vinyl's center label is black now — the curved totals go light */
+body[data-skin='vinyl'] #callouts .gauge-text { fill: #ded8d0; }
+body[data-skin] .callout-label { font-size: 14px; }
+body[data-skin='vinyl'] .callout-label { color: #ffffff; }
+
+body[data-skin='vinyl'] .tooltip-card {
+  width: 207px;
+  padding: 10px 12px;
+  border: 1px solid #cbcbcb;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #ffffff 0%, #fafafa 100%);
+  box-shadow: 0 1px 6px 1px rgba(59, 101, 242, 0.3);
+  color: #333333;
+}
+body[data-skin='vinyl'] .tooltip-chip {
+  background: #dae3ff;
+  color: #3b65f2;
+}
+body[data-skin='vinyl'] .tooltip-time { color: #8e8e8e; }
+
+/* legend glyphs as the frame draws them: a filled charcoal dome for the live
+   thread, a smaller and more saturated coral pip for the unfinished one */
+body[data-skin='vinyl'] .sw-active {
+  height: 10px;
+  border: 2.5px solid #b1adad;
+  border-bottom: 0;
+  background: none;
+  border-radius: 12px 12px 0 0;
+}
+body[data-skin='vinyl'] .sw-sub::before,
+body[data-skin='vinyl'] .sw-sub::after {
+  width: 9px;
+  height: 9px;
+  background: #b1adad;
+}
+body[data-skin] .sw-unfinished {
+  width: 12px;
+  height: 12px;
+  margin: 0 2px;
+  background: rgba(255, 179, 166, 0.9);
+  border: 1.5px dashed #ff4625;
+}
+
+/* The frame's disc casts a soft shadow onto the page — measured, the page
+   colour only recovers around r 503. That falls outside the rendered disc, so
+   it is painted here, under the canvas, rather than in the shader. */
+body[data-skin='vinyl'] #dial::before {
+  content: '';
+  position: absolute;
+  left: 924px;
+  top: 610.5px;
+  width: 1030px;
+  height: 1030px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle closest-side,
+    rgba(58, 52, 46, 0) 0 484px,
+    rgba(58, 52, 46, 0.28) 486px,
+    rgba(58, 52, 46, 0.22) 490px,
+    rgba(58, 52, 46, 0.13) 494px,
+    rgba(58, 52, 46, 0.07) 498px,
+    rgba(58, 52, 46, 0) 506px
+  );
+  pointer-events: none;
+}
+
+/* =====================================================================
+   Master-frame chrome: legend delay controls + floating stat panels
+   (Figma nodes 863:43826 "Token usage", 863:43077 "Code written over time")
+   ===================================================================== */
+
+/* per-skin panel paint; the frame's warm paper values are the default */
+body {
+  --panel-bg: rgba(250, 250, 250, 0.6);
+  --panel-border: #e3dad1;
+  --panel-head-bg: #e3dad1;
+  --panel-head-text: #80796f;
+  --panel-cap: #80796f;
+  --panel-cost: #c49279;
+}
+body[data-skin='electric'] {
+  --panel-bg: rgba(4, 22, 42, 0.75);
+  --panel-border: #0a3d62;
+  --panel-head-bg: #002544;
+  --panel-head-text: #88eaff;
+  --panel-cap: #2e87d6;
+  --panel-cost: #ffffff;
+}
+
+/* ---- legend: response-delay controls ---- */
+.legend-divider { height: 1px; background: var(--card-border); margin: 4px 0; }
+.hatch-cycle { display: inline-flex; align-items: center; gap: 4px; margin-left: auto; padding-left: 12px; }
+.hatch-cycle button {
+  border: 0.5px solid var(--card-border);
+  background: var(--toggle-bg);
+  color: var(--toggle-text);
+  width: 18px; height: 18px;
+  border-radius: 5px;
+  font-size: 12px; line-height: 1;
+  font-family: inherit;
+}
+.hatch-name { font-size: 12px; color: var(--text-dim); min-width: 62px; text-align: center; }
+.delay-toggle { user-select: none; }
+.switch {
+  flex: 0 0 auto;
+  width: 34px; height: 19px;
+  border-radius: 10px;
+  background: var(--toggle-bg);
+  border: 0.5px solid var(--card-border);
+  position: relative;
+  transition: background 0.15s;
+}
+.switch::after {
+  content: '';
+  position: absolute;
+  width: 15px; height: 15px;
+  border-radius: 50%;
+  background: #fff;
+  top: 1.5px; left: 2px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  transition: left 0.15s;
+}
+.delay-toggle.on .switch { background: var(--accent, #ff6c52); }
+.delay-toggle.on .switch::after { left: 16px; }
+
+/* ---- panel shell ---- */
+.data-panel {
+  position: absolute;
+  width: 290px;
+  backdrop-filter: blur(18px);
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: 8px;
+  overflow: hidden;
+  color: var(--text-strong);
+}
+.panel-token { left: 26px; bottom: 24px; }
+.panel-code { right: 26px; bottom: 24px; }
+.data-panel-head {
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px 0 12px;
+  background: var(--panel-head-bg);
+  color: var(--panel-head-text);
+  font-size: 12px;
+  font-weight: 500;
+  user-select: none;
+}
+.panel-caret { transition: transform 0.15s; }
+.data-panel.collapsed .panel-caret { transform: rotate(180deg); }
+.data-panel.collapsed .data-panel-body { display: none; }
+
+/* ---- token usage panel ---- */
+.tp-total { padding: 14px 12px 4px; }
+.tp-cap { font-size: 14px; color: var(--panel-cap); }
+.tp-big { font-size: 40px; line-height: 1.15; letter-spacing: -0.5px; font-variant-numeric: tabular-nums; }
+.tp-cost { font-size: 18px; color: var(--panel-cost); margin-top: 2px; }
+.tp-models {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+  padding: 10px 18px 0;
+}
+/* both bars stand on this one shared baseline, names hang below it */
+.tp-axis { height: 1px; background: var(--panel-border); margin: 0 12px; }
+.tp-names { display: flex; gap: 12px; padding: 4px 18px 8px; margin-bottom: 4px; }
+.tp-names span { flex: 1; text-align: center; font-size: 10px; color: var(--panel-cap); line-height: 1.3; }
+.tp-model { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; text-align: center; }
+.tp-model b { font-size: 12px; font-weight: 400; }
+.tp-usd { font-size: 12px; color: var(--panel-cost); }
+.tp-bar {
+  width: 100%;
+  margin-top: 4px;
+  border-radius: 4px 4px 0 0;
+  position: relative;
+}
+.tp-bar img { position: absolute; right: 8px; bottom: 6px; }
+.tp-bar-openai { background: #fffdfa; border: 1px solid #e8e8e8; border-bottom: none; }
+.tp-bar-claude { background: #ffc7b1; }
+/* Exact Figma 1120:10892 bar fills:
+   OpenAI: #fff 70% at 0% -> #fff 5% at 93%.
+   Claude: #ff662a 100% at 0% -> #ff662a 0% at 100%. */
+body[data-skin='electric'] .tp-bar-openai {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.70) 0%, rgba(255, 255, 255, 0.05) 93%);
+  border: 0.5px solid rgba(255, 255, 255, 0.65);
+  border-bottom: none;
+}
+body[data-skin='electric'] .tp-bar-claude {
+  background: linear-gradient(180deg, #ff662a 0%, rgba(255, 102, 42, 0) 100%);
+  border: 0.5px solid rgba(255, 122, 79, 0.72);
+  border-bottom: none;
+}
+/* Provider marks lose contrast against Electric's dark center and translucent
+   charts in their source charcoal/orange. Preserve their alpha silhouettes,
+   but paint every OpenAI and Claude mark pure white on this skin. */
+body[data-skin='electric'] img[src$='openai-mark.svg'],
+body[data-skin='electric'] img[src$='claude-spark.png'] {
+  filter: brightness(0) saturate(100%) invert(1);
+  opacity: 1;
+}
+.tp-cap-mid { padding: 4px 12px 0; }
+.tp-donuts { display: block; width: 258px; margin: 4px auto 0; }
+.tp-donuts .donut-label { font-size: 10px; fill: var(--panel-cap); font-family: inherit; }
+.tp-legend {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px 8px;
+  padding: 10px 14px 14px;
+}
+.tp-key { display: flex; gap: 4px; align-items: flex-start; }
+.tp-swatch { flex: 0 0 auto; width: 10px; height: 6px; border-radius: 3px; margin-top: 2px; }
+.tp-key-name { font-size: 10px; color: var(--panel-cap); }
+.tp-key-tok { font-size: 12px; }
+.tp-key-usd { font-size: 11px; color: var(--panel-cost); }
+
+/* ---- code written over time panel ---- */
+.cp-chart { display: block; width: 260px; margin: 8px auto 0; }
+.cp-axis { stroke: var(--card-border); stroke-width: 1; }
+.cp-time-bg {
+  fill: #eee9e3;
+  stroke: #d8d1c9;
+  stroke-width: 0.5;
+}
+.cp-time-label {
+  fill: #80796f;
+  font-family: 'Nunito', sans-serif;
+  font-size: 6px;
+  font-weight: 600;
+}
+.cp-electric-area { display: none; }
+body[data-skin='electric'] .cp-bars { display: none; }
+body[data-skin='electric'] .cp-electric-area { display: block; }
+body[data-skin='electric'] .cp-time-bg {
+  fill: rgba(0, 106, 199, 0.72);
+  stroke: rgba(111, 198, 242, 0.75);
+}
+body[data-skin='electric'] .cp-time-label { fill: #b6e7ff; }
+.cp-list { border-top: 1px solid var(--panel-border); padding: 12px 14px 14px; }
+.cp-cap { font-size: 12px; color: var(--panel-cap); margin-bottom: 8px; }
+.cp-row { display: flex; justify-content: space-between; font-size: 14px; padding: 3px 0; }
+.cp-row b { font-weight: 400; font-variant-numeric: tabular-nums; }
+.cp-pos { color: #09b09d; }
+.cp-neg { color: #ff7878; }
+
+/* electric HUD keeps its chamfer language on the panels */
+body[data-skin='electric'] .data-panel {
+  border-radius: 0;
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%);
+}
+
+/* Figma 1120:10892 — the token card is frosted and rounded, unlike the
+   chamfered summary/code stack on the opposite side. */
+body[data-skin='electric'] .panel-token {
+  background: rgba(0, 106, 199, 0.10);
+  border: 1px solid rgba(255, 255, 255, 0.40);
+  border-radius: 8px;
+  clip-path: none;
+  backdrop-filter: blur(80px);
+  box-shadow:
+    inset 0 0 32px 12px rgba(0, 136, 255, 0.25),
+    0 5px 12px rgba(0, 0, 0, 0.12);
+}
+body[data-skin='electric'] .panel-token .tp-big {
+  color: #88eaff;
+}
+
+/* ---- AgentPlayback lockup + Figma summary card (node 1120:7169) ---- */
+.playback-brand {
+  position: absolute;
+  right: 26px;
+  top: 25px;
+  height: 31px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 238px;
+  color: var(--text-strong);
+  text-align: right;
+  font-size: 18px;
+  line-height: 1.05;
+  pointer-events: auto;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.summary-panel {
+  position: absolute;
+  left: 22px;
+  top: 76px;
+  width: 290px;
+  overflow: hidden;
+  color: var(--text-strong);
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: 8px;
+  backdrop-filter: blur(18px);
+}
+.right-stats-stack {
+  position: absolute;
+  right: 26px;
+  bottom: 24px;
+  width: 330px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.right-stats-stack .summary-panel,
+.right-stats-stack .panel-code {
+  position: relative;
+  inset: auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+.summary-total { padding: 17px 12px 13px; }
+.summary-total span { display: block; color: var(--panel-cap); font-size: 16px; }
+.summary-total strong { display: block; font-size: 42px; line-height: 1.04; font-weight: 400; letter-spacing: -0.8px; }
+.summary-rows { padding: 10px 12px 13px; border-top: 1px solid var(--panel-border); }
+.summary-rows > div { height: 22px; display: flex; align-items: center; justify-content: space-between; font-size: 15px; }
+.summary-rows span { color: var(--panel-cap); }
+.summary-rows i { width: 17px; display: inline-block; color: var(--panel-cap); font-style: normal; text-align: center; }
+.summary-rows b { font-weight: 400; font-variant-numeric: tabular-nums; }
+
+body[data-skin='vinyl'] .playback-brand {
+  color: #5c5852;
+  text-shadow: 0 1px 0 rgba(255,255,255,.45);
+}
+body[data-skin='vinyl'] .summary-panel { box-shadow: none; }
+body[data-skin='electric'] .playback-brand { color: #9fdcff; text-shadow: 0 0 10px rgba(38, 184, 255, .35); }
+body[data-skin='electric'] .summary-panel {
+  border-radius: 0;
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%);
+  box-shadow: inset 0 0 20px rgba(27, 117, 178, .16);
+}
+
+/* Shared master-frame placement: date and summary occupy the left rail;
+   skin controls and legend occupy the right rail under the brand. */
+body[data-skin] .header-left,
+body[data-skin='electric'] .header-left {
+  inset: 0;
+  width: auto;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+}
+body[data-skin] .header-left > * + * { margin-top: 0; }
+body[data-skin] .header-left > .date-row {
+  position: absolute;
+  left: 22px;
+  top: 25px;
+  pointer-events: auto;
+}
+body[data-skin] .header-controls {
+  position: absolute;
+  right: 26px;
+  top: 76px;
+  width: 290px;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  pointer-events: auto;
+}
+body[data-skin] .header-controls > .skin-toggle,
+body[data-skin='electric'] .header-controls > .skin-toggle,
+body[data-skin='electric'] .header-controls > .legend-card {
+  margin-top: 0;
+}
+body[data-skin] .header-controls > .skin-toggle,
+body[data-skin] .header-controls > .legend-card {
+  width: 290px;
+  box-sizing: border-box;
+}
+
+/* Project color editor — nodes 1208:49105 (closed), 1208:52224 (Vinyl), and
+   1208:53124 (Electric). All three header controls share its 290px width. */
+.color-editor {
+  align-self: flex-end;
+  width: 290px;
+  box-sizing: border-box;
+  overflow: hidden;
+  color: #333;
+  background: rgba(250, 250, 250, .60);
+  border: 1px solid #e3dad1;
+  border-radius: 8px;
+  backdrop-filter: blur(18px);
+}
+.color-editor.open { min-height: 0; }
+.color-editor-header {
+  width: 100%;
+  height: 26px;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 0;
+  color: #8d8781;
+  background: transparent;
+  font: 14px/1 'Geist Sans', sans-serif;
+  text-align: left;
+}
+.color-editor.open .color-editor-header {
+  height: 51px;
+  padding: 0 23px;
+  background: rgba(227, 218, 209, .78);
+}
+.color-editor-title { display: flex; align-items: center; gap: 8px; }
+.color-editor-title svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.color-editor-chevron {
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 5px solid currentColor;
+}
+.color-editor.open .color-editor-chevron {
+  border-top: 0;
+  border-bottom: 5px solid currentColor;
+}
+.color-editor-body { padding: 14px 13px 12px; }
+.color-projects {
+  display: flex;
+  align-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 7px 8px;
+  margin-bottom: 14px;
+}
+.color-project {
+  height: 31px;
+  padding: 0 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(227, 218, 209, .70);
+  border-radius: 6px;
+  color: #333;
+  background: rgba(255, 255, 255, .64);
+  box-shadow: 0 1px 3px rgba(70, 61, 53, .10);
+  font: 14px/1 'Geist Sans', sans-serif;
+  white-space: nowrap;
+}
+.color-project span {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 .5px rgba(0, 0, 0, .06);
+}
+.color-project.active { box-shadow: 0 0 0 1px rgba(227, 218, 209, .75), 0 1px 3px rgba(70, 61, 53, .12); }
+.color-picker-surface {
+  position: relative;
+  height: 277px;
+  padding-top: 10px;
+  box-sizing: border-box;
+  border-radius: 7px;
+  background: rgba(227, 218, 209, .18);
+}
+.color-wheel {
+  position: relative;
+  width: 210px;
+  height: 210px;
+  margin: 0 auto;
+  border-radius: 50%;
+  touch-action: none;
+  background: conic-gradient(from 0deg, #ffeb3b, #ff9d35, #ef3f3f, #f03fa7, #982fe8, #245bea, #35bfea, #62dc91, #ffeb3b);
+  box-shadow: 0 1px 4px rgba(43, 35, 28, .14);
+}
+.color-wheel::before {
+  content: '';
+  position: absolute;
+  inset: 13px;
+  border-radius: 50%;
+  background: rgba(250, 250, 250, .95);
+}
+.color-sv {
+  position: absolute;
+  inset: 20px;
+  overflow: hidden;
+  border-radius: 50%;
+  background-image:
+    linear-gradient(to bottom, transparent, #000),
+    linear-gradient(to right, #fff, transparent);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .05);
+}
+.color-sv-thumb,
+.color-hue-thumb {
+  position: absolute;
+  width: 13px;
+  height: 13px;
+  z-index: 2;
+  border: 1.5px solid #fff;
+  border-radius: 50%;
+  box-sizing: border-box;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .45);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+.color-hue-thumb { width: 18px; height: 18px; background: currentColor; }
+.color-presets {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 17px 16px 0;
+}
+.color-preset {
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 .5px rgba(255, 255, 255, .36);
+}
+
+body[data-skin='electric'] .color-editor {
+  color: #b6e7ff;
+  background: rgba(0, 106, 199, .10);
+  border-color: rgba(255, 255, 255, .40);
+  backdrop-filter: blur(6px);
+  box-shadow: inset 0 0 8px rgba(0, 136, 255, .55);
+}
+body[data-skin='electric'] .color-editor.open { min-height: 0; }
+body[data-skin='electric'] .color-editor-header { color: #88d9ff; }
+body[data-skin='electric'] .color-editor.open .color-editor-header {
+  background: linear-gradient(180deg, rgba(0, 106, 199, .34), rgba(0, 72, 137, .16));
+  box-shadow: inset 0 -1px rgba(0, 136, 255, .34);
+}
+body[data-skin='electric'] .color-project {
+  color: #d8efff;
+  background: rgba(0, 106, 199, .13);
+  border-color: rgba(79, 184, 255, .45);
+  box-shadow: inset 0 0 6px rgba(0, 136, 255, .34), 0 0 3px rgba(0, 136, 255, .24);
+}
+body[data-skin='electric'] .color-project.active {
+  border-color: rgba(113, 204, 255, .70);
+  box-shadow: inset 0 0 8px rgba(0, 136, 255, .54), 0 0 4px rgba(0, 136, 255, .30);
+}
+body[data-skin='electric'] .color-picker-surface {
+  background: rgba(0, 7, 13, .56);
+  border: 1px solid rgba(79, 184, 255, .25);
+}
+body[data-skin='electric'] .color-wheel::before { background: #071019; }
+
+/* Figma calendar frame 2147229930. The blue is cost intensity; geometry and
+   type stay fixed while each skin only changes the surrounding surface. */
+.calendar-popover {
+  position: absolute;
+  left: 22px;
+  top: 64px;
+  z-index: 30;
+  width: 432px;
+  padding: 14px;
+  border: 0.5px solid #e3dad1;
+  border-radius: 6px;
+  background: #fafafa;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.12);
+  backdrop-filter: blur(24px);
+  color: #333;
+  pointer-events: auto;
+  transform: scale(var(--stage-inverse-scale, 1));
+  transform-origin: left top;
+}
+.calendar-head {
+  height: 31px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.calendar-head strong {
+  font-family: 'Nunito', sans-serif;
+  font-size: 16px;
+  line-height: 1.2;
+  font-weight: 600;
+}
+.calendar-month-nav { display: flex; gap: 10px; }
+.calendar-month-nav button {
+  width: 16px;
+  height: 20px;
+  border: 0;
+  background: transparent;
+  color: #333;
+  font: 400 22px/16px inherit;
+}
+.calendar-weekdays,
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 56px);
+  gap: 2px;
+}
+.calendar-weekdays { margin-bottom: 2px; }
+.calendar-weekdays span {
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  line-height: 1.2;
+  font-weight: 400;
+}
+.calendar-day {
+  width: 56px;
+  height: 56px;
+  padding: 4px;
+  border: 0.5px solid transparent;
+  border-radius: 4px;
+  background: rgba(128, 121, 111, 0.055);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  overflow: hidden;
+  color: #000;
+  font-family: 'Nunito', sans-serif;
+  text-align: left;
+}
+.calendar-day:not(.empty) {
+  background: rgba(208, 222, 255, var(--cost-alpha, 0));
+}
+.calendar-day.selected {
+  border-color: #80796f;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+}
+.calendar-day.outside { color: #c7c7c7; }
+.calendar-day.outside.empty { background: rgba(128, 121, 111, 0.035); }
+.calendar-day.empty { color: #c7c7c7; }
+.calendar-day.loading {
+  color: #80796f;
+  background: rgba(128, 121, 111, 0.055);
+}
+.calendar-day.loading .calendar-agents {
+  margin-top: auto;
+  animation: calendar-loading-pulse 900ms ease-in-out infinite alternate;
+}
+@keyframes calendar-loading-pulse {
+  from { opacity: 0.45; }
+  to { opacity: 0.9; }
+}
+.calendar-date { font-size: 12px; line-height: 1.2; letter-spacing: -0.01em; }
+.calendar-agents { margin-top: auto; color: #80796f; font-size: 9px; line-height: 1.2; letter-spacing: -0.01em; white-space: nowrap; }
+.calendar-cost { color: #c49279; font-size: 9px; line-height: 1.2; letter-spacing: -0.01em; white-space: nowrap; }
+body[data-skin='electric'] .calendar-popover {
+  width: 432px;
+  padding: 14px;
+  color: #d8efff;
+  background: rgba(0, 106, 199, .10);
+  border: 1px solid rgba(255, 255, 255, .40);
+  border-radius: 8px;
+  box-shadow:
+    inset 0 0 32px 12px rgba(0, 136, 255, .25),
+    0 5px 12px rgba(0, 0, 0, .12);
+  backdrop-filter: blur(80px);
+}
+body[data-skin='electric'] .calendar-head { height: 31px; }
+body[data-skin='electric'] .calendar-head strong {
+  color: #50c1d0;
+  font-size: 16px;
+  font-weight: 400;
+}
+body[data-skin='electric'] .calendar-month-nav { gap: 10px; }
+body[data-skin='electric'] .calendar-month-nav button {
+  width: 16px;
+  height: 20px;
+  color: #50c1d0;
+  font-size: 22px;
+  line-height: 16px;
+}
+body[data-skin='electric'] .calendar-weekdays,
+body[data-skin='electric'] .calendar-grid {
+  grid-template-columns: repeat(7, 56px);
+  gap: 2px;
+}
+body[data-skin='electric'] .calendar-weekdays { margin-bottom: 2px; }
+body[data-skin='electric'] .calendar-weekdays span {
+  height: 20px;
+  color: #50c1d0;
+  font-size: 10px;
+}
+body[data-skin='electric'] .calendar-day {
+  width: 56px;
+  height: 56px;
+  padding: 4px;
+  gap: 2px;
+  border-radius: 4px;
+  border-width: 1px;
+}
+body[data-skin='electric'] .calendar-month-nav button,
+body[data-skin='electric'] .calendar-day { color: #d8efff; }
+body[data-skin='electric'] .calendar-day:not(.empty) {
+  background: rgba(var(--electric-cost-rgb, 0, 106, 199), calc(.10 + var(--cost-alpha, 0) * .48));
+}
+body[data-skin='electric'] .calendar-day.empty,
+body[data-skin='electric'] .calendar-day.outside { color: #416079; }
+body[data-skin='electric'] .calendar-day.loading {
+  color: rgba(216, 239, 255, .70);
+  background: rgba(0, 106, 199, .10);
+}
+body[data-skin='electric'] .calendar-day.outside.empty { background: rgba(0, 106, 199, .055); }
+body[data-skin='electric'] .calendar-day.selected {
+  border-color: rgba(255, 255, 255, .40);
+  box-shadow: inset 0 0 8px rgba(80, 193, 208, .25);
+}
+body[data-skin='electric'] .calendar-date { font-size: 12px; }
+body[data-skin='electric'] .calendar-agents,
+body[data-skin='electric'] .calendar-cost {
+  font-size: 9px;
+  line-height: 1.2;
+}
+body[data-skin='electric'] .calendar-agents { color: rgba(216, 239, 255, .70); }
+body[data-skin='electric'] .calendar-cost { color: rgba(216, 239, 255, .82); }
+
+@media (prefers-reduced-motion: reduce) {
+  .calendar-day.loading .calendar-agents { animation: none; opacity: 0.7; }
+}
+
+
+/* the hatch stepper sits on its own indented legend row */
+.legend-row.hatch-cycle { gap: 6px; padding-left: 24px; }
+
+/* code panel bar chart (Data-vis frame 863:43693): teal above / red below */
+body { --cp-pos: #09b09d; --cp-neg: #ff7878; }
+body[data-skin='electric'] { --cp-pos: #02ecc9; --cp-neg: #ff4d4d; }
+.cp-stop-pos { stop-color: var(--cp-pos); }
+.cp-stop-neg { stop-color: var(--cp-neg); }
+.cp-delta { display: flex; gap: 10px; }
+
+/* token panel on a pre-scanner day: a quiet note instead of invented numbers */
+.tp-empty { padding: 18px 4px 10px; }
