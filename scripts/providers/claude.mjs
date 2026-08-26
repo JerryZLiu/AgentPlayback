@@ -12,6 +12,8 @@
 import { readdirSync, readFileSync, statSync, existsSync } from 'node:fs'
 import { basename, join } from 'node:path'
 import { localT, planRecords, loadNeeded } from '../lib/fastscan.mjs'
+import { jsonStr } from '../lib/scan-core.mjs'
+import { claudeProjectRoots, splitPath } from '../lib/roots.mjs'
 
 // anchored so embedded timestamps inside message/tool content never match:
 // Claude entries carry `"uuid":"…","timestamp":"…"` at the top level
@@ -75,7 +77,7 @@ export function record(path) {
     pos = nl + 1
     const ts = TS_RE.exec(line)
     const t = ts ? localT(ts[1]) : null
-    if (!cwd) { const c = /"cwd":"([^"]+)"/.exec(line); if (c) cwd = c[1] }
+    if (!cwd) { const c = /"cwd":"([^"]+)"/.exec(line); if (c) cwd = jsonStr(c[1]) }
     // Claude Code writes its generated session title as an ai-title entry
     if (line.includes('"type":"ai-title"')) {
       const m = /"aiTitle":"((?:[^"\\]|\\.)*)"/.exec(line)
@@ -188,10 +190,10 @@ export default {
   // files, and report which days those changes touch (see fastscan.mjs)
   async plan(ctx) {
     const { HOME, dayKeys } = ctx
-    const root = join(HOME, '.claude', 'projects')
     const files = []
-    if (existsSync(root)) {
-      const windowStart = new Date(`${dayKeys[0]}T00:00:00`)
+    const windowStart = new Date(`${dayKeys[0]}T00:00:00`)
+    // CLAUDE_CONFIG_DIR / ~/.config/claude / ~/.claude, like ccusage
+    for (const root of claudeProjectRoots(HOME)) {
       for (const dir of readdirSync(root)) {
         const dirPath = join(root, dir)
         let names
@@ -225,7 +227,7 @@ export default {
       // conversations the owner had — counted in totals, hidden from the dial
       const sub = f.rel.includes('subagents')
       const id = basename(f.rel).replace(/\.jsonl$/, '')
-      const parentId = sub ? f.rel.split('/')[0] : null
+      const parentId = sub ? splitPath(f.rel)[0] : null
       if (byDay.size) sessions.push({ sub, id, parentId, cwd: rec.cwd ?? f.dir.replace(/-/g, '/'), byDay, waitsByDay: waits.byDay, codeByDay: code.byDay, tokByDay: tok.byDay, turnsByDay: turns.byDay, models: [...tok.models], title: rec.title, summary: rec.firstUser, file: f.path })
     }
     return sessions
