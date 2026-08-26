@@ -7,6 +7,8 @@ import { createReadStream } from 'node:fs'
 import { createInterface } from 'node:readline'
 
 export const CWD_RE = /"cwd":"([^"]+)"/
+// the captured group is still JSON-escaped (Windows paths carry \\), decode it
+export const jsonStr = (s) => { try { return JSON.parse(`"${s}"`) } catch { return s } }
 
 // a "blocked" wait: user sends a follow-up and the agent grinds on it while
 // the user sits there. Under 5 min is ordinary chat cadence; over an hour
