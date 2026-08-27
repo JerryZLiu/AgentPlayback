@@ -24,6 +24,8 @@
 import { readdirSync, readFileSync, statSync, existsSync } from 'node:fs'
 import { join } from 'node:path'
 import { localT, planRecords, loadNeeded } from '../lib/fastscan.mjs'
+import { jsonStr } from '../lib/scan-core.mjs'
+import { codexHomes, splitPath } from '../lib/roots.mjs'
 
 // anchored so embedded timestamps inside message/tool content never match:
 // Codex rollout lines begin with `{"timestamp":"…"`.
@@ -74,16 +76,18 @@ function resolveAlias(model, ts) {
 /** Codex keeps its generated session titles out of the rollouts, in
  *  ~/.codex/session_index.jsonl — {"id","thread_name","updated_at"} lines
  *  keyed by the uuid that ends the rollout filename (later lines win). */
-async function titleIndex(HOME, scanFile) {
+async function titleIndex(homes, scanFile) {
   const titles = new Map()
-  const p = join(HOME, '.codex', 'session_index.jsonl')
-  if (!existsSync(p)) return titles
-  await scanFile(p, (line) => {
-    try {
-      const o = JSON.parse(line)
-      if (o?.id && typeof o.thread_name === 'string' && o.thread_name.trim()) titles.set(o.id, o.thread_name.trim())
-    } catch {}
-  })
+  for (const home of homes) {
+    const p = join(home, 'session_index.jsonl')
+    if (!existsSync(p)) continue
+    await scanFile(p, (line) => {
+      try {
+        const o = JSON.parse(line)
+        if (o?.id && typeof o.thread_name === 'string' && o.thread_name.trim()) titles.set(o.id, o.thread_name.trim())
+      } catch {}
+    })
+  }
   return titles
 }
 
@@ -204,7 +208,7 @@ export function record(path) {
 
     const ts = TS_RE.exec(pre)
     const t = ts ? localT(ts[1]) : null
-    if (!cwd) { const c = /"cwd":"([^"]+)"/.exec(full()); if (c) cwd = c[1] }
+    if (!cwd) { const c = /"cwd":"([^"]+)"/.exec(full()); if (c) cwd = jsonStr(c[1]) }
     // Codex marks human turns with user_message events; everything else
     // timestamped in a rollout is the agent working
     if (isUserMsg) {
@@ -384,7 +388,9 @@ export default {
   // files, and report which days those changes touch (see fastscan.mjs)
   async plan(ctx) {
     const { HOME, dayKeys, scanFile } = ctx
-    const titles = await titleIndex(HOME, scanFile)
+    // CODEX_HOME (comma-separated) or ~/.codex, like ccusage
+    const homes = codexHomes(HOME)
+    const titles = await titleIndex(homes, scanFile)
     const windowStartMs = new Date(`${dayKeys[0]}T00:00:00`).getTime()
     const daySet = new Set(dayKeys)
     const files = []
@@ -402,7 +408,14 @@ export default {
     // rollout elsewhere still being written inside the window: long-lived
     // sessions live in the day dir they STARTED in, which can predate the
     // window, and archived_sessions is outside the date tree entirely
-    const sessRoot = join(HOME, '.codex', 'sessions')
+    const extras = []
+    const noteAll = (path, name, st) => {
+      const id = UUID_RE.exec(name)?.[1]
+      if (id && !allByUuid.has(id)) allByUuid.set(id, path)
+      if (st.mtimeMs >= windowStartMs) extras.push({ path, name, st })
+    }
+    for (const home of homes) {
+    const sessRoot = join(home, 'sessions')
     for (const key of dayKeys) {
       const [y, mo, d] = key.split('-')
       const dir = join(sessRoot, y, mo, d)
@@ -411,12 +424,6 @@ export default {
         const path = join(dir, f)
         push(path, f, statSync(path))
       }
-    }
-    const extras = []
-    const noteAll = (path, name, st) => {
-      const id = UUID_RE.exec(name)?.[1]
-      if (id && !allByUuid.has(id)) allByUuid.set(id, path)
-      if (st.mtimeMs >= windowStartMs) extras.push({ path, name, st })
     }
     if (existsSync(sessRoot)) {
       for (const y of readdirSync(sessRoot)) {
@@ -443,14 +450,15 @@ export default {
         }
       }
     }
-    const archRoot = join(HOME, '.codex', 'archived_sessions')
+    const archRoot = join(home, 'archived_sessions')
     if (existsSync(archRoot)) {
       for (const f of readdirSync(archRoot, { recursive: true })) {
         if (!String(f).endsWith('.jsonl')) continue
         const path = join(archRoot, String(f))
-        try { noteAll(path, String(f).split('/').pop(), statSync(path)) } catch {}
+        try { noteAll(path, splitPath(f).pop(), statSync(path)) } catch {}
       }
     }
+    } // homes
     extras.sort((a, b) => a.path < b.path ? -1 : a.path > b.path ? 1 : 0)
     for (const e of extras) push(e.path, e.name, e.st)
     const p = await planRecords('codex', RECORD_V, files, record, import.meta.url, { prune: ctx.prune !== false })
