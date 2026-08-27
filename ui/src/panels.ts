@@ -80,18 +80,18 @@ function segPath(cx: number, cy: number, r: number, w: number, a0: number, a1: n
 
 function donutSVG(
   cx: number, cy: number, r: number, w: number, label: string,
-  segs: { color: string; frac: number }[],
+  segs: { color: string; frac: number; category: string }[],
   gradientPrefix?: string,
 ): string {
   const defs = gradientPrefix ? `<defs>${segs.map((s, i) => `
     <radialGradient id="${gradientPrefix}-${i}" gradientUnits="userSpaceOnUse" cx="${cx}" cy="${cy}" r="${r + w / 2}">
-      <stop offset="7%" stop-color="${s.color}" stop-opacity="0.20"/>
-      <stop offset="100%" stop-color="${s.color}" stop-opacity="1"/>
+      <stop data-token-category="${esc(s.category)}" data-color-role="stop" offset="7%" stop-color="${s.color}" stop-opacity="0.20"/>
+      <stop data-token-category="${esc(s.category)}" data-color-role="stop" offset="100%" stop-color="${s.color}" stop-opacity="1"/>
     </radialGradient>`).join('')}</defs>` : ''
   const paint = (s: { color: string }, i: number) =>
     gradientPrefix ? `url(#${gradientPrefix}-${i})` : s.color
   if (segs.length === 1) {
-    return `${defs}<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${paint(segs[0], 0)}" stroke-width="${w}"/>`
+    return `${defs}<circle data-token-category="${esc(segs[0].category)}" data-color-role="${gradientPrefix ? 'gradient-stroke' : 'stroke'}" cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${paint(segs[0], 0)}" stroke-width="${w}"/>`
       + `<text x="${cx}" y="${cy}" class="donut-label" text-anchor="middle" dominant-baseline="middle">${esc(label)}</text>`
   }
   const GAP = 4 / r // ~4px seam whatever the radius
@@ -101,9 +101,23 @@ function donutSVG(
     const span = Math.max(s.frac * usable, 0.05)
     const d = segPath(cx, cy, r, w, a, a + span, gradientPrefix ? 1 : w * 0.16)
     a += span + GAP
-    return `<path d="${d}" fill="${paint(s, i)}"${gradientPrefix ? ` stroke="${s.color}" stroke-opacity="0.5" stroke-width="0.5"` : ''}/>`
+    return `<path data-token-category="${esc(s.category)}" data-color-role="${gradientPrefix ? 'gradient-stroke' : 'fill'}" d="${d}" fill="${paint(s, i)}"${gradientPrefix ? ` stroke="${s.color}" stroke-opacity="0.5" stroke-width="0.5"` : ''}/>`
   }).join('')
   return `${defs}${paths}<text x="${cx}" y="${cy}" class="donut-label" text-anchor="middle" dominant-baseline="middle">${esc(label)}</text>`
+}
+
+/** Repaint the already-mounted token charts without rebuilding the overlay.
+ * This keeps an active color-wheel drag alive while its corresponding donut
+ * segments and legend swatch update on every pointer move. */
+export function recolorTokenPanel(root: ParentNode, category: string, color: string) {
+  root.querySelectorAll<HTMLElement | SVGElement>('[data-token-category]').forEach((el) => {
+    if (el.getAttribute('data-token-category') !== category) return
+    const role = el.getAttribute('data-color-role')
+    if (role === 'stop') el.setAttribute('stop-color', color)
+    else if (role === 'fill') el.setAttribute('fill', color)
+    else if (role === 'stroke' || role === 'gradient-stroke') el.setAttribute('stroke', color)
+    else if (role === 'swatch') el.style.background = color
+  })
 }
 
 // ---- token usage panel ---------------------------------------------------------
@@ -217,13 +231,13 @@ export function buildTokenPanel(day: DayData, skin: SkinLike): HTMLElement {
     <div class="tp-cap tp-cap-mid">Token usage${costs ? ' and cost' : ''} by category</div>
     <svg class="tp-donuts" viewBox="0 0 258 168">
       ${costs
-        ? donutSVG(usageDonut.cx, usageDonut.cy, usageDonut.r, usageDonut.w, 'Usage', cats.map((c) => ({ color: c.color, frac: c.tok / tokSum })), electric ? 'electric-usage' : undefined)
-          + donutSVG(costDonut.cx, costDonut.cy, costDonut.r, costDonut.w, 'Cost', cats.map((c) => ({ color: c.color, frac: c.usd / usdSum })), electric ? 'electric-cost' : undefined)
-        : donutSVG(usageDonut.cx, usageDonut.cy, usageDonut.r, usageDonut.w, 'Usage', cats.map((c) => ({ color: c.color, frac: c.tok / tokSum })), electric ? 'electric-usage' : undefined)}
+        ? donutSVG(usageDonut.cx, usageDonut.cy, usageDonut.r, usageDonut.w, 'Usage', cats.map((c) => ({ color: c.color, frac: c.tok / tokSum, category: c.cat })), electric ? 'electric-usage' : undefined)
+          + donutSVG(costDonut.cx, costDonut.cy, costDonut.r, costDonut.w, 'Cost', cats.map((c) => ({ color: c.color, frac: c.usd / usdSum, category: c.cat })), electric ? 'electric-cost' : undefined)
+        : donutSVG(usageDonut.cx, usageDonut.cy, usageDonut.r, usageDonut.w, 'Usage', cats.map((c) => ({ color: c.color, frac: c.tok / tokSum, category: c.cat })), electric ? 'electric-usage' : undefined)}
     </svg>
     <div class="tp-legend">${cats.map((c) => `
       <div class="tp-key">
-        <span class="tp-swatch" style="background:${c.color}"></span>
+        <span class="tp-swatch" data-token-category="${esc(c.cat)}" data-color-role="swatch" style="background:${c.color}"></span>
         <div class="tp-key-body">
           <div class="tp-key-name">${esc(catLabel(c.cat))}</div>
           <div class="tp-key-tok">${fmtTok(c.tok)}</div>
