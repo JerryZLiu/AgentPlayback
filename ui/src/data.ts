@@ -173,6 +173,7 @@ export interface TokenStats {
 }
 
 export interface DayData {
+  stats?: { peakConcurrent?: number; peakConcurrentIncludingSubagents?: number }
   threads: Thread[]
   donut: DonutSegment[]
   labels: Partial<Record<Category, string>>
@@ -249,6 +250,7 @@ export async function loadDay(date?: string): Promise<DayData | null> {
       donut: d.donut ?? [],
       labels: { ...d.labels },
       meta: { ...EMPTY_META, ...d.meta },
+      stats: d.stats,
       code: d.code,
       codeTotals: d.codeTotals,
       tokens: d.tokens,
@@ -269,7 +271,12 @@ export interface DayIndex {
   /** known dates whose generated day file does not exist yet */
   loading?: string[]
   /** per-day calendar stats written by the scanner */
-  summary?: Record<string, { agents: number; cost: number }>
+  summary?: Record<string, {
+    agents: number
+    cost: number
+    peakConcurrent?: number
+    peakConcurrentIncludingSubagents?: number
+  }>
 }
 
 export async function loadDayIndex(): Promise<DayIndex | null> {
