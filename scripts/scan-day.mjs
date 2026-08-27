@@ -10,11 +10,12 @@
 
 import { writeFileSync, readFileSync, mkdirSync, statSync, readdirSync, existsSync, renameSync } from 'node:fs'
 import { join, dirname } from 'node:path'
-import { homedir } from 'node:os'
+import { homedir, tmpdir } from 'node:os'
 import { fileURLToPath } from 'node:url'
 import { createHash } from 'node:crypto'
 import { makeDayWindow, scanFile, waitTracker, turnTracker, codeTracker, tokenTracker, CWD_RE } from './lib/scan-core.mjs'
 import { CACHE_ROOT } from './lib/fastscan.mjs'
+import { splitPath } from './lib/roots.mjs'
 import { PROVIDERS, providerById } from './providers/index.mjs'
 
 const HOME = homedir()
@@ -67,6 +68,8 @@ function daySummary(day) {
   const cost = day.tokens?.cost
   return {
     agents: day.threads.filter((t) => !t.dotted).length,
+    peakConcurrent: day.stats?.peakConcurrent ?? 0,
+    peakConcurrentIncludingSubagents: day.stats?.peakConcurrentIncludingSubagents ?? day.stats?.peakConcurrent ?? 0,
     cost: cost ? +((cost.openai ?? 0) + (cost.claude ?? 0)).toFixed(2) : 0,
   }
 }
@@ -148,10 +151,15 @@ function costOf(byModel, providerId) {
 // ---- shape one day ---------------------------------------------------------
 // cwds that aren't a real project: home/root/temp — headless `claude -p`
 // runs from scripts, LaunchAgents, cron etc. usually land here
-const JUNK_CWDS = new Set([HOME, '/', '/tmp', '/private/tmp', '/var/tmp', '/private/var/tmp',
+const JUNK_CWDS = new Set([HOME, '/', '/tmp', '/private/tmp', '/var/tmp', '/private/var/tmp', tmpdir(),
   // bare home folders are a launch location, not a project
   ...['Documents', 'Desktop', 'Downloads'].map((d) => join(HOME, d))])
-const TEMP_RE = /^(\/private)?\/var\/folders\//
+// Windows paths are case-insensitive and may carry a trailing separator
+const JUNK_CWDS_WIN = new Set([...JUNK_CWDS].map((p) => p.toLowerCase()))
+const isJunkCwd = (cwd) => JUNK_CWDS.has(cwd)
+  || (process.platform === 'win32' && JUNK_CWDS_WIN.has(cwd.replace(/[\\/]+$/, '').toLowerCase()))
+// macOS per-user temp, Windows %TEMP% / C:\Windows\Temp, bare drive roots
+const TEMP_RE = /^(\/private)?\/var\/folders\/|^[a-z]:[\\/](windows[\\/]temp|users[\\/][^\\/]+[\\/]appdata[\\/]local[\\/]temp)([\\/]|$)|^[a-z]:[\\/]?$/i
 
 /** honest folder name: the cwd's last path segment; junk cwds → Other */
 // segments that aren't a real project name: session UUIDs and URL slugs
@@ -159,8 +167,8 @@ const TEMP_RE = /^(\/private)?\/var\/folders\//
 const UUID_RE = /^[0-9a-f]{8}(-[0-9a-f]{4}){3}/
 const URLISH_RE = /^(https?|www)|-com\b|\.com/
 function projectName(cwd) {
-  if (JUNK_CWDS.has(cwd) || TEMP_RE.test(cwd)) return 'Other'
-  const parts = cwd.split('/').filter(Boolean)
+  if (isJunkCwd(cwd) || TEMP_RE.test(cwd)) return 'Other'
+  const parts = splitPath(cwd).filter(Boolean)
   let seg = parts[parts.length - 1] || 'Other'
   // Codex scratch dirs (~/Documents/Codex/<date>/<prompt-stub>): the leaf is
   // the first words of the prompt ("do", "loo", "can-u"), not a project
@@ -186,9 +194,46 @@ function fmtClock(h) {
   return `${hh}:${String(mm).padStart(2, '0')} ${ap}`
 }
 
+/** Activity stretches for one normalized session on one day. This is shared
+ *  by the visible top-level arcs and the all-agent concurrency record so both
+ *  metrics use exactly the same gap and minimum-duration rules. */
+function activitySegments(session, key) {
+  const ts = [...(session.byDay.get(key) ?? [])].sort((a, b) => a - b)
+  if (!ts.length) return []
+  const segments = []
+  let start = ts[0]
+  let previous = ts[0]
+  const flush = (end) => {
+    if (end - start >= MIN_BLOCK_MIN) segments.push([start, Math.max(end, start + MIN_BLOCK_MIN)])
+  }
+  for (const timestamp of ts.slice(1)) {
+    if (timestamp - previous > GAP_MIN) { flush(previous); start = timestamp }
+    previous = timestamp
+  }
+  flush(previous)
+  return segments
+}
+
+function peakConcurrentFor(segments) {
+  const events = segments.flatMap(([start, end]) => [[start, 1], [end, -1]])
+  events.sort((a, b) => a[0] - b[0] || a[1] - b[1])
+  let active = 0
+  let peak = 0
+  for (const [, delta] of events) {
+    active += delta
+    peak = Math.max(peak, active)
+  }
+  return peak
+}
+
 function shapeDay(key, sessions) {
   const isToday = key === actualTodayKey
   const providerIds = PROVIDERS.map((p) => p.id)
+  const segmentsBySession = new Map(sessions.map((session) => [session, activitySegments(session, key)]))
+  // This record intentionally includes subagents even though the rest of the
+  // app omits their arcs. Each parent and child is one independently active
+  // agent during its own normalized activity stretches.
+  const peakConcurrentIncludingSubagents = peakConcurrentFor([...segmentsBySession.values()].flat())
   // subagent count per parent session, for the parent's tooltip
   const subsOf = new Map()
   for (const s of sessions) {
@@ -198,21 +243,8 @@ function shapeDay(key, sessions) {
   const blocks = []
   for (const s of sessions) {
     if (s.sub) continue // subagents: no arc, no waits, no turns — totals only
-    const ts = [...(s.byDay.get(key) ?? [])].sort((a, b) => a - b)
-    if (!ts.length) continue
-    // activity segments: contiguous minute clusters split at GAP_MIN silences,
-    // sub-minimum clusters dropped (their tokens still land in day totals)
-    const segs = []
-    let start = ts[0]
-    let prev = ts[0]
-    const flushSeg = (end) => {
-      if (end - start >= MIN_BLOCK_MIN) segs.push([start, Math.max(end, start + MIN_BLOCK_MIN)])
-    }
-    for (const t of ts.slice(1)) {
-      if (t - prev > GAP_MIN) { flushSeg(prev); start = t }
-      prev = t
-    }
-    flushSeg(prev)
+    const segs = segmentsBySession.get(s)
+    if (!segs?.length) continue
     // one thread per run of segments whose gaps stay under JOIN_SESSION_MIN —
     // its duration is the SUM of segments, never the wall-clock span, so a
     // session poked at 2pm and 5pm doesn't book three hours of agent time
@@ -384,6 +416,8 @@ function shapeDay(key, sessions) {
     }
   })
 
+  const peakConcurrent = peakConcurrentFor(blocks.flatMap((block) => block.segments))
+
   const donut = SLOTS.filter((s) => labels[s]).map((slot) => ({
     category: slot,
     hours: +[...totals.entries()].filter(([n]) => slotOf.get(n) === slot)
@@ -532,6 +566,7 @@ function shapeDay(key, sessions) {
   const allUnpriced = providerIds.reduce((a, p) => a + costOf(dayAgg[p], p).unpricedTok, 0)
 
   return {
+    stats: { peakConcurrent, peakConcurrentIncludingSubagents },
     generatedAt: now.toISOString(),
     date: key,
     providers: PROVIDERS.map((p) => ({ id: p.id, name: p.name })),
