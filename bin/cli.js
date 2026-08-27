@@ -10,6 +10,7 @@ import { createReadStream, existsSync, mkdirSync, statSync, readdirSync, readFil
 import { homedir } from 'node:os'
 import { dirname, extname, join, normalize, resolve, sep } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { claudeProjectRoots, codexHomes } from '../scripts/lib/roots.mjs'
 
 const ROOT = dirname(dirname(fileURLToPath(import.meta.url)))
 const DIST = join(ROOT, 'ui', 'dist')
@@ -78,8 +79,8 @@ function sequentialDates() {
   let earliest = today
   const note = (key) => { if (/^\d{4}-\d{2}-\d{2}$/.test(key) && key < earliest) earliest = key }
 
-  const codexRoot = join(homedir(), '.codex', 'sessions')
-  if (existsSync(codexRoot)) {
+  for (const codexRoot of codexHomes().map((h) => join(h, 'sessions'))) {
+    if (!existsSync(codexRoot)) continue
     for (const year of readdirSync(codexRoot)) {
       const yearDir = join(codexRoot, year)
       let months = []
@@ -93,8 +94,7 @@ function sequentialDates() {
     }
   }
 
-  const claudeRoot = join(homedir(), '.claude', 'projects')
-  if (existsSync(claudeRoot)) {
+  for (const claudeRoot of claudeProjectRoots()) {
     let files = []
     try { files = readdirSync(claudeRoot, { recursive: true }) } catch {}
     for (const rel of files) {
@@ -150,6 +150,8 @@ function finalizeSequentialIndex(dates, failed) {
     summary[key] = {
       agents: day.threads.filter((thread) => !thread.dotted).length,
       cost: cost ? +((cost.openai ?? 0) + (cost.claude ?? 0)).toFixed(2) : 0,
+      peakConcurrent: day.stats?.peakConcurrent ?? 0,
+      peakConcurrentIncludingSubagents: day.stats?.peakConcurrentIncludingSubagents ?? day.stats?.peakConcurrent ?? 0,
     }
     if (ascending.indexOf(key) < ascending.length - 30) continue
     const rows = new Map((day.tokens?.byCategory ?? []).map((row) => [row.category, row]))
@@ -313,7 +315,8 @@ function openBrowser(url) {
     : process.platform === 'win32' ? ['cmd', ['/c', 'start', '""', url.replace(/&/g, '^&')]]
     : ['xdg-open', [url]]
   try {
-    const child = spawn(cmd[0], cmd[1], { stdio: 'ignore', detached: true })
+    // verbatim on Windows so `start ""` keeps its empty-title argument intact
+    const child = spawn(cmd[0], cmd[1], { stdio: 'ignore', detached: true, windowsHide: true, windowsVerbatimArguments: process.platform === 'win32' })
     child.on('error', () => {}) // no opener on this box — the URL is printed either way
     child.unref()
   } catch {}
