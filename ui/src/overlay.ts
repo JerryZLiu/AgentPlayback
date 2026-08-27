@@ -9,7 +9,7 @@ import { MOCK_DAY, PAPER_MOCK_DONUT, threadDur, type DayData, type Thread } from
 import { SKINS, type SkinId } from './skins'
 import { skinFor, waveHorizonFor } from './palette'
 import { variantsFor } from './vinylvariants'
-import { buildCodePanel, buildTokenPanel, panelShell } from './panels'
+import { buildCodePanel, buildTokenPanel, panelShell, recolorTokenPanel } from './panels'
 
 /** the delay-hatch treatments the arc shader knows (uHatchStyle index) —
  *  all static by decree */
@@ -49,6 +49,10 @@ export interface OverlayHooks {
   skinVariant?: string
   onSkinVariant?: (id: string) => void
   onNav?: (delta: number) => void
+  nextDayDisabled?: boolean
+  onShare?: () => void
+  shareReady?: boolean
+  shareSeen?: boolean
   grooves?: GrooveControls
   /** hour labels clear this radius — the seismograph's outer extent, so the
    *  clock ring can never collide with the whisker ticks */
@@ -249,6 +253,7 @@ function colorEditorEl(day: DayData, activeSkin: SkinId, skin: ReturnType<typeof
     paintControls()
     editor.querySelector<HTMLButtonElement>('.color-project.active span')!.style.background = color
     hooks.colors!.onChange(selectedColorProject, color)
+    recolorTokenPanel(editor.closest('#overlay') ?? document, String(selected[0]), color)
   }
   paintControls()
   editor.querySelectorAll<HTMLButtonElement>('.color-project').forEach((button) => {
@@ -627,7 +632,11 @@ export function buildOverlay(
   })
   const [prevBtn, nextBtn] = header.querySelectorAll<HTMLButtonElement>('.date-nav button')
   prevBtn?.addEventListener('click', () => hooks.onNav?.(-1))
-  nextBtn?.addEventListener('click', () => hooks.onNav?.(1))
+  if (nextBtn) {
+    nextBtn.disabled = hooks.nextDayDisabled === true
+    nextBtn.classList.toggle('clickable', !nextBtn.disabled)
+    nextBtn.addEventListener('click', () => hooks.onNav?.(1))
+  }
   if (delays) {
     const d = delays
     const tog = header.querySelector<HTMLElement>('.delay-toggle')!
@@ -639,6 +648,23 @@ export function buildOverlay(
     overlay.appendChild(buildPlaybackBrand())
     overlay.append(buildSummaryPanel(day), buildCodePanel(day))
   }
+  const shareButton = document.createElement('button')
+  const ready = hooks.shareReady === true
+  const seen = hooks.shareSeen === true
+  const readinessClass = ready ? ` is-ready clickable ${seen ? 'is-seen' : 'is-glowing'}` : ' is-disabled'
+  shareButton.className = `share-trigger${readinessClass}`
+  shareButton.disabled = !ready
+  const shareLabel = activeSkin === 'electric' ? 'Agent wrapped' : 'Agents Wrapped'
+  const shareAsset = activeSkin === 'electric'
+    ? '/assets/agents-wrapped-ticket-electric-4x.png'
+    : '/assets/agents-wrapped-ticket-4x.png'
+  shareButton.innerHTML = `<img class="wrapped-ticket" src="${shareAsset}" alt="" aria-hidden="true" /><span>${shareLabel}</span>`
+  shareButton.addEventListener('click', () => {
+    shareButton.classList.remove('is-glowing')
+    shareButton.classList.add('is-seen')
+    hooks.onShare?.()
+  })
+  overlay.appendChild(shareButton)
   overlay.appendChild(buildTokenPanel(day, skin))
   // ---- groove controls: pack toggle + spacing slider (real days only).
   // Handlers update their own DOM and rebuild the scene; the overlay itself
