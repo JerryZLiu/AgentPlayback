@@ -1,0 +1,10 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'>
+<defs><linearGradient id='g0' gradientUnits='userSpaceOnUse' x1='9.34' y1='1.67' x2='10.00' y2='14.15'><stop offset='0' stop-color='#2e3694'/><stop offset='0.3' stop-color='#4652e0'/><stop offset='0.6' stop-color='#4f5dff'/><stop offset='1' stop-color='#8791ff'/></linearGradient><linearGradient id='g1' gradientUnits='userSpaceOnUse' x1='11.03' y1='12.17' x2='4.83' y2='3.94'><stop offset='0' stop-color='#473594'/><stop offset='0.3' stop-color='#6b51e0'/><stop offset='0.6' stop-color='#7a5cff'/><stop offset='1' stop-color='#a590ff'/></linearGradient><linearGradient id='g2' gradientUnits='userSpaceOnUse' x1='4.81' y1='5.85' x2='11.03' y2='10.37'><stop offset='0' stop-color='#604094'/><stop offset='0.3' stop-color='#9161e0'/><stop offset='0.6' stop-color='#a56eff'/><stop offset='1' stop-color='#c29cff'/></linearGradient><linearGradient id='g3' gradientUnits='userSpaceOnUse' x1='10.38' y1='8.87' x2='5.93' y2='9.45'><stop offset='0' stop-color='#94592d'/><stop offset='0.3' stop-color='#e08844'/><stop offset='0.6' stop-color='#ff9a4d'/><stop offset='1' stop-color='#ffba86'/></linearGradient></defs>
+<circle cx='8' cy='8' r='7.8' fill='#121214'/>
+<path d='M 9.345 1.673 A 6.469 6.469 0 0 1 9.999 14.152' fill='none' stroke='url(#g0)' stroke-width='1.250' stroke-linecap='round'/>
+<path d='M 11.031 12.171 A 5.156 5.156 0 0 1 4.825 3.937' fill='none' stroke='url(#g1)' stroke-width='1.250' stroke-linecap='round'/>
+<path d='M 4.813 5.851 A 3.844 3.844 0 1 1 11.029 10.366' fill='none' stroke='url(#g2)' stroke-width='1.250' stroke-linecap='round'/>
+<path d='M 10.379 8.866 A 2.531 2.531 0 0 1 5.927 9.452' fill='none' stroke='url(#g3)' stroke-width='1.250' stroke-linecap='round'/>
+<circle cx='8' cy='8' r='1' fill='#f0ebe3'/>
+<circle cx='8' cy='8' r='0.31' fill='#121214'/>
+</svg>
