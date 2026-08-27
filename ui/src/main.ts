@@ -12,6 +12,7 @@ import { setProjectColorOrder, setProjectColorOverride, setProjectColorOverrides
 import { setVariant, variantId } from './vinylvariants'
 import { buildOverlay, fmtClock, refreshOpenCalendar, type CalendarDaySummary } from './overlay'
 import { setGitHubStarPromptEligible } from './star-prompt'
+import { openShareDialog } from './share'
 
 const stage = document.getElementById('stage')!
 const canvas = document.getElementById('gl') as HTMLCanvasElement
@@ -42,7 +43,7 @@ const params = new URLSearchParams(location.search)
 localStorage.removeItem('dayflow-rev')
 
 let skinId = (params.get('skin') ?? localStorage.getItem('dayflow-skin') ?? '') as SkinId
-if (!SKINS[skinId]) skinId = 'paper'
+if (!SKINS[skinId]) skinId = 'vinyl'
 document.body.dataset.skin = skinId
 
 // Pressing is the shipped Vinyl surface; URL and remembered selections can
@@ -63,6 +64,7 @@ let introIdx = Math.max(INTROS.indexOf(introPref as IntroName), 0)
 // ?look= pins, localStorage persists. (The key keeps its historical name so
 // saved preferences survive.)
 const LOOK_KEY = 'dayflow-look-v2'
+const WRAPPED_GLOW_SESSION_KEY = 'agentplayback-wrapped-glow-shown'
 const lookPref = params.get('look') ?? localStorage.getItem(LOOK_KEY) ?? 'classic'
 let look: Look = lookPref === 'classic' ? 'classic' : 'bold'
 setLook(look)
@@ -487,6 +489,19 @@ function setSpacing(px: number) {
 }
 
 function rebuildOverlay() {
+  const wrappedDate = selectedDateKey()
+  const wrappedReady = Boolean(
+    dayIndex
+    && !dayIndex.partial
+    && !dayIndex.loading?.includes(wrappedDate)
+    && DAY.threads.some((thread) => !thread.dotted),
+  )
+  const wrappedSeenKey = `agentplayback-wrapped-seen:${wrappedDate}`
+  const wrappedSeen = localStorage.getItem(wrappedSeenKey) === '1'
+  const wrappedShouldGlow = wrappedReady
+    && !wrappedSeen
+    && sessionStorage.getItem(WRAPPED_GLOW_SESSION_KEY) !== '1'
+  if (wrappedShouldGlow) sessionStorage.setItem(WRAPPED_GLOW_SESSION_KEY, '1')
   buildOverlay(overlay, callouts, arcs, DAY, skinId, {
     onSkin: setSkin,
     skinVariant: variantId(skinId),
@@ -496,6 +511,17 @@ function rebuildOverlay() {
       setSkin(skinId)
     },
     onNav: gotoDay,
+    nextDayDisabled: selectedDateKey() === dayIndex?.today,
+    onShare: () => {
+      localStorage.setItem(wrappedSeenKey, '1')
+      void openShareDialog({
+        day: DAY,
+        dayIndex,
+        selectedDate: selectedDateKey(),
+      })
+    },
+    shareReady: wrappedReady,
+    shareSeen: wrappedSeen || !wrappedShouldGlow,
     calendar: dayIndex ? {
       selectedDate: selectedDateKey(),
       days: calendarDays,
@@ -561,6 +587,12 @@ function rebuildOverlay() {
   })
 }
 rebuildOverlay()
+
+if (params.get('share') === '1') {
+  requestAnimationFrame(() => {
+    overlay.querySelector<HTMLButtonElement>('.share-trigger')?.click()
+  })
+}
 
 // ---- intro sequences -------------------------------------------------------
 // Six ways the dial can animate in, cycled by the header Intro button or
