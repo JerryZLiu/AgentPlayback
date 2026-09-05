@@ -23,6 +23,8 @@ jobs:
           registry-url: https://registry.npmjs.org
           package-manager-cache: false
       - run: npm ci
+      # npm can omit Rollup's platform binary from a lockfile generated on macOS.
+      - run: npm install --no-save --workspace=agentplayback-ui @rollup/rollup-linux-x64-gnu@4.62.2
       - run: npm run build
       - name: Verify release tag matches package version
         run: |
