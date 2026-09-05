@@ -75,41 +75,47 @@ function daySummary(day) {
 }
 
 // ---- pricing ----------------------------------------------------------------
-// LiteLLM's community price table, keyed by the exact model ids the logs carry,
-// with per-token rates for every bucket. Fetched fresh each scan; the last
-// good copy is cached (DAYFLOW_PRICE_CACHE, else beside this script) so
-// offline scans still price. The copy beside this script also ships in the
-// npm package as a seed for first runs with no network.
-const PRICE_URL = 'https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json'
-const PRICE_SEED = join(SCRIPTS_DIR, 'model-prices-cache.json')
-const PRICE_CACHE = process.env.DAYFLOW_PRICE_CACHE ?? PRICE_SEED
-// refetching the table on every scan puts a network round-trip on the warm
-// path for a file that changes a few times a week — trust a recent cache
-// (DAYFLOW_PRICE_TTL_H=0 forces a fetch)
-const PRICE_TTL_H = Number(process.env.DAYFLOW_PRICE_TTL_H ?? 6)
+// A small, schema-versioned OpenAI/Anthropic subset of LiteLLM's community
+// price table, published hourly by this repository. The last good response is
+// cached outside the installed package; a failed refresh keeps using stale
+// data, while a first offline run reports costs as unavailable.
+const PRICE_URL = process.env.DAYFLOW_PRICE_URL
+  ?? 'https://raw.githubusercontent.com/JerryZLiu/AgentPlayback/main/pricing/openai-anthropic.json'
+const PRICE_CACHE = process.env.DAYFLOW_PRICE_CACHE ?? join(HOME, '.agentplayback', 'openai-anthropic-prices.json')
+// DAYFLOW_PRICE_TTL_H=0 forces a refresh.
+const PRICE_TTL_H = Number(process.env.DAYFLOW_PRICE_TTL_H ?? 1)
 const sha1 = (s) => createHash('sha1').update(s).digest('hex')
+function parsePriceManifest(txt) {
+  const parsed = JSON.parse(txt)
+  // Accept the previous raw-table shape for custom cache paths during rollout.
+  if (parsed?.schema_version != null && parsed.schema_version !== 1) throw new Error(`unsupported price manifest schema ${parsed.schema_version}`)
+  const table = parsed?.schema_version === 1 ? parsed.prices : parsed
+  if (!table || typeof table !== 'object' || Array.isArray(table)) throw new Error('invalid price manifest')
+  return table
+}
 async function loadPrices() {
   try {
     if (PRICE_TTL_H > 0 && Date.now() - statSync(PRICE_CACHE).mtimeMs < PRICE_TTL_H * 3600e3) {
       const txt = readFileSync(PRICE_CACHE, 'utf8')
-      return { table: JSON.parse(txt), hash: sha1(txt) }
+      return { table: parsePriceManifest(txt), hash: sha1(txt) }
     }
   } catch {}
   try {
     const res = await fetch(PRICE_URL, { signal: AbortSignal.timeout(15000) })
     if (res.ok) {
       const txt = await res.text()
-      const table = JSON.parse(txt) // parse before caching a bad body
-      writeFileSync(PRICE_CACHE, txt)
+      const table = parsePriceManifest(txt) // validate before caching a bad body
+      mkdirSync(dirname(PRICE_CACHE), { recursive: true })
+      const tmp = `${PRICE_CACHE}.${process.pid}.tmp`
+      writeFileSync(tmp, txt)
+      renameSync(tmp, PRICE_CACHE)
       return { table, hash: sha1(txt) }
     }
   } catch {}
-  for (const f of [PRICE_CACHE, PRICE_SEED]) {
-    try {
-      const txt = readFileSync(f, 'utf8')
-      return { table: JSON.parse(txt), hash: sha1(txt) }
-    } catch {}
-  }
+  try {
+    const txt = readFileSync(PRICE_CACHE, 'utf8')
+    return { table: parsePriceManifest(txt), hash: sha1(txt) }
+  } catch {}
   console.warn('warning: no price table (fetch failed, no cache) — costs will be omitted')
   return { table: {}, hash: 'none' }
 }
