@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-05T08:38:34.101Z",
+  "generated_at": "2026-09-05T23:57:24.159Z",
   "upstream": {
     "url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
-    "sha256": "a5ad23f7a2d98249588a2f21a305f8e3741bba450fd6216bde505cb9c4bee98a"
+    "sha256": "f68d88c12610ea31ab355a1293fde55aeed6fa78a1f4b182c67be47d80b1d202"
   },
   "prices": {
     "chat-latest": {
@@ -347,6 +347,47 @@
       "provider_specific_entry": {
         "us": 1.1
       }
+    },
+    "claude-mythos-5-1": {
+      "deprecation_date": "2027-09-01",
+      "cache_creation_input_token_cost": 0.0000125,
+      "cache_creation_input_token_cost_above_1hr": 0.00002,
+      "cache_read_input_token_cost": 2.5e-7,
+      "input_cost_per_token": 0.00001,
+      "litellm_provider": "anthropic",
+      "max_input_tokens": 1000000,
+      "max_output_tokens": 128000,
+      "max_tokens": 128000,
+      "mode": "chat",
+      "output_cost_per_token": 0.00005,
+      "search_context_cost_per_query": {
+        "search_context_size_high": 0.01,
+        "search_context_size_low": 0.01,
+        "search_context_size_medium": 0.01
+      },
+      "supports_adaptive_thinking": true,
+      "thinking_always_on": true,
+      "supports_mid_conversation_system": true,
+      "supports_assistant_prefill": false,
+      "supports_computer_use": true,
+      "supports_forced_tool_use": false,
+      "supports_function_calling": true,
+      "supports_pdf_input": true,
+      "supports_prompt_caching": true,
+      "supports_reasoning": true,
+      "supports_response_schema": true,
+      "supports_sampling_params": false,
+      "supports_tool_choice": true,
+      "supports_vision": true,
+      "supports_xhigh_reasoning_effort": true,
+      "supports_max_reasoning_effort": true,
+      "provider_specific_entry": {
+        "us": 1.1
+      },
+      "supports_output_config": true,
+      "prompt_cache_min_tokens": 512,
+      "supports_native_structured_output": true,
+      "source": "https://platform.claude.com/docs/en/models/mythos-5-1/overview"
     },
     "claude-mythos-preview": {
       "cache_creation_input_token_cost": 0.0000125,
@@ -1005,7 +1046,7 @@
       "supports_tool_choice": true,
       "supports_vision": true,
       "supports_web_search": true,
-      "source": "https://developers.openai.com/api/docs/models/daybreak-blue-latest",
+      "source": "https://developers.openai.com/api/docs/models/gpt-daybreak-blue-latest",
       "supports_parallel_function_calling": true
     },
     "daybreak-red-latest": {
@@ -1043,7 +1084,7 @@
       "supports_tool_choice": true,
       "supports_vision": true,
       "supports_web_search": true,
-      "source": "https://developers.openai.com/api/docs/models/daybreak-red-latest",
+      "source": "https://developers.openai.com/api/docs/models/gpt-daybreak-red-latest",
       "supports_computer_use": true,
       "supports_parallel_function_calling": true
     },
@@ -3756,12 +3797,12 @@
       "cache_read_input_token_cost": 5e-7,
       "cache_read_input_token_cost_above_272k_tokens": 0.000001,
       "cache_read_input_token_cost_flex": 2.5e-7,
-      "cache_read_input_token_cost_priority": 0.000001,
+      "cache_read_input_token_cost_priority": 0.00000125,
       "input_cost_per_token": 0.000005,
       "input_cost_per_token_above_272k_tokens": 0.00001,
       "input_cost_per_token_flex": 0.0000025,
       "input_cost_per_token_batches": 0.0000025,
-      "input_cost_per_token_priority": 0.00001,
+      "input_cost_per_token_priority": 0.0000125,
       "litellm_provider": "openai",
       "max_input_tokens": 1050000,
       "max_output_tokens": 128000,
@@ -3771,7 +3812,7 @@
       "output_cost_per_token_above_272k_tokens": 0.000045,
       "output_cost_per_token_flex": 0.000015,
       "output_cost_per_token_batches": 0.000015,
-      "output_cost_per_token_priority": 0.00006,
+      "output_cost_per_token_priority": 0.000075,
       "regional_processing_uplift_multiplier_eu": 1.1,
       "regional_processing_uplift_multiplier_us": 1.1,
       "search_context_cost_per_query": {
@@ -3813,12 +3854,12 @@
       "cache_read_input_token_cost": 5e-7,
       "cache_read_input_token_cost_above_272k_tokens": 0.000001,
       "cache_read_input_token_cost_flex": 2.5e-7,
-      "cache_read_input_token_cost_priority": 0.000001,
+      "cache_read_input_token_cost_priority": 0.00000125,
       "input_cost_per_token": 0.000005,
       "input_cost_per_token_above_272k_tokens": 0.00001,
       "input_cost_per_token_flex": 0.0000025,
       "input_cost_per_token_batches": 0.0000025,
-      "input_cost_per_token_priority": 0.00001,
+      "input_cost_per_token_priority": 0.0000125,
       "litellm_provider": "openai",
       "max_input_tokens": 1050000,
       "max_output_tokens": 128000,
@@ -3828,7 +3869,7 @@
       "output_cost_per_token_above_272k_tokens": 0.000045,
       "output_cost_per_token_flex": 0.000015,
       "output_cost_per_token_batches": 0.000015,
-      "output_cost_per_token_priority": 0.00006,
+      "output_cost_per_token_priority": 0.000075,
       "regional_processing_uplift_multiplier_eu": 1.1,
       "regional_processing_uplift_multiplier_us": 1.1,
       "search_context_cost_per_query": {
@@ -4561,6 +4602,82 @@
       "supports_vision": false,
       "deprecation_date": "2027-01-20"
     },
+    "gpt-daybreak-blue-latest": {
+      "cache_creation_input_token_cost": 0.000005,
+      "cache_creation_input_token_cost_above_272k_tokens": 0.00001,
+      "cache_read_input_token_cost": 4e-7,
+      "cache_read_input_token_cost_above_272k_tokens": 8e-7,
+      "input_cost_per_token": 0.000004,
+      "input_cost_per_token_above_272k_tokens": 0.000008,
+      "litellm_provider": "openai",
+      "max_input_tokens": 1050000,
+      "max_output_tokens": 128000,
+      "max_tokens": 128000,
+      "mode": "responses",
+      "output_cost_per_token": 0.00002,
+      "output_cost_per_token_above_272k_tokens": 0.00003,
+      "supported_endpoints": [
+        "/v1/responses"
+      ],
+      "supported_modalities": [
+        "text",
+        "image"
+      ],
+      "supported_output_modalities": [
+        "text"
+      ],
+      "supports_computer_use": true,
+      "supports_function_calling": true,
+      "supports_native_streaming": true,
+      "supports_pdf_input": true,
+      "supports_prompt_caching": true,
+      "supports_reasoning": true,
+      "supports_response_schema": true,
+      "supports_system_messages": true,
+      "supports_tool_choice": true,
+      "supports_vision": true,
+      "supports_web_search": true,
+      "source": "https://developers.openai.com/api/docs/models/gpt-daybreak-blue-latest",
+      "supports_parallel_function_calling": true
+    },
+    "gpt-daybreak-red-latest": {
+      "cache_creation_input_token_cost": 0.000015625,
+      "cache_creation_input_token_cost_above_272k_tokens": 0.00003125,
+      "cache_read_input_token_cost": 0.00000125,
+      "cache_read_input_token_cost_above_272k_tokens": 0.0000025,
+      "input_cost_per_token": 0.0000125,
+      "input_cost_per_token_above_272k_tokens": 0.000025,
+      "litellm_provider": "openai",
+      "max_input_tokens": 400000,
+      "max_output_tokens": 128000,
+      "max_tokens": 128000,
+      "mode": "responses",
+      "output_cost_per_token": 0.000075,
+      "output_cost_per_token_above_272k_tokens": 0.0001125,
+      "supported_endpoints": [
+        "/v1/responses"
+      ],
+      "supported_modalities": [
+        "text",
+        "image"
+      ],
+      "supported_output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_native_streaming": true,
+      "supports_pdf_input": true,
+      "supports_prompt_caching": true,
+      "supports_reasoning": true,
+      "supports_response_schema": true,
+      "supports_system_messages": true,
+      "supports_tool_choice": true,
+      "supports_vision": true,
+      "supports_web_search": true,
+      "source": "https://developers.openai.com/api/docs/models/gpt-daybreak-red-latest",
+      "supports_computer_use": true,
+      "supports_parallel_function_calling": true
+    },
     "gpt-image-1.5": {
       "cache_read_input_token_cost": 0.00000125,
       "deprecation_date": "2026-12-01",
@@ -4591,42 +4708,12 @@
       "supports_vision": true,
       "supports_pdf_input": true
     },
-    "gpt-image-2": {
-      "cache_read_input_token_cost": 0.00000125,
-      "input_cost_per_token": 0.000005,
-      "litellm_provider": "openai",
-      "mode": "image_generation",
-      "output_cost_per_token": 0.00001,
-      "input_cost_per_image_token": 0.000008,
-      "output_cost_per_image_token": 0.00003,
-      "supported_endpoints": [
-        "/v1/images/generations",
-        "/v1/images/edits"
-      ],
-      "supports_vision": true,
-      "supports_pdf_input": true
-    },
-    "gpt-image-2-2026-04-21": {
-      "cache_read_input_token_cost": 0.00000125,
-      "input_cost_per_token": 0.000005,
-      "litellm_provider": "openai",
-      "mode": "image_generation",
-      "output_cost_per_token": 0.00001,
-      "input_cost_per_image_token": 0.000008,
-      "output_cost_per_image_token": 0.00003,
-      "supported_endpoints": [
-        "/v1/images/generations",
-        "/v1/images/edits"
-      ],
-      "supports_vision": true,
-      "supports_pdf_input": true
-    },
     "gpt-realtime": {
       "cache_creation_input_audio_token_cost": 4e-7,
       "cache_read_input_token_cost": 4e-7,
       "deprecation_date": "2027-01-20",
       "input_cost_per_audio_token": 0.000032,
-      "input_cost_per_image": 0.000005,
+      "input_cost_per_image_token": 0.000005,
       "input_cost_per_token": 0.000004,
       "litellm_provider": "openai",
       "max_input_tokens": 32000,
@@ -4658,7 +4745,7 @@
       "cache_creation_input_audio_token_cost": 4e-7,
       "cache_read_input_token_cost": 4e-7,
       "input_cost_per_audio_token": 0.000032,
-      "input_cost_per_image": 0.000005,
+      "input_cost_per_image_token": 0.000005,
       "input_cost_per_token": 0.000004,
       "litellm_provider": "openai",
       "max_input_tokens": 32000,
@@ -4691,7 +4778,7 @@
       "cache_read_input_audio_token_cost": 4e-7,
       "cache_read_input_token_cost": 4e-7,
       "input_cost_per_audio_token": 0.000032,
-      "input_cost_per_image": 0.000005,
+      "input_cost_per_image_token": 0.000005,
       "input_cost_per_token": 0.000004,
       "litellm_provider": "openai",
       "max_input_tokens": 128000,
@@ -4724,7 +4811,7 @@
       "cache_read_input_audio_token_cost": 4e-7,
       "cache_read_input_token_cost": 4e-7,
       "input_cost_per_audio_token": 0.000032,
-      "input_cost_per_image": 0.000005,
+      "input_cost_per_image_token": 0.000005,
       "input_cost_per_token": 0.000004,
       "litellm_provider": "openai",
       "max_input_tokens": 128000,
@@ -4759,7 +4846,7 @@
       "cache_read_input_audio_token_cost": 3e-7,
       "cache_read_input_token_cost": 6e-8,
       "input_cost_per_audio_token": 0.00001,
-      "input_cost_per_image": 8e-7,
+      "input_cost_per_image_token": 8e-7,
       "input_cost_per_token": 6e-7,
       "litellm_provider": "openai",
       "max_input_tokens": 128000,
@@ -4794,7 +4881,7 @@
       "cache_read_input_token_cost": 4e-7,
       "deprecation_date": "2027-01-20",
       "input_cost_per_audio_token": 0.000032,
-      "input_cost_per_image": 0.000005,
+      "input_cost_per_image_token": 0.000005,
       "input_cost_per_token": 0.000004,
       "litellm_provider": "openai",
       "max_input_tokens": 32000,
@@ -4860,7 +4947,7 @@
       "cache_read_input_token_cost": 6e-8,
       "deprecation_date": "2026-07-23",
       "input_cost_per_audio_token": 0.00001,
-      "input_cost_per_image": 8e-7,
+      "input_cost_per_image_token": 8e-7,
       "input_cost_per_token": 6e-7,
       "litellm_provider": "openai",
       "max_input_tokens": 128000,
@@ -4893,7 +4980,7 @@
       "cache_read_input_audio_token_cost": 3e-7,
       "cache_read_input_token_cost": 6e-8,
       "input_cost_per_audio_token": 0.00001,
-      "input_cost_per_image": 8e-7,
+      "input_cost_per_image_token": 8e-7,
       "input_cost_per_token": 6e-7,
       "litellm_provider": "openai",
       "max_input_tokens": 128000,
