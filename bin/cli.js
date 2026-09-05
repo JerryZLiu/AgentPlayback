@@ -21,7 +21,7 @@ const ENV = {
   ...process.env,
   DAYFLOW_OUT: DATA,
   DAYFLOW_CACHE: join(HOME_DIR, 'cache'),
-  DAYFLOW_PRICE_CACHE: join(HOME_DIR, 'model-prices-cache.json'),
+  DAYFLOW_PRICE_CACHE: join(HOME_DIR, 'openai-anthropic-prices.json'),
 }
 
 const args = process.argv.slice(2)
