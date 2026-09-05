@@ -14,7 +14,6 @@
     "scripts/scan-day.mjs",
     "scripts/lib",
     "scripts/providers",
-    "scripts/model-prices-cache.json",
     "ui/dist",
     "!ui/dist/day*.json",
     "!ui/dist/days.json",
