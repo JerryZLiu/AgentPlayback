@@ -536,7 +536,7 @@ export default {
         if (!t || !daySet.has(t.key)) continue
         // OpenAI picks the pricing tier per request: input above the model's
         // long-context threshold bills the whole event at long-context rates
-        const long = e.model.startsWith('gpt-5') && e.input > LONG_CTX_THRESHOLD
+        const long = e.model.startsWith('gpt-') && e.input > LONG_CTX_THRESHOLD
         const key = `${e.model}${long ? LONG_CTX_TAG : ''}${e.tier === TIER_FAST ? FAST_TAG : ''}`
         tok.push(t, { i: e.input - e.cached, cw: 0, cr: e.cached, o: e.output }, key)
       }
@@ -561,16 +561,24 @@ export default {
   modelCost(key, b, prices) {
     const [base, ...tags] = key.split(' ')
     if (!tags.length) return null
-    const mult = tags.includes('fast') ? (FAST_MULT[base] ?? 1) : 1
-    const lr = tags.includes('long') ? LONG_CTX_RATES[base] : null
-    if (lr) return { usd: (b.i * lr.i + b.cw * lr.cw + b.cr * lr.cr + b.o * lr.o) * mult }
     const p = prices[base]
-    if (!p) return { unpriced: b.i + b.cw + b.cr + b.o }
-    return {
-      usd: (b.i * (p.input_cost_per_token ?? 0)
-        + b.cw * (p.cache_creation_input_token_cost ?? p.input_cost_per_token ?? 0)
-        + b.cr * (p.cache_read_input_token_cost ?? p.input_cost_per_token ?? 0)
-        + b.o * (p.output_cost_per_token ?? 0)) * mult,
+    const long = tags.includes('long')
+    const fast = tags.includes('fast')
+    const suffix = `${long ? '_above_272k_tokens' : ''}${fast ? '_priority' : ''}`
+    if (p) {
+      const rate = (field) => p[`${field}${suffix}`] ?? p[`${field}${long ? '_above_272k_tokens' : ''}`] ?? p[`${field}${fast ? '_priority' : ''}`] ?? p[field] ?? 0
+      return {
+        usd: b.i * rate('input_cost_per_token')
+          + b.cw * rate('cache_creation_input_token_cost')
+          + b.cr * rate('cache_read_input_token_cost')
+          + b.o * rate('output_cost_per_token'),
+      }
     }
+    // Targeted fallback for older cached manifests that predate LiteLLM's
+    // tier fields. Unknown models stay unpriced rather than borrowing a rate.
+    const mult = fast ? (FAST_MULT[base] ?? 1) : 1
+    const lr = long ? LONG_CTX_RATES[base] : null
+    if (lr) return { usd: (b.i * lr.i + b.cw * lr.cw + b.cr * lr.cr + b.o * lr.o) * mult }
+    return { unpriced: b.i + b.cw + b.cr + b.o }
   },
 }
