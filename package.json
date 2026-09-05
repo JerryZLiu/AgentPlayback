@@ -1,6 +1,6 @@
 {
   "name": "agentplayback",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "See what your coding agents actually did all day. Claude Code and Codex sessions on a 24h dial — grouped, timed, priced, and flagged when one is waiting on you. Local only.",
   "type": "module",
   "workspaces": [
@@ -38,6 +38,10 @@
     "timeline",
     "dayflow"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JerryZLiu/AgentPlayback.git"
+  },
   "homepage": "https://dayflow.so",
   "license": "MIT"
 }
