@@ -1,6 +1,6 @@
 {
   "name": "agentplayback",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "See what your coding agents actually did all day. Claude Code and Codex sessions on a 24h dial — grouped, timed, priced, and flagged when one is waiting on you. Local only.",
   "type": "module",
   "workspaces": [
