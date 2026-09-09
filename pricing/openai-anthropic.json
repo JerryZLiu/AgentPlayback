@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-05T23:57:24.159Z",
+  "generated_at": "2026-09-09T06:02:41.027Z",
   "upstream": {
     "url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
-    "sha256": "f68d88c12610ea31ab355a1293fde55aeed6fa78a1f4b182c67be47d80b1d202"
+    "sha256": "aed904030df782f3a9c9043c40d60d4eec3c99ea1dd201f5d9b5fc7eff34e1cc"
   },
   "prices": {
     "chat-latest": {
@@ -15,6 +15,9 @@
       "max_tokens": 128000,
       "mode": "chat",
       "output_cost_per_token": 0.00003,
+      "reasoning_effort_levels": [
+        "medium"
+      ],
       "source": "https://developers.openai.com/api/docs/models/chat-latest",
       "supported_endpoints": [
         "/v1/chat/completions",
@@ -32,6 +35,7 @@
       "supports_parallel_function_calling": true,
       "supports_pdf_input": true,
       "supports_prompt_caching": true,
+      "supports_reasoning": true,
       "supports_response_schema": true,
       "supports_system_messages": true,
       "supports_tool_choice": true,
@@ -5236,6 +5240,7 @@
       "supports_parallel_function_calling": true,
       "supports_pdf_input": true,
       "supports_prompt_caching": true,
+      "supports_reasoning": true,
       "supports_response_schema": true,
       "supports_system_messages": true,
       "supports_tool_choice": true,
@@ -5276,6 +5281,7 @@
       "supports_parallel_function_calling": true,
       "supports_pdf_input": true,
       "supports_prompt_caching": true,
+      "supports_reasoning": true,
       "supports_response_schema": true,
       "supports_system_messages": true,
       "supports_tool_choice": true,
@@ -5487,6 +5493,7 @@
       "supports_parallel_function_calling": true,
       "supports_pdf_input": true,
       "supports_prompt_caching": true,
+      "supports_reasoning": true,
       "supports_response_schema": true,
       "supports_system_messages": true,
       "supports_tool_choice": true,
@@ -5527,6 +5534,7 @@
       "supports_parallel_function_calling": true,
       "supports_pdf_input": true,
       "supports_prompt_caching": true,
+      "supports_reasoning": true,
       "supports_response_schema": true,
       "supports_system_messages": true,
       "supports_tool_choice": true,
