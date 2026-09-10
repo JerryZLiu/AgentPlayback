@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-09T06:02:41.027Z",
+  "generated_at": "2026-09-10T06:02:23.125Z",
   "upstream": {
     "url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
-    "sha256": "aed904030df782f3a9c9043c40d60d4eec3c99ea1dd201f5d9b5fc7eff34e1cc"
+    "sha256": "3df965920d0ccecdf36f477aea971eed52ac1b30a611b68c4776b88a06f9d367"
   },
   "prices": {
     "chat-latest": {
@@ -1870,7 +1870,12 @@
       "supports_response_schema": true,
       "supports_system_messages": true,
       "supports_tool_choice": true,
-      "supports_vision": true
+      "supports_vision": true,
+      "search_context_cost_per_query": {
+        "search_context_size_high": 0.025,
+        "search_context_size_low": 0.025,
+        "search_context_size_medium": 0.025
+      }
     },
     "gpt-4o-mini-2024-07-18": {
       "cache_read_input_token_cost": 7.5e-8,
@@ -1887,9 +1892,9 @@
       "output_cost_per_token_priority": 0.000001,
       "output_cost_per_token_batches": 3e-7,
       "search_context_cost_per_query": {
-        "search_context_size_high": 0.03,
+        "search_context_size_high": 0.025,
         "search_context_size_low": 0.025,
-        "search_context_size_medium": 0.0275
+        "search_context_size_medium": 0.025
       },
       "supports_function_calling": true,
       "supports_parallel_function_calling": true,
@@ -1988,9 +1993,9 @@
       "output_cost_per_token": 6e-7,
       "output_cost_per_token_batches": 3e-7,
       "search_context_cost_per_query": {
-        "search_context_size_high": 0.03,
+        "search_context_size_high": 0.025,
         "search_context_size_low": 0.025,
-        "search_context_size_medium": 0.0275
+        "search_context_size_medium": 0.025
       },
       "supports_function_calling": true,
       "supports_parallel_function_calling": true,
@@ -2015,9 +2020,9 @@
       "output_cost_per_token": 6e-7,
       "output_cost_per_token_batches": 3e-7,
       "search_context_cost_per_query": {
-        "search_context_size_high": 0.03,
+        "search_context_size_high": 0.025,
         "search_context_size_low": 0.025,
-        "search_context_size_medium": 0.0275
+        "search_context_size_medium": 0.025
       },
       "supports_function_calling": true,
       "supports_parallel_function_calling": true,
@@ -2190,9 +2195,9 @@
       "output_cost_per_token": 0.00001,
       "output_cost_per_token_batches": 0.000005,
       "search_context_cost_per_query": {
-        "search_context_size_high": 0.05,
-        "search_context_size_low": 0.03,
-        "search_context_size_medium": 0.035
+        "search_context_size_high": 0.025,
+        "search_context_size_low": 0.025,
+        "search_context_size_medium": 0.025
       },
       "supports_function_calling": true,
       "supports_parallel_function_calling": true,
@@ -2217,9 +2222,9 @@
       "output_cost_per_token": 0.00001,
       "output_cost_per_token_batches": 0.000005,
       "search_context_cost_per_query": {
-        "search_context_size_high": 0.05,
-        "search_context_size_low": 0.03,
-        "search_context_size_medium": 0.035
+        "search_context_size_high": 0.025,
+        "search_context_size_low": 0.025,
+        "search_context_size_medium": 0.025
       },
       "supports_function_calling": true,
       "supports_parallel_function_calling": true,
