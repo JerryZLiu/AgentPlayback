@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-10T06:02:23.125Z",
+  "generated_at": "2026-09-11T06:05:02.865Z",
   "upstream": {
     "url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
-    "sha256": "3df965920d0ccecdf36f477aea971eed52ac1b30a611b68c4776b88a06f9d367"
+    "sha256": "86ee577ca0e1b0643295c57be6e27e8bc2178f3ee30c7ee27d3aac4b9e85bc08"
   },
   "prices": {
     "chat-latest": {
@@ -2832,7 +2832,7 @@
       "supports_none_reasoning_effort": true,
       "default_reasoning_effort": "none",
       "supports_xhigh_reasoning_effort": false,
-      "supports_minimal_reasoning_effort": true
+      "supports_minimal_reasoning_effort": false
     },
     "gpt-5.1-2025-11-13": {
       "cache_read_input_token_cost": 1.25e-7,
@@ -2877,7 +2877,7 @@
       "supports_none_reasoning_effort": true,
       "default_reasoning_effort": "none",
       "supports_xhigh_reasoning_effort": false,
-      "supports_minimal_reasoning_effort": true
+      "supports_minimal_reasoning_effort": false
     },
     "gpt-5.1-chat-latest": {
       "cache_read_input_token_cost": 1.25e-7,
@@ -3095,7 +3095,7 @@
       "supports_none_reasoning_effort": true,
       "default_reasoning_effort": "none",
       "supports_xhigh_reasoning_effort": true,
-      "supports_minimal_reasoning_effort": true
+      "supports_minimal_reasoning_effort": false
     },
     "gpt-5.2-2025-12-11": {
       "cache_read_input_token_cost": 1.75e-7,
@@ -3141,7 +3141,7 @@
       "supports_none_reasoning_effort": true,
       "default_reasoning_effort": "none",
       "supports_xhigh_reasoning_effort": true,
-      "supports_minimal_reasoning_effort": true
+      "supports_minimal_reasoning_effort": false
     },
     "gpt-5.2-chat-latest": {
       "cache_read_input_token_cost": 1.75e-7,
@@ -3441,7 +3441,7 @@
       "supports_none_reasoning_effort": true,
       "default_reasoning_effort": "none",
       "supports_xhigh_reasoning_effort": true,
-      "supports_minimal_reasoning_effort": true,
+      "supports_minimal_reasoning_effort": false,
       "input_cost_per_token_above_272k_tokens_flex": 0.0000025,
       "output_cost_per_token_above_272k_tokens_flex": 0.00001125,
       "cache_read_input_token_cost_above_272k_tokens_flex": 2.5e-7
@@ -3493,7 +3493,7 @@
       "supports_none_reasoning_effort": true,
       "default_reasoning_effort": "none",
       "supports_xhigh_reasoning_effort": true,
-      "supports_minimal_reasoning_effort": true,
+      "supports_minimal_reasoning_effort": false,
       "input_cost_per_token_above_272k_tokens_flex": 0.0000025,
       "output_cost_per_token_above_272k_tokens_flex": 0.00001125,
       "cache_read_input_token_cost_above_272k_tokens_flex": 2.5e-7
@@ -3747,7 +3747,7 @@
       "supports_web_search": true,
       "supports_none_reasoning_effort": false,
       "supports_xhigh_reasoning_effort": true,
-      "supports_minimal_reasoning_effort": true,
+      "supports_minimal_reasoning_effort": false,
       "input_cost_per_token_above_272k_tokens_flex": 0.00003,
       "output_cost_per_token_above_272k_tokens_flex": 0.000135
     },
@@ -3798,7 +3798,7 @@
       "supports_web_search": true,
       "supports_none_reasoning_effort": false,
       "supports_xhigh_reasoning_effort": true,
-      "supports_minimal_reasoning_effort": true,
+      "supports_minimal_reasoning_effort": false,
       "input_cost_per_token_above_272k_tokens_flex": 0.00003,
       "output_cost_per_token_above_272k_tokens_flex": 0.000135
     },
