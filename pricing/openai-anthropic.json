@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-11T06:05:02.865Z",
+  "generated_at": "2026-09-13T06:16:15.721Z",
   "upstream": {
     "url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
-    "sha256": "86ee577ca0e1b0643295c57be6e27e8bc2178f3ee30c7ee27d3aac4b9e85bc08"
+    "sha256": "51282f775bc43cd0e1e116e335574eae7a022be31610724ed3d889161be22eb5"
   },
   "prices": {
     "chat-latest": {
@@ -1013,6 +1013,35 @@
       "supports_system_messages": true,
       "supports_tool_choice": true,
       "supports_vision": true
+    },
+    "computer-use-preview": {
+      "input_cost_per_token": 0.000003,
+      "litellm_provider": "openai",
+      "max_input_tokens": 8192,
+      "max_output_tokens": 1024,
+      "max_tokens": 1024,
+      "mode": "chat",
+      "output_cost_per_token": 0.000012,
+      "supported_endpoints": [
+        "/v1/responses"
+      ],
+      "supported_modalities": [
+        "text",
+        "image"
+      ],
+      "supported_output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_parallel_function_calling": true,
+      "supports_pdf_input": true,
+      "supports_prompt_caching": false,
+      "supports_reasoning": true,
+      "supports_response_schema": false,
+      "supports_system_messages": true,
+      "supports_tool_choice": true,
+      "supports_vision": true,
+      "source": "https://platform.openai.com/docs/models/computer-use-preview"
     },
     "daybreak-blue-latest": {
       "cache_creation_input_token_cost": 0.000005,
@@ -3701,8 +3730,6 @@
       "supports_minimal_reasoning_effort": false
     },
     "gpt-5.4-pro": {
-      "cache_read_input_token_cost": 0.000003,
-      "cache_read_input_token_cost_above_272k_tokens": 0.000006,
       "input_cost_per_token": 0.00003,
       "input_cost_per_token_above_272k_tokens": 0.00006,
       "input_cost_per_token_flex": 0.000015,
@@ -3752,8 +3779,6 @@
       "output_cost_per_token_above_272k_tokens_flex": 0.000135
     },
     "gpt-5.4-pro-2026-03-05": {
-      "cache_read_input_token_cost": 0.000003,
-      "cache_read_input_token_cost_above_272k_tokens": 0.000006,
       "input_cost_per_token": 0.00003,
       "input_cost_per_token_above_272k_tokens": 0.00006,
       "input_cost_per_token_flex": 0.000015,
@@ -3917,8 +3942,6 @@
       "cache_read_input_token_cost_above_272k_tokens_flex": 5e-7
     },
     "gpt-5.5-pro": {
-      "cache_read_input_token_cost": 0.000003,
-      "cache_read_input_token_cost_above_272k_tokens": 0.000006,
       "input_cost_per_token": 0.00003,
       "input_cost_per_token_above_272k_tokens": 0.00006,
       "input_cost_per_token_flex": 0.000015,
@@ -3967,8 +3990,6 @@
       "supports_low_reasoning_effort": false
     },
     "gpt-5.5-pro-2026-04-23": {
-      "cache_read_input_token_cost": 0.000003,
-      "cache_read_input_token_cost_above_272k_tokens": 0.000006,
       "input_cost_per_token": 0.00003,
       "input_cost_per_token_above_272k_tokens": 0.00006,
       "input_cost_per_token_flex": 0.000015,
