@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-13T06:16:15.721Z",
+  "generated_at": "2026-09-14T19:26:29.919Z",
   "upstream": {
     "url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
-    "sha256": "51282f775bc43cd0e1e116e335574eae7a022be31610724ed3d889161be22eb5"
+    "sha256": "6df6de7891a71df32db4f91967168abd9d468185ca969df51781452d80e9a0e7"
   },
   "prices": {
     "chat-latest": {
@@ -4740,6 +4740,7 @@
     },
     "gpt-realtime": {
       "cache_creation_input_audio_token_cost": 4e-7,
+      "cache_read_input_audio_token_cost": 4e-7,
       "cache_read_input_token_cost": 4e-7,
       "deprecation_date": "2027-01-20",
       "input_cost_per_audio_token": 0.000032,
@@ -4773,6 +4774,7 @@
     },
     "gpt-realtime-1.5": {
       "cache_creation_input_audio_token_cost": 4e-7,
+      "cache_read_input_audio_token_cost": 4e-7,
       "cache_read_input_token_cost": 4e-7,
       "input_cost_per_audio_token": 0.000032,
       "input_cost_per_image_token": 0.000005,
@@ -4908,6 +4910,7 @@
     },
     "gpt-realtime-2025-08-28": {
       "cache_creation_input_audio_token_cost": 4e-7,
+      "cache_read_input_audio_token_cost": 4e-7,
       "cache_read_input_token_cost": 4e-7,
       "deprecation_date": "2027-01-20",
       "input_cost_per_audio_token": 0.000032,
@@ -4942,6 +4945,7 @@
     "gpt-realtime-mini": {
       "cache_creation_input_audio_token_cost": 3e-7,
       "cache_read_input_audio_token_cost": 3e-7,
+      "cache_read_input_token_cost": 6e-8,
       "deprecation_date": "2027-01-20",
       "input_cost_per_audio_token": 0.00001,
       "input_cost_per_token": 6e-7,
