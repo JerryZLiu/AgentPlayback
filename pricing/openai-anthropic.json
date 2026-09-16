@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-16T20:12:30.821Z",
+  "generated_at": "2026-09-16T23:00:20.900Z",
   "upstream": {
     "url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
-    "sha256": "bf553e1b7278c9955a1160a049f1300286722590ed447f011f5d10c370834453"
+    "sha256": "570f0638b6dc465e9bb34c5bd2d48b0f84a51ea4b2cd40e9800674f8d4f5deeb"
   },
   "prices": {
     "chat-latest": {
@@ -877,7 +877,7 @@
       "cache_creation_input_token_cost_above_200k_tokens": 0.0000075,
       "cache_read_input_token_cost_above_200k_tokens": 6e-7,
       "litellm_provider": "anthropic",
-      "max_input_tokens": 200000,
+      "max_input_tokens": 1000000,
       "max_output_tokens": 64000,
       "max_tokens": 64000,
       "mode": "chat",
@@ -912,7 +912,7 @@
       "cache_creation_input_token_cost_above_200k_tokens": 0.0000075,
       "cache_read_input_token_cost_above_200k_tokens": 6e-7,
       "litellm_provider": "anthropic",
-      "max_input_tokens": 200000,
+      "max_input_tokens": 1000000,
       "max_output_tokens": 64000,
       "max_tokens": 64000,
       "mode": "chat",
@@ -933,7 +933,8 @@
       "supports_tool_choice": true,
       "supports_vision": true,
       "supports_web_search": true,
-      "prompt_cache_min_tokens": 1024
+      "prompt_cache_min_tokens": 1024,
+      "source": "https://docs.anthropic.com/en/docs/about-claude/pricing"
     },
     "claude-sonnet-4-6": {
       "deprecation_date": "2027-02-17",
@@ -1078,7 +1079,7 @@
       "input_cost_per_token": 0.000004,
       "input_cost_per_token_above_272k_tokens": 0.000008,
       "litellm_provider": "openai",
-      "max_input_tokens": 1050000,
+      "max_input_tokens": 922000,
       "max_output_tokens": 128000,
       "max_tokens": 128000,
       "mode": "chat",
@@ -4796,7 +4797,7 @@
       "input_cost_per_token": 0.000004,
       "input_cost_per_token_above_272k_tokens": 0.000008,
       "litellm_provider": "openai",
-      "max_input_tokens": 1050000,
+      "max_input_tokens": 922000,
       "max_output_tokens": 128000,
       "max_tokens": 128000,
       "mode": "responses",
