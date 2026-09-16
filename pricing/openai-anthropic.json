@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-15T01:32:36.393Z",
+  "generated_at": "2026-09-16T00:26:29.096Z",
   "upstream": {
     "url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
-    "sha256": "2a5c39959fd97f0b4aa186ba4e9e68c74079ce87be1ed1d118b74d74a6b9c282"
+    "sha256": "22e373c40971de23f47d55ff4efa8846c4ac83f20c6d23d5c9bacb56a97854e5"
   },
   "prices": {
     "chat-latest": {
@@ -786,6 +786,7 @@
       },
       "supports_output_config": true,
       "supports_speed": true,
+      "supports_fast_mode": true,
       "prompt_cache_min_tokens": 1024,
       "source": "https://platform.claude.com/docs/en/about-claude/pricing"
     },
@@ -827,6 +828,7 @@
       },
       "supports_output_config": true,
       "supports_speed": true,
+      "supports_fast_mode": true,
       "prompt_cache_min_tokens": 512,
       "source": "https://platform.claude.com/docs/en/about-claude/pricing"
     },
