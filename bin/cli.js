@@ -222,6 +222,7 @@ function rescan(force = false) {
 const MIME = {
   '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css',
   '.json': 'application/json', '.png': 'image/png', '.svg': 'image/svg+xml',
+  '.mp4': 'video/mp4',
   '.woff': 'font/woff', '.woff2': 'font/woff2', '.ico': 'image/x-icon',
 }
 const DAY_JSON = /^\/(day(-\d{4}-\d{2}-\d{2})?|days)\.json$/
@@ -245,16 +246,36 @@ function hasStarredRepository() {
   }
 }
 
-function sendFile(res, file) {
+function sendFile(req, res, file) {
   let st
   try { st = statSync(file) } catch { return false }
   if (!st.isFile()) return false
-  res.writeHead(200, {
+  const headers = {
     'content-type': MIME[extname(file)] ?? 'application/octet-stream',
-    'content-length': st.size,
+    'accept-ranges': 'bytes',
     'cache-control': 'no-store',
-  })
-  createReadStream(file).pipe(res)
+  }
+  let start = 0
+  let end = st.size - 1
+  const range = req.headers.range
+  if (range) {
+    const match = /^bytes=(\d*)-(\d*)$/.exec(range)
+    if (match && (match[1] || match[2])) {
+      start = match[1] ? Number(match[1]) : Math.max(0, st.size - Number(match[2]))
+      end = match[1] && match[2] ? Math.min(Number(match[2]), end) : end
+    } else {
+      start = NaN
+    }
+    if (!Number.isSafeInteger(start) || !Number.isSafeInteger(end) || start < 0 || start > end || start >= st.size) {
+      res.writeHead(416, { ...headers, 'content-range': `bytes */${st.size}` })
+      res.end()
+      return true
+    }
+    headers['content-range'] = `bytes ${start}-${end}/${st.size}`
+  }
+  res.writeHead(range ? 206 : 200, { ...headers, 'content-length': range ? end - start + 1 : st.size })
+  if (req.method === 'HEAD' || st.size === 0) res.end()
+  else createReadStream(file, { start, end }).pipe(res)
   return true
 }
 
@@ -291,14 +312,14 @@ const server = createServer((req, res) => {
   }
   // day data comes from the scan output dir, everything else from the build
   if (DAY_JSON.test(path)) {
-    if (sendFile(res, join(DATA, path.slice(1)))) return
+    if (sendFile(req, res, join(DATA, path.slice(1)))) return
     res.writeHead(404, { 'content-type': 'application/json' })
     res.end('{"error":"not scanned yet"}')
     return
   }
   const rel = normalize(path === '/' ? '/index.html' : path)
   const file = resolve(DIST, '.' + rel)
-  if (!file.startsWith(DIST + sep) || !sendFile(res, file)) {
+  if (!file.startsWith(DIST + sep) || !sendFile(req, res, file)) {
     res.writeHead(404)
     res.end('not found')
   }
