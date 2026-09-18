@@ -2087,3 +2087,24 @@ body[data-skin='electric'] { --cp-pos: #02ecc9; --cp-neg: #ff4d4d; }
 
 /* token panel on a pre-scanner day: a quiet note instead of invented numbers */
 .tp-empty { padding: 18px 4px 10px; }
+
+/* Video walkthrough card and modal. */
+.how-it-works { width: 100%; pointer-events: auto; }
+.how-trigger { position: relative; display: flex; align-items: center; width: 100%; height: 44px; padding: 0 15px 0 68px; overflow: hidden; border: 1px solid var(--panel-border, var(--card-border)); border-radius: 7px; background: rgba(250, 248, 246, .9); color: var(--text-strong); font: 400 16px/1 'Geist Sans', sans-serif; cursor: pointer; backdrop-filter: blur(18px); transition: background-color 150ms ease, transform 150ms cubic-bezier(.23, 1, .32, 1); }
+.how-booklet { position: absolute; left: 17px; top: 9px; width: 37px; height: 47px; box-sizing: border-box; padding-top: 6px; border: 1px solid #c4ceb8; border-radius: 3px; background: linear-gradient(90deg, #c7d2bb 0 3px, #e7eddb 3px); box-shadow: 1px 2px 3px #393e3520; transform: rotate(-15deg); color: #667555; }
+.how-booklet-title { display: block; padding-left: 3px; font-size: 4px; line-height: 1; font-weight: 600; letter-spacing: .4px; text-align: center; }
+.how-booklet-dial { display: block; width: 19px; height: 19px; margin: 5px auto 0; border: 1px solid #879675; border-radius: 50%; background: repeating-radial-gradient(circle, transparent 0 3px, #aab99a 3px 4px, transparent 4px 6px); }
+.how-booklet-line { display: block; width: 15px; height: 1px; margin: 4px auto 0; background: #9fae8f; }
+body[data-skin='electric'] .how-trigger { background: rgba(8, 28, 43, .92); border-color: #26546a; }
+.how-guide { position: fixed; inset: 0; margin: auto; box-sizing: border-box; width: min(1040px, calc(100vw - 48px), calc((100dvh - 110px) * 1.6)); max-height: calc(100dvh - 32px); padding: 0; overflow: hidden; border: 1px solid #ded8ce; border-radius: 14px; background: #fffdf8; color: #34332f; box-shadow: 0 24px 80px #0005; pointer-events: auto; font-family: 'Geist Sans', sans-serif; }
+.how-guide::backdrop { background: rgba(25, 23, 21, .55);  }
+.how-heading { display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; }
+.how-guide h2 { margin: 0; font-size: 15px; font-weight: 500; }
+.how-close { width: 28px; height: 28px; border: 0; border-radius: 6px; background: transparent; color: #8b857b; cursor: pointer; font-size: 23px; line-height: 1; }
+.how-video { display: block; width: 100%; aspect-ratio: 8 / 5; background: #000; }
+.how-trigger:focus-visible, .how-close:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+.how-trigger:active { transform: scale(.985); }
+.how-close:active { transform: scale(.97); }
+@media (hover: hover) { .how-trigger:hover { background: rgba(255, 255, 255, .96); }
+body[data-skin='electric'] .how-trigger:hover { background: #102d40; } .how-close:hover { background: #eee9e0; color: #34332f; } }
+body[data-skin='electric'] .how-guide { background: #091720; color: #d9f4ff; border-color: #26546a; box-shadow: 0 14px 48px #0008; }
