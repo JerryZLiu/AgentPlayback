@@ -10,6 +10,7 @@ import { SKINS, type SkinId } from './skins'
 import { skinFor, waveHorizonFor } from './palette'
 import { variantsFor } from './vinylvariants'
 import { buildCodePanel, buildTokenPanel, panelShell, recolorTokenPanel } from './panels'
+import { buildHowItWorks } from './how-it-works'
 
 /** the delay-hatch treatments the arc shader knows (uHatchStyle index) —
  *  all static by decree */
@@ -604,6 +605,7 @@ export function buildOverlay(
       </div>` : ''}
     </div>`
   overlay.appendChild(header)
+  header.querySelector('.header-controls')?.appendChild(buildHowItWorks())
   const mountCalendar = () => {
     overlay.querySelector('.calendar-popover')?.remove()
     if (calendarOpen && hooks.calendar) overlay.appendChild(calendarCard(hooks.calendar))
