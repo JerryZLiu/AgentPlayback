@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-16T23:00:20.900Z",
+  "generated_at": "2026-09-19T20:47:05.740Z",
   "upstream": {
     "url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
-    "sha256": "570f0638b6dc465e9bb34c5bd2d48b0f84a51ea4b2cd40e9800674f8d4f5deeb"
+    "sha256": "09df06c7a87a6b01333bc13c87c77958a3696a2cc1c302c3040a755ac4d140e8"
   },
   "prices": {
     "chat-latest": {
@@ -203,7 +203,6 @@
       "prompt_cache_min_tokens": 1024
     },
     "claude-fable-5": {
-      "deprecation_date": "2027-06-09",
       "cache_creation_input_token_cost": 0.0000125,
       "cache_creation_input_token_cost_above_1hr": 0.00002,
       "cache_read_input_token_cost": 0.000001,
@@ -243,7 +242,6 @@
       "source": "https://platform.claude.com/docs/en/about-claude/pricing"
     },
     "claude-fable-5-1": {
-      "deprecation_date": "2027-09-01",
       "cache_creation_input_token_cost": 0.0000125,
       "cache_creation_input_token_cost_above_1hr": 0.00002,
       "cache_read_input_token_cost": 2.5e-7,
@@ -284,7 +282,6 @@
       "source": "https://platform.claude.com/docs/en/about-claude/pricing"
     },
     "claude-haiku-4-5": {
-      "deprecation_date": "2026-10-15",
       "cache_creation_input_token_cost": 0.00000125,
       "cache_creation_input_token_cost_above_1hr": 0.000002,
       "cache_read_input_token_cost": 1e-7,
@@ -309,7 +306,6 @@
       "source": "https://platform.claude.com/docs/en/about-claude/pricing"
     },
     "claude-haiku-4-5-20251001": {
-      "deprecation_date": "2026-10-15",
       "cache_creation_input_token_cost": 0.00000125,
       "cache_creation_input_token_cost_above_1hr": 0.000002,
       "cache_read_input_token_cost": 1e-7,
@@ -372,7 +368,6 @@
       }
     },
     "claude-mythos-5-1": {
-      "deprecation_date": "2027-09-01",
       "cache_creation_input_token_cost": 0.0000125,
       "cache_creation_input_token_cost_above_1hr": 0.00002,
       "cache_read_input_token_cost": 2.5e-7,
@@ -537,7 +532,6 @@
       "prompt_cache_min_tokens": 1024
     },
     "claude-opus-4-5": {
-      "deprecation_date": "2026-11-24",
       "cache_creation_input_token_cost": 0.00000625,
       "cache_creation_input_token_cost_above_1hr": 0.00001,
       "cache_read_input_token_cost": 5e-7,
@@ -568,7 +562,6 @@
       "source": "https://platform.claude.com/docs/en/about-claude/pricing"
     },
     "claude-opus-4-5-20251101": {
-      "deprecation_date": "2026-11-24",
       "cache_creation_input_token_cost": 0.00000625,
       "cache_creation_input_token_cost_above_1hr": 0.00001,
       "cache_read_input_token_cost": 5e-7,
@@ -598,7 +591,6 @@
       "prompt_cache_min_tokens": 4096
     },
     "claude-opus-4-6": {
-      "deprecation_date": "2027-02-05",
       "cache_creation_input_token_cost": 0.00000625,
       "cache_creation_input_token_cost_above_1hr": 0.00001,
       "cache_read_input_token_cost": 5e-7,
@@ -636,7 +628,6 @@
       "source": "https://platform.claude.com/docs/en/about-claude/pricing"
     },
     "claude-opus-4-6-20260205": {
-      "deprecation_date": "2027-02-05",
       "cache_creation_input_token_cost": 0.00000625,
       "cache_creation_input_token_cost_above_1hr": 0.00001,
       "cache_read_input_token_cost": 5e-7,
@@ -673,7 +664,6 @@
       "prompt_cache_min_tokens": 4096
     },
     "claude-opus-4-7": {
-      "deprecation_date": "2027-04-16",
       "cache_creation_input_token_cost": 0.00000625,
       "cache_creation_input_token_cost_above_1hr": 0.00001,
       "cache_read_input_token_cost": 5e-7,
@@ -712,7 +702,6 @@
       "source": "https://platform.claude.com/docs/en/about-claude/pricing"
     },
     "claude-opus-4-7-20260416": {
-      "deprecation_date": "2027-04-16",
       "cache_creation_input_token_cost": 0.00000625,
       "cache_creation_input_token_cost_above_1hr": 0.00001,
       "cache_read_input_token_cost": 5e-7,
@@ -750,7 +739,6 @@
       "prompt_cache_min_tokens": 2048
     },
     "claude-opus-4-8": {
-      "deprecation_date": "2027-05-28",
       "cache_creation_input_token_cost": 0.00000625,
       "cache_creation_input_token_cost_above_1hr": 0.00001,
       "cache_read_input_token_cost": 5e-7,
@@ -792,7 +780,6 @@
       "source": "https://platform.claude.com/docs/en/about-claude/pricing"
     },
     "claude-opus-5": {
-      "deprecation_date": "2027-07-24",
       "cache_creation_input_token_cost": 0.00000625,
       "cache_creation_input_token_cost_above_1hr": 0.00001,
       "cache_read_input_token_cost": 5e-7,
@@ -866,7 +853,6 @@
       "prompt_cache_min_tokens": 1024
     },
     "claude-sonnet-4-5": {
-      "deprecation_date": "2026-09-29",
       "cache_creation_input_token_cost": 0.00000375,
       "cache_creation_input_token_cost_above_1hr": 0.000006,
       "cache_creation_input_token_cost_above_1hr_above_200k_tokens": 0.000012,
@@ -901,7 +887,6 @@
       "source": "https://platform.claude.com/docs/en/about-claude/pricing"
     },
     "claude-sonnet-4-5-20250929": {
-      "deprecation_date": "2026-09-29",
       "cache_creation_input_token_cost": 0.00000375,
       "cache_creation_input_token_cost_above_1hr": 0.000006,
       "cache_creation_input_token_cost_above_1hr_above_200k_tokens": 0.000012,
@@ -937,7 +922,6 @@
       "source": "https://docs.anthropic.com/en/docs/about-claude/pricing"
     },
     "claude-sonnet-4-6": {
-      "deprecation_date": "2027-02-17",
       "cache_creation_input_token_cost": 0.00000375,
       "cache_creation_input_token_cost_above_1hr": 0.000006,
       "cache_read_input_token_cost": 3e-7,
@@ -974,7 +958,6 @@
       "source": "https://platform.claude.com/docs/en/about-claude/pricing"
     },
     "claude-sonnet-5": {
-      "deprecation_date": "2027-06-30",
       "cache_creation_input_token_cost": 0.0000025,
       "cache_creation_input_token_cost_above_1hr": 0.000004,
       "cache_read_input_token_cost": 2e-7,
