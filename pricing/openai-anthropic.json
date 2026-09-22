@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-20T01:15:01.821Z",
+  "generated_at": "2026-09-22T10:03:38.114Z",
   "upstream": {
     "url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
-    "sha256": "d905fb9038f0301a908b85a979fcfe22bc3ffeb924b73de50a77eb131ddd0458"
+    "sha256": "1d45487b021b83c8f3657a478b3a4df94f7f6df6aa30f1c72d9c267223600e4a"
   },
   "prices": {
     "chat-latest": {
@@ -203,6 +203,7 @@
       "prompt_cache_min_tokens": 1024
     },
     "claude-fable-5": {
+      "supports_anthropic_compaction": true,
       "cache_creation_input_token_cost": 0.0000125,
       "cache_creation_input_token_cost_above_1hr": 0.00002,
       "cache_read_input_token_cost": 0.000001,
@@ -242,6 +243,7 @@
       "source": "https://platform.claude.com/docs/en/about-claude/pricing"
     },
     "claude-fable-5-1": {
+      "supports_anthropic_compaction": true,
       "cache_creation_input_token_cost": 0.0000125,
       "cache_creation_input_token_cost_above_1hr": 0.00002,
       "cache_read_input_token_cost": 2.5e-7,
@@ -329,6 +331,7 @@
       "prompt_cache_min_tokens": 4096
     },
     "claude-mythos-5": {
+      "supports_anthropic_compaction": true,
       "cache_creation_input_token_cost": 0.0000125,
       "cache_creation_input_token_cost_above_1hr": 0.00002,
       "cache_read_input_token_cost": 0.000001,
@@ -368,6 +371,7 @@
       }
     },
     "claude-mythos-5-1": {
+      "supports_anthropic_compaction": true,
       "cache_creation_input_token_cost": 0.0000125,
       "cache_creation_input_token_cost_above_1hr": 0.00002,
       "cache_read_input_token_cost": 2.5e-7,
@@ -408,6 +412,7 @@
       "source": "https://platform.claude.com/docs/en/about-claude/pricing"
     },
     "claude-mythos-preview": {
+      "supports_anthropic_compaction": true,
       "cache_creation_input_token_cost": 0.0000125,
       "cache_creation_input_token_cost_above_1hr": 0.00002,
       "cache_read_input_token_cost": 0.000001,
@@ -593,6 +598,7 @@
       "prompt_cache_min_tokens": 4096
     },
     "claude-opus-4-6": {
+      "supports_anthropic_compaction": true,
       "cache_creation_input_token_cost": 0.00000625,
       "cache_creation_input_token_cost_above_1hr": 0.00001,
       "cache_read_input_token_cost": 5e-7,
@@ -631,6 +637,7 @@
       "source": "https://platform.claude.com/docs/en/about-claude/pricing"
     },
     "claude-opus-4-6-20260205": {
+      "supports_anthropic_compaction": true,
       "cache_creation_input_token_cost": 0.00000625,
       "cache_creation_input_token_cost_above_1hr": 0.00001,
       "cache_read_input_token_cost": 5e-7,
@@ -668,6 +675,7 @@
       "prompt_cache_min_tokens": 4096
     },
     "claude-opus-4-7": {
+      "supports_anthropic_compaction": true,
       "cache_creation_input_token_cost": 0.00000625,
       "cache_creation_input_token_cost_above_1hr": 0.00001,
       "cache_read_input_token_cost": 5e-7,
@@ -707,6 +715,7 @@
       "source": "https://platform.claude.com/docs/en/about-claude/pricing"
     },
     "claude-opus-4-7-20260416": {
+      "supports_anthropic_compaction": true,
       "cache_creation_input_token_cost": 0.00000625,
       "cache_creation_input_token_cost_above_1hr": 0.00001,
       "cache_read_input_token_cost": 5e-7,
@@ -745,6 +754,7 @@
       "prompt_cache_min_tokens": 2048
     },
     "claude-opus-4-8": {
+      "supports_anthropic_compaction": true,
       "cache_creation_input_token_cost": 0.00000625,
       "cache_creation_input_token_cost_above_1hr": 0.00001,
       "cache_read_input_token_cost": 5e-7,
@@ -787,6 +797,7 @@
       "source": "https://platform.claude.com/docs/en/about-claude/pricing"
     },
     "claude-opus-5": {
+      "supports_anthropic_compaction": true,
       "cache_creation_input_token_cost": 0.00000625,
       "cache_creation_input_token_cost_above_1hr": 0.00001,
       "cache_read_input_token_cost": 5e-7,
@@ -930,6 +941,7 @@
       "source": "https://docs.anthropic.com/en/docs/about-claude/pricing"
     },
     "claude-sonnet-4-6": {
+      "supports_anthropic_compaction": true,
       "cache_creation_input_token_cost": 0.00000375,
       "cache_creation_input_token_cost_above_1hr": 0.000006,
       "cache_read_input_token_cost": 3e-7,
@@ -967,6 +979,7 @@
       "source": "https://platform.claude.com/docs/en/about-claude/pricing"
     },
     "claude-sonnet-5": {
+      "supports_anthropic_compaction": true,
       "cache_creation_input_token_cost": 0.0000025,
       "cache_creation_input_token_cost_above_1hr": 0.000004,
       "cache_read_input_token_cost": 2e-7,
