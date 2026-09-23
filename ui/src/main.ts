@@ -124,6 +124,9 @@ if (dayIndex && dateParam) {
 let RAW_DAY: DayData = (await loadDay(
   dayIndex && dayCursor !== dayIndex.days.length - 1 ? dayIndex.days[dayCursor] : undefined,
 )) ?? MOCK_DAY
+// taken before applyLanes mutates the threads, so the live refresh below can
+// tell whether a rescan actually changed today
+let todaySnapshot = JSON.stringify(RAW_DAY)
 let DAY: DayData = filterDay(RAW_DAY)
 setGitHubStarPromptEligible(DAY !== MOCK_DAY && DAY.threads.length > 0)
 
@@ -947,6 +950,43 @@ if (dayIndex?.partial) {
     if (!dayIndex?.partial) clearInterval(timer)
   }, 500)
 }
+
+// Today keeps changing while agents run, so rescan it every few minutes while
+// the page is on screen, and right away when it comes back after a while.
+// The dial only redraws when you're looking at today and its data changed.
+const TODAY_REFRESH_MS = 5 * 60 * 1000
+let lastTodayRefresh = Date.now()
+let todayRefreshing = false
+
+async function refreshToday() {
+  if (todayRefreshing || document.hidden) return
+  todayRefreshing = true
+  lastTodayRefresh = Date.now()
+  try {
+    const res = await fetch('/api/scan/today', { method: 'POST' })
+    const { ok } = await res.json()
+    if (!ok) return
+    const wasToday = selectedDateKey() === dayIndex?.today
+    await refreshDayIndex()
+    if (!wasToday || !dayIndex) return
+    const fresh = await loadDay()
+    const snapshot = JSON.stringify(fresh)
+    if (!fresh || snapshot === todaySnapshot) return
+    todaySnapshot = snapshot
+    dayCursor = dayIndex.days.length - 1
+    applyDay(fresh)
+  } catch {
+    // an older server without the endpoint, or the tool shutting down
+  } finally {
+    todayRefreshing = false
+  }
+}
+
+const refreshTodayIfDue = () => {
+  if (Date.now() - lastTodayRefresh >= TODAY_REFRESH_MS) void refreshToday()
+}
+setInterval(refreshTodayIfDue, 30 * 1000)
+document.addEventListener('visibilitychange', refreshTodayIfDue)
 
 // ---- render on demand via the tween ticker ----
 

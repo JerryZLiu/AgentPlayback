@@ -203,7 +203,7 @@ async function runSequentialBackfill() {
 }
 
 function rescan(force = false) {
-  if (scanRunning) return { started: false, running: true }
+  if (scanRunning || todayScan) return { started: false, running: true }
   if (!force && Date.now() - lastScan < COOLDOWN_MS) return { started: false, cooldown: true }
   lastScan = Date.now()
   scanRunning = true
@@ -214,6 +214,31 @@ function rescan(force = false) {
   })
   return { started: true }
 }
+// The history pass never touches today, so an open page keeps today fresh by
+// calling POST /api/scan/today every few minutes. When the agent day rolls
+// over, the previous day gets one last pass so its final hours land too.
+let todayScan = null
+let lastTodayKey = agentDayKey(new Date())
+
+async function refreshToday() {
+  const today = agentDayKey(new Date())
+  const dates = lastTodayKey === today ? [today] : [lastTodayKey, today]
+  lastTodayKey = today
+  for (const date of dates) {
+    if (!(await scanDate(date))) return false
+  }
+  return true
+}
+
+function scanToday() {
+  if (scanRunning) return Promise.resolve(false)
+  todayScan ??= refreshToday().finally(() => {
+    todayScan = null
+    scanChild = null
+  })
+  return todayScan
+}
+
 // The mounted page calls POST /api/scan after rendering today's quick result.
 // Starting here would let a fast machine finish history before the loading
 // calendar ever reaches the screen.
@@ -302,6 +327,14 @@ const server = createServer((req, res) => {
     })
     res.writeHead(result.status === 0 ? 200 : 502, { 'content-type': 'application/json' })
     res.end(result.status === 0 ? '{"starred":true}' : '{"error":"GitHub star failed"}')
+    return
+  }
+  if (path === '/api/scan/today') {
+    if (req.method !== 'POST') { res.writeHead(405); res.end(); return }
+    void scanToday().then((ok) => {
+      res.writeHead(200, { 'content-type': 'application/json' })
+      res.end(JSON.stringify({ ok }))
+    })
     return
   }
   if (path === '/api/scan') {

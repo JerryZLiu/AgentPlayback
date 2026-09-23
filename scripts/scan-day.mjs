@@ -668,7 +668,9 @@ if (TARGET_DATE) {
   writeDayIndex({
     days,
     today: actualTodayKey,
-    partial: true,
+    // keep the index's own state: mid-backfill it stays partial, but a
+    // single-day refresh of a finished index must not reopen the backfill UI
+    partial: Boolean(prev?.partial),
     loading,
     projectColorOrder: prev?.projectColorOrder ?? [],
     summary: { ...(prev?.summary ?? {}), [TARGET_DATE]: daySummary(day) },
