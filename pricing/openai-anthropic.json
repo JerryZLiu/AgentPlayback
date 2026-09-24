@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-22T22:15:46.551Z",
+  "generated_at": "2026-09-24T04:59:15.405Z",
   "upstream": {
     "url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
-    "sha256": "85209c6621dc6130801f6b14ae5412f868db2efd6345f7d772e982c1555db6d4"
+    "sha256": "e65c6d1370f01f2c5b38599715c1481de5f614b00cc87f6b57dd404050217a9b"
   },
   "prices": {
     "chat-latest": {
@@ -271,6 +271,7 @@
       "source": "https://platform.claude.com/docs/en/about-claude/pricing"
     },
     "claude-mythos-preview": {
+      "deprecation_date": "2026-06-09",
       "supports_anthropic_compaction": true,
       "cache_creation_input_token_cost": 0.0000125,
       "cache_creation_input_token_cost_above_1hr": 0.00002,
@@ -2006,6 +2007,7 @@
     },
     "gpt-5-chat": {
       "cache_read_input_token_cost": 1.25e-7,
+      "deprecation_date": "2026-07-23",
       "input_cost_per_token": 0.00000125,
       "litellm_provider": "openai",
       "max_input_tokens": 128000,
@@ -2038,6 +2040,69 @@
       "supports_none_reasoning_effort": false,
       "supports_xhigh_reasoning_effort": false,
       "supports_minimal_reasoning_effort": true
+    },
+    "gpt-5-chat-latest": {
+      "cache_read_input_token_cost": 1.25e-7,
+      "deprecation_date": "2026-07-23",
+      "input_cost_per_token": 0.00000125,
+      "litellm_provider": "openai",
+      "max_input_tokens": 128000,
+      "max_output_tokens": 16384,
+      "max_tokens": 16384,
+      "mode": "chat",
+      "output_cost_per_token": 0.00001,
+      "source": "https://developers.openai.com/api/docs/models/gpt-5-chat-latest",
+      "supported_endpoints": [
+        "/v1/chat/completions",
+        "/v1/responses"
+      ],
+      "supported_modalities": [
+        "text",
+        "image"
+      ],
+      "supported_output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_native_streaming": true,
+      "supports_parallel_function_calling": true,
+      "supports_pdf_input": true,
+      "supports_prompt_caching": false,
+      "supports_reasoning": true,
+      "supports_response_schema": true,
+      "supports_tool_choice": true,
+      "supports_vision": true
+    },
+    "gpt-5-codex": {
+      "cache_read_input_token_cost": 1.25e-7,
+      "input_cost_per_token": 0.00000125,
+      "litellm_provider": "openai",
+      "max_input_tokens": 272000,
+      "max_output_tokens": 128000,
+      "max_tokens": 128000,
+      "mode": "responses",
+      "output_cost_per_token": 0.00001,
+      "source": "https://developers.openai.com/api/docs/models/gpt-5-codex",
+      "supported_endpoints": [
+        "/v1/responses"
+      ],
+      "supported_modalities": [
+        "text",
+        "image"
+      ],
+      "supported_output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_native_streaming": true,
+      "supports_parallel_function_calling": true,
+      "supports_pdf_input": true,
+      "supports_prompt_caching": true,
+      "supports_reasoning": true,
+      "supports_response_schema": true,
+      "supports_tool_choice": true,
+      "supports_vision": true,
+      "supports_web_search": true
     },
     "gpt-5-mini": {
       "cache_read_input_token_cost": 2.5e-8,
@@ -2485,6 +2550,129 @@
       "supports_xhigh_reasoning_effort": false,
       "supports_minimal_reasoning_effort": false
     },
+    "gpt-5.1-chat-latest": {
+      "cache_read_input_token_cost": 1.25e-7,
+      "input_cost_per_token": 0.00000125,
+      "litellm_provider": "openai",
+      "max_input_tokens": 128000,
+      "max_output_tokens": 16384,
+      "max_tokens": 16384,
+      "mode": "chat",
+      "output_cost_per_token": 0.00001,
+      "source": "https://developers.openai.com/api/docs/models/gpt-5.1-chat-latest",
+      "supported_endpoints": [
+        "/v1/chat/completions",
+        "/v1/responses"
+      ],
+      "supported_modalities": [
+        "text",
+        "image"
+      ],
+      "supported_output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_native_streaming": true,
+      "supports_parallel_function_calling": true,
+      "supports_pdf_input": true,
+      "supports_prompt_caching": false,
+      "supports_reasoning": true,
+      "supports_response_schema": true,
+      "supports_tool_choice": true,
+      "supports_vision": true
+    },
+    "gpt-5.1-codex": {
+      "cache_read_input_token_cost": 1.25e-7,
+      "input_cost_per_token": 0.00000125,
+      "litellm_provider": "openai",
+      "max_input_tokens": 400000,
+      "max_output_tokens": 128000,
+      "max_tokens": 128000,
+      "mode": "responses",
+      "output_cost_per_token": 0.00001,
+      "source": "https://developers.openai.com/api/docs/models/gpt-5.1-codex",
+      "supported_endpoints": [
+        "/v1/responses"
+      ],
+      "supported_modalities": [
+        "text",
+        "image"
+      ],
+      "supported_output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_native_streaming": true,
+      "supports_parallel_function_calling": true,
+      "supports_pdf_input": true,
+      "supports_prompt_caching": true,
+      "supports_reasoning": true,
+      "supports_response_schema": true,
+      "supports_tool_choice": true,
+      "supports_vision": true,
+      "supports_web_search": true
+    },
+    "gpt-5.1-codex-max": {
+      "cache_read_input_token_cost": 1.25e-7,
+      "input_cost_per_token": 0.00000125,
+      "litellm_provider": "openai",
+      "max_input_tokens": 400000,
+      "max_output_tokens": 128000,
+      "max_tokens": 128000,
+      "mode": "responses",
+      "output_cost_per_token": 0.00001,
+      "source": "https://developers.openai.com/api/docs/models/gpt-5.1-codex-max",
+      "supported_endpoints": [
+        "/v1/responses"
+      ],
+      "supported_modalities": [
+        "text",
+        "image"
+      ],
+      "supported_output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_native_streaming": true,
+      "supports_parallel_function_calling": true,
+      "supports_pdf_input": true,
+      "supports_prompt_caching": true,
+      "supports_reasoning": true,
+      "supports_response_schema": true,
+      "supports_tool_choice": true,
+      "supports_vision": true,
+      "supports_web_search": true
+    },
+    "gpt-5.1-codex-mini": {
+      "cache_read_input_token_cost": 2.5e-8,
+      "input_cost_per_token": 2.5e-7,
+      "litellm_provider": "openai",
+      "max_input_tokens": 400000,
+      "max_output_tokens": 128000,
+      "max_tokens": 128000,
+      "mode": "responses",
+      "output_cost_per_token": 0.000002,
+      "source": "https://developers.openai.com/api/docs/models/gpt-5.1-codex-mini",
+      "supported_endpoints": [
+        "/v1/responses"
+      ],
+      "supported_modalities": [
+        "text",
+        "image"
+      ],
+      "supported_output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_native_streaming": true,
+      "supports_parallel_function_calling": true,
+      "supports_pdf_input": true,
+      "supports_prompt_caching": true,
+      "supports_reasoning": true,
+      "supports_response_schema": true,
+      "supports_tool_choice": true,
+      "supports_vision": true
+    },
     "gpt-5.2": {
       "cache_read_input_token_cost": 1.75e-7,
       "cache_read_input_token_cost_batches": 8.75e-8,
@@ -2591,6 +2779,68 @@
       "supports_xhigh_reasoning_effort": true,
       "supports_minimal_reasoning_effort": false
     },
+    "gpt-5.2-chat-latest": {
+      "cache_read_input_token_cost": 1.75e-7,
+      "input_cost_per_token": 0.00000175,
+      "litellm_provider": "openai",
+      "max_input_tokens": 128000,
+      "max_output_tokens": 16384,
+      "max_tokens": 16384,
+      "mode": "chat",
+      "output_cost_per_token": 0.000014,
+      "source": "https://developers.openai.com/api/docs/models/gpt-5.2-chat-latest",
+      "supported_endpoints": [
+        "/v1/chat/completions",
+        "/v1/responses"
+      ],
+      "supported_modalities": [
+        "text",
+        "image"
+      ],
+      "supported_output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_native_streaming": true,
+      "supports_parallel_function_calling": true,
+      "supports_pdf_input": true,
+      "supports_prompt_caching": false,
+      "supports_reasoning": true,
+      "supports_response_schema": true,
+      "supports_tool_choice": true,
+      "supports_vision": true
+    },
+    "gpt-5.2-codex": {
+      "cache_read_input_token_cost": 1.75e-7,
+      "input_cost_per_token": 0.00000175,
+      "litellm_provider": "openai",
+      "max_input_tokens": 272000,
+      "max_output_tokens": 128000,
+      "max_tokens": 128000,
+      "mode": "responses",
+      "output_cost_per_token": 0.000014,
+      "source": "https://developers.openai.com/api/docs/models/gpt-5.2-codex",
+      "supported_endpoints": [
+        "/v1/responses"
+      ],
+      "supported_modalities": [
+        "text",
+        "image"
+      ],
+      "supported_output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_native_streaming": true,
+      "supports_parallel_function_calling": true,
+      "supports_pdf_input": true,
+      "supports_prompt_caching": true,
+      "supports_reasoning": true,
+      "supports_response_schema": true,
+      "supports_tool_choice": true,
+      "supports_vision": true,
+      "supports_web_search": true
+    },
     "gpt-5.2-pro": {
       "input_cost_per_token": 0.000021,
       "input_cost_per_token_batches": 0.0000105,
@@ -2674,6 +2924,37 @@
       "supports_none_reasoning_effort": false,
       "supports_xhigh_reasoning_effort": true,
       "supports_minimal_reasoning_effort": true
+    },
+    "gpt-5.3-chat-latest": {
+      "cache_read_input_token_cost": 1.75e-7,
+      "input_cost_per_token": 0.00000175,
+      "litellm_provider": "openai",
+      "max_input_tokens": 128000,
+      "max_output_tokens": 16384,
+      "max_tokens": 16384,
+      "mode": "chat",
+      "output_cost_per_token": 0.000014,
+      "source": "https://developers.openai.com/api/docs/models/gpt-5.3-chat-latest",
+      "supported_endpoints": [
+        "/v1/chat/completions",
+        "/v1/responses"
+      ],
+      "supported_modalities": [
+        "text",
+        "image"
+      ],
+      "supported_output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_native_streaming": true,
+      "supports_parallel_function_calling": true,
+      "supports_pdf_input": true,
+      "supports_prompt_caching": false,
+      "supports_reasoning": true,
+      "supports_response_schema": true,
+      "supports_tool_choice": true,
+      "supports_vision": true
     },
     "gpt-5.3-codex": {
       "cache_read_input_token_cost": 1.75e-7,
@@ -4741,6 +5022,37 @@
       "supports_vision": true,
       "supports_web_search": true
     },
+    "o3-deep-research": {
+      "cache_read_input_token_cost": 0.0000025,
+      "input_cost_per_token": 0.00001,
+      "litellm_provider": "openai",
+      "max_input_tokens": 200000,
+      "max_output_tokens": 100000,
+      "max_tokens": 100000,
+      "mode": "responses",
+      "output_cost_per_token": 0.00004,
+      "source": "https://developers.openai.com/api/docs/models/o3-deep-research",
+      "supported_endpoints": [
+        "/v1/batch",
+        "/v1/responses"
+      ],
+      "supported_modalities": [
+        "text",
+        "image"
+      ],
+      "supported_output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_native_streaming": true,
+      "supports_parallel_function_calling": false,
+      "supports_prompt_caching": true,
+      "supports_reasoning": true,
+      "supports_response_schema": false,
+      "supports_tool_choice": false,
+      "supports_vision": true,
+      "supports_pdf_input": true
+    },
     "o3-mini": {
       "cache_read_input_token_cost": 5.5e-7,
       "deprecation_date": "2026-10-23",
@@ -4925,6 +5237,37 @@
       "supports_tool_choice": true,
       "supports_vision": true,
       "supports_web_search": true
+    },
+    "o4-mini-deep-research": {
+      "cache_read_input_token_cost": 5e-7,
+      "input_cost_per_token": 0.000002,
+      "litellm_provider": "openai",
+      "max_input_tokens": 200000,
+      "max_output_tokens": 100000,
+      "max_tokens": 100000,
+      "mode": "responses",
+      "output_cost_per_token": 0.000008,
+      "source": "https://developers.openai.com/api/docs/models/o4-mini-deep-research",
+      "supported_endpoints": [
+        "/v1/batch",
+        "/v1/responses"
+      ],
+      "supported_modalities": [
+        "text",
+        "image"
+      ],
+      "supported_output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_native_streaming": true,
+      "supports_parallel_function_calling": false,
+      "supports_prompt_caching": true,
+      "supports_reasoning": true,
+      "supports_response_schema": false,
+      "supports_tool_choice": false,
+      "supports_vision": true,
+      "supports_pdf_input": true
     },
     "omni-moderation-2024-09-26": {
       "input_cost_per_token": 0,
