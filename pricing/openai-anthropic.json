@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-24T04:59:15.405Z",
+  "generated_at": "2026-09-25T07:55:35.643Z",
   "upstream": {
     "url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
-    "sha256": "e65c6d1370f01f2c5b38599715c1481de5f614b00cc87f6b57dd404050217a9b"
+    "sha256": "e1ed31bbf608a61c1929f19f0f41395959785bc4fde07fbc2f8284df4396d669"
   },
   "prices": {
     "chat-latest": {
@@ -43,6 +43,7 @@
       "supports_web_search": true
     },
     "chatgpt-image-latest": {
+      "cache_read_input_image_token_cost": 0.000002,
       "cache_read_input_token_cost": 0.00000125,
       "cache_read_input_token_cost_batches": 6.3e-7,
       "deprecation_date": "2026-12-01",
@@ -804,6 +805,7 @@
       "source": "https://platform.claude.com/docs/en/about-claude/pricing"
     },
     "computer-use-preview": {
+      "deprecation_date": "2026-07-23",
       "input_cost_per_token": 0.000003,
       "litellm_provider": "openai",
       "max_input_tokens": 8192,
@@ -2075,6 +2077,7 @@
     },
     "gpt-5-codex": {
       "cache_read_input_token_cost": 1.25e-7,
+      "deprecation_date": "2026-07-23",
       "input_cost_per_token": 0.00000125,
       "litellm_provider": "openai",
       "max_input_tokens": 272000,
@@ -2552,6 +2555,7 @@
     },
     "gpt-5.1-chat-latest": {
       "cache_read_input_token_cost": 1.25e-7,
+      "deprecation_date": "2026-07-23",
       "input_cost_per_token": 0.00000125,
       "litellm_provider": "openai",
       "max_input_tokens": 128000,
@@ -2583,6 +2587,7 @@
     },
     "gpt-5.1-codex": {
       "cache_read_input_token_cost": 1.25e-7,
+      "deprecation_date": "2026-07-23",
       "input_cost_per_token": 0.00000125,
       "litellm_provider": "openai",
       "max_input_tokens": 400000,
@@ -2614,6 +2619,7 @@
     },
     "gpt-5.1-codex-max": {
       "cache_read_input_token_cost": 1.25e-7,
+      "deprecation_date": "2026-07-23",
       "input_cost_per_token": 0.00000125,
       "litellm_provider": "openai",
       "max_input_tokens": 400000,
@@ -2645,6 +2651,7 @@
     },
     "gpt-5.1-codex-mini": {
       "cache_read_input_token_cost": 2.5e-8,
+      "deprecation_date": "2026-07-23",
       "input_cost_per_token": 2.5e-7,
       "litellm_provider": "openai",
       "max_input_tokens": 400000,
@@ -2781,6 +2788,7 @@
     },
     "gpt-5.2-chat-latest": {
       "cache_read_input_token_cost": 1.75e-7,
+      "deprecation_date": "2026-08-10",
       "input_cost_per_token": 0.00000175,
       "litellm_provider": "openai",
       "max_input_tokens": 128000,
@@ -2812,6 +2820,7 @@
     },
     "gpt-5.2-codex": {
       "cache_read_input_token_cost": 1.75e-7,
+      "deprecation_date": "2026-07-23",
       "input_cost_per_token": 0.00000175,
       "litellm_provider": "openai",
       "max_input_tokens": 272000,
@@ -2927,6 +2936,7 @@
     },
     "gpt-5.3-chat-latest": {
       "cache_read_input_token_cost": 1.75e-7,
+      "deprecation_date": "2026-08-10",
       "input_cost_per_token": 0.00000175,
       "litellm_provider": "openai",
       "max_input_tokens": 128000,
@@ -4488,6 +4498,7 @@
       "supports_parallel_function_calling": true
     },
     "gpt-image-1.5": {
+      "cache_read_input_image_token_cost": 0.000002,
       "cache_read_input_token_cost": 0.00000125,
       "cache_read_input_token_cost_batches": 6.3e-7,
       "deprecation_date": "2026-12-01",
@@ -4508,6 +4519,7 @@
       "supports_pdf_input": true
     },
     "gpt-image-1.5-2025-12-16": {
+      "cache_read_input_image_token_cost": 0.000002,
       "cache_read_input_token_cost": 0.00000125,
       "cache_read_input_token_cost_batches": 6.3e-7,
       "deprecation_date": "2026-12-01",
@@ -4530,6 +4542,7 @@
     "gpt-realtime": {
       "cache_creation_input_audio_token_cost": 4e-7,
       "cache_read_input_audio_token_cost": 4e-7,
+      "cache_read_input_image_token_cost": 5e-7,
       "cache_read_input_token_cost": 4e-7,
       "deprecation_date": "2027-01-20",
       "input_cost_per_audio_token": 0.000032,
@@ -4565,6 +4578,7 @@
     "gpt-realtime-1.5": {
       "cache_creation_input_audio_token_cost": 4e-7,
       "cache_read_input_audio_token_cost": 4e-7,
+      "cache_read_input_image_token_cost": 5e-7,
       "cache_read_input_token_cost": 4e-7,
       "input_cost_per_audio_token": 0.000032,
       "input_cost_per_image_token": 0.000005,
@@ -4599,6 +4613,7 @@
     "gpt-realtime-2": {
       "cache_creation_input_audio_token_cost": 4e-7,
       "cache_read_input_audio_token_cost": 4e-7,
+      "cache_read_input_image_token_cost": 5e-7,
       "cache_read_input_token_cost": 4e-7,
       "input_cost_per_audio_token": 0.000032,
       "input_cost_per_image_token": 0.000005,
@@ -4633,6 +4648,7 @@
     "gpt-realtime-2.1": {
       "cache_creation_input_audio_token_cost": 4e-7,
       "cache_read_input_audio_token_cost": 4e-7,
+      "cache_read_input_image_token_cost": 5e-7,
       "cache_read_input_token_cost": 4e-7,
       "input_cost_per_audio_token": 0.000032,
       "input_cost_per_image_token": 0.000005,
@@ -4669,6 +4685,7 @@
     "gpt-realtime-2.1-mini": {
       "cache_creation_input_audio_token_cost": 3e-7,
       "cache_read_input_audio_token_cost": 3e-7,
+      "cache_read_input_image_token_cost": 8e-8,
       "cache_read_input_token_cost": 6e-8,
       "input_cost_per_audio_token": 0.00001,
       "input_cost_per_image_token": 8e-7,
@@ -4705,6 +4722,7 @@
     "gpt-realtime-2025-08-28": {
       "cache_creation_input_audio_token_cost": 4e-7,
       "cache_read_input_audio_token_cost": 4e-7,
+      "cache_read_input_image_token_cost": 5e-7,
       "cache_read_input_token_cost": 4e-7,
       "deprecation_date": "2027-01-20",
       "input_cost_per_audio_token": 0.000032,
@@ -4740,6 +4758,7 @@
     "gpt-realtime-mini": {
       "cache_creation_input_audio_token_cost": 3e-7,
       "cache_read_input_audio_token_cost": 3e-7,
+      "cache_read_input_image_token_cost": 8e-8,
       "cache_read_input_token_cost": 6e-8,
       "deprecation_date": "2027-01-20",
       "input_cost_per_audio_token": 0.00001,
@@ -4775,6 +4794,7 @@
     "gpt-realtime-mini-2025-12-15": {
       "cache_creation_input_audio_token_cost": 3e-7,
       "cache_read_input_audio_token_cost": 3e-7,
+      "cache_read_input_image_token_cost": 8e-8,
       "cache_read_input_token_cost": 6e-8,
       "input_cost_per_audio_token": 0.00001,
       "input_cost_per_image_token": 8e-7,
