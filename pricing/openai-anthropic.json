@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-26T07:48:24.340Z",
+  "generated_at": "2026-09-28T22:06:52.988Z",
   "upstream": {
     "url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
-    "sha256": "db9b9a64e3dc9bf75e6095781a19eb71c2b43c693abe2c088a3364b7d4f38ff9"
+    "sha256": "815c5fe8e56762e78157a7b90d676957a82c821ee0ad8b687e3d4b3796e9bb33"
   },
   "prices": {
     "chat-latest": {
@@ -887,6 +887,52 @@
       "supports_output_config": true,
       "prompt_cache_min_tokens": 1024,
       "source": "https://platform.claude.com/docs/en/about-claude/pricing"
+    },
+    "claude-sonnet-5-5": {
+      "supports_anthropic_compaction": true,
+      "cache_creation_input_token_cost": 0.0000025,
+      "cache_creation_input_token_cost_above_1hr": 0.000004,
+      "cache_creation_input_token_cost_batches": 0.00000125,
+      "cache_read_input_token_cost": 2e-7,
+      "cache_read_input_token_cost_batches": 1e-7,
+      "input_cost_per_token": 0.000002,
+      "input_cost_per_token_batches": 0.000001,
+      "litellm_provider": "anthropic",
+      "max_input_tokens": 1000000,
+      "max_output_tokens": 128000,
+      "max_tokens": 128000,
+      "mode": "chat",
+      "output_cost_per_token": 0.00001,
+      "output_cost_per_token_batches": 0.000005,
+      "search_context_cost_per_query": {
+        "search_context_size_high": 0.01,
+        "search_context_size_low": 0.01,
+        "search_context_size_medium": 0.01
+      },
+      "supports_adaptive_thinking": true,
+      "supports_mid_conversation_system": true,
+      "supports_assistant_prefill": false,
+      "supports_computer_use": true,
+      "supports_function_calling": true,
+      "supports_native_structured_output": true,
+      "supports_pdf_input": true,
+      "supports_prompt_caching": true,
+      "supports_reasoning": true,
+      "supports_response_schema": true,
+      "supports_sampling_params": false,
+      "supports_tool_choice": true,
+      "supports_vision": true,
+      "supports_xhigh_reasoning_effort": true,
+      "supports_max_reasoning_effort": true,
+      "provider_specific_entry": {
+        "us": 1.1
+      },
+      "supports_output_config": true,
+      "supports_forced_tool_use": false,
+      "thinking_always_on": true,
+      "prompt_cache_min_tokens": 512,
+      "source": "https://platform.claude.com/docs/en/models/sonnet-5-5/overview",
+      "supports_web_search": true
     },
     "computer-use-preview": {
       "deprecation_date": "2026-07-23",
@@ -5155,7 +5201,8 @@
       "supports_response_schema": false,
       "supports_tool_choice": false,
       "supports_vision": true,
-      "supports_pdf_input": true
+      "supports_pdf_input": true,
+      "deprecation_date": "2026-07-23"
     },
     "o3-mini": {
       "cache_read_input_token_cost": 5.5e-7,
@@ -5371,7 +5418,8 @@
       "supports_response_schema": false,
       "supports_tool_choice": false,
       "supports_vision": true,
-      "supports_pdf_input": true
+      "supports_pdf_input": true,
+      "deprecation_date": "2026-07-23"
     },
     "omni-moderation-2024-09-26": {
       "input_cost_per_token": 0,
