@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-01T06:04:56.950Z",
+  "generated_at": "2026-10-02T18:29:25.124Z",
   "upstream": {
     "url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
-    "sha256": "a8fa99b3dc2dbc0258ffc57da7a96b5fee3893b6d88ffa5435d6dfaf8e867504"
+    "sha256": "6a6c5f26c342932371d7681f3dd7e5fc5d3a7f33fa59692fb167c08cad21cb4e"
   },
   "prices": {
     "chat-latest": {
@@ -1962,6 +1962,7 @@
       ]
     },
     "gpt-4o-mini-tts-2025-03-20": {
+      "deprecation_date": "2027-01-06",
       "input_cost_per_token": 6e-7,
       "litellm_provider": "openai",
       "mode": "audio_speech",
@@ -1981,6 +1982,7 @@
       ]
     },
     "gpt-4o-mini-tts-2025-12-15": {
+      "deprecation_date": "2027-01-06",
       "input_cost_per_token": 6e-7,
       "litellm_provider": "openai",
       "mode": "audio_speech",
@@ -2650,7 +2652,8 @@
       "output_cost_per_token_flex": 0.000005,
       "source": "https://developers.openai.com/api/docs/pricing",
       "supports_xhigh_reasoning_effort": false,
-      "supports_minimal_reasoning_effort": false
+      "supports_minimal_reasoning_effort": false,
+      "deprecation_date": "2027-04-01"
     },
     "gpt-5.1-2025-11-13": {
       "cache_read_input_token_cost": 1.25e-7,
@@ -3158,7 +3161,8 @@
       "supports_web_search": true,
       "supports_none_reasoning_effort": false,
       "supports_xhigh_reasoning_effort": false,
-      "supports_minimal_reasoning_effort": true
+      "supports_minimal_reasoning_effort": true,
+      "deprecation_date": "2027-04-01"
     },
     "gpt-5.4": {
       "cache_read_input_token_cost": 2.5e-7,
@@ -3431,7 +3435,8 @@
       "default_reasoning_effort": "none",
       "source": "https://developers.openai.com/api/docs/pricing",
       "supports_xhigh_reasoning_effort": true,
-      "supports_minimal_reasoning_effort": false
+      "supports_minimal_reasoning_effort": false,
+      "deprecation_date": "2027-04-01"
     },
     "gpt-5.4-nano-2026-03-17": {
       "cache_read_input_token_cost": 2e-8,
