@@ -203,7 +203,10 @@ export default {
         try { names = readdirSync(dirPath, { recursive: true }).filter((f) => f.endsWith('.jsonl')) } catch { continue }
         for (const f of names) {
           const p = join(dirPath, f)
-          const st = statSync(p)
+          // a transcript can vanish between the listing and the stat (session
+          // cleanup, a live subagent dir, a dangling symlink) — skip it
+          let st
+          try { st = statSync(p) } catch { continue }
           if (st.mtime < windowStart) continue
           files.push({ path: p, rel: String(f), dir, mtimeMs: st.mtimeMs, size: st.size })
         }

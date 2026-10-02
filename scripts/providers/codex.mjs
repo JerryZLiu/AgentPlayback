@@ -422,7 +422,7 @@ export default {
       if (!existsSync(dir)) continue
       for (const f of readdirSync(dir).filter((x) => x.endsWith('.jsonl'))) {
         const path = join(dir, f)
-        push(path, f, statSync(path))
+        try { push(path, f, statSync(path)) } catch {}
       }
     }
     if (existsSync(sessRoot)) {
