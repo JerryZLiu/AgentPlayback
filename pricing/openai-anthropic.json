@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-07T16:36:14.612Z",
+  "generated_at": "2026-10-07T22:03:03.930Z",
   "upstream": {
     "url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
-    "sha256": "97c42ed5c9ace82959d36ae48290023cd1319f90d60ede078e49090ffdfaad91"
+    "sha256": "c274b2a1bf9b686a206c1467d7cf2f02b12e13bfef2c1bd92e7ffe798c701a6b"
   },
   "prices": {
     "chat-latest": {
@@ -205,6 +205,61 @@
       "supports_tool_choice": true,
       "supports_vision": true,
       "prompt_cache_min_tokens": 4096
+    },
+    "claude-haiku-5-5": {
+      "input_cost_per_token_above_100k_tokens_batches": 2.5e-7,
+      "output_cost_per_token_above_100k_tokens_batches": 0.00000125,
+      "cache_creation_input_token_cost_above_100k_tokens_batches": 3.125e-7,
+      "cache_read_input_token_cost_above_100k_tokens_batches": 2.5e-8,
+      "supports_anthropic_compaction": true,
+      "cache_creation_input_token_cost": 1.25e-7,
+      "cache_creation_input_token_cost_above_1hr": 2e-7,
+      "cache_creation_input_token_cost_batches": 6.25e-8,
+      "cache_read_input_token_cost": 1e-8,
+      "cache_read_input_token_cost_batches": 5e-9,
+      "input_cost_per_token": 1e-7,
+      "input_cost_per_token_batches": 5e-8,
+      "litellm_provider": "anthropic",
+      "max_input_tokens": 1000000,
+      "max_output_tokens": 128000,
+      "max_tokens": 128000,
+      "mode": "chat",
+      "output_cost_per_token": 5e-7,
+      "output_cost_per_token_batches": 2.5e-7,
+      "search_context_cost_per_query": {
+        "search_context_size_high": 0.01,
+        "search_context_size_low": 0.01,
+        "search_context_size_medium": 0.01
+      },
+      "supports_adaptive_thinking": true,
+      "supports_mid_conversation_system": true,
+      "supports_assistant_prefill": false,
+      "supports_computer_use": true,
+      "supports_function_calling": true,
+      "supports_native_structured_output": true,
+      "supports_pdf_input": true,
+      "supports_prompt_caching": true,
+      "supports_reasoning": true,
+      "supports_response_schema": true,
+      "supports_sampling_params": false,
+      "supports_tool_choice": true,
+      "supports_vision": true,
+      "supports_xhigh_reasoning_effort": true,
+      "supports_max_reasoning_effort": true,
+      "provider_specific_entry": {
+        "us": 1.1
+      },
+      "supports_output_config": true,
+      "supports_forced_tool_use": true,
+      "thinking_always_on": false,
+      "prompt_cache_min_tokens": 512,
+      "source": "https://platform.claude.com/docs/en/models/haiku-5-5/overview",
+      "supports_web_search": true,
+      "input_cost_per_token_above_100k_tokens": 5e-7,
+      "output_cost_per_token_above_100k_tokens": 0.0000025,
+      "cache_creation_input_token_cost_above_100k_tokens": 6.25e-7,
+      "cache_creation_input_token_cost_above_1hr_above_100k_tokens": 0.000001,
+      "cache_read_input_token_cost_above_100k_tokens": 5e-8
     },
     "claude-mythos-5": {
       "supports_anthropic_compaction": true,
@@ -896,8 +951,8 @@
       "cache_creation_input_token_cost": 0.0000025,
       "cache_creation_input_token_cost_above_1hr": 0.000004,
       "cache_creation_input_token_cost_batches": 0.00000125,
-      "cache_read_input_token_cost": 2e-7,
-      "cache_read_input_token_cost_batches": 1e-7,
+      "cache_read_input_token_cost": 1e-7,
+      "cache_read_input_token_cost_batches": 5e-8,
       "input_cost_per_token": 0.000002,
       "input_cost_per_token_batches": 0.000001,
       "litellm_provider": "anthropic",
@@ -934,7 +989,7 @@
       "supports_forced_tool_use": false,
       "thinking_always_on": true,
       "prompt_cache_min_tokens": 512,
-      "source": "https://platform.claude.com/docs/en/models/sonnet-5-5/overview",
+      "source": "https://platform.claude.com/docs/en/about-claude/pricing",
       "supports_web_search": true
     },
     "computer-use-preview": {
