@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-07T22:03:03.930Z",
+  "generated_at": "2026-10-08T09:05:32.959Z",
   "upstream": {
     "url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
-    "sha256": "c274b2a1bf9b686a206c1467d7cf2f02b12e13bfef2c1bd92e7ffe798c701a6b"
+    "sha256": "4bda1a19da601af95df65ba20c40bcb1e914ee00b890ea95f8d14de9886fac46"
   },
   "prices": {
     "chat-latest": {
@@ -4352,7 +4352,8 @@
       "supported_endpoints": [
         "/v1/chat/completions",
         "/v1/batch",
-        "/v1/responses"
+        "/v1/responses",
+        "/v1/decisions"
       ],
       "supported_modalities": [
         "text",
