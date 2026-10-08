@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-08T09:05:32.959Z",
+  "generated_at": "2026-10-08T22:09:20.956Z",
   "upstream": {
     "url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
-    "sha256": "4bda1a19da601af95df65ba20c40bcb1e914ee00b890ea95f8d14de9886fac46"
+    "sha256": "4ed0c2530fc877388f28f49a6d46266750ea26ebc2b1175ece020d0441c6aa8d"
   },
   "prices": {
     "chat-latest": {
@@ -63,6 +63,7 @@
       ]
     },
     "claude-fable-5": {
+      "supports_web_search": true,
       "supports_anthropic_compaction": true,
       "cache_creation_input_token_cost": 0.0000125,
       "cache_creation_input_token_cost_above_1hr": 0.00002,
@@ -107,6 +108,7 @@
       "source": "https://platform.claude.com/docs/en/about-claude/pricing"
     },
     "claude-fable-5-1": {
+      "supports_web_search": true,
       "supports_anthropic_compaction": true,
       "cache_creation_input_token_cost": 0.0000125,
       "cache_creation_input_token_cost_above_1hr": 0.00002,
@@ -180,6 +182,7 @@
       "source": "https://platform.claude.com/docs/en/about-claude/pricing"
     },
     "claude-haiku-4-5-20251001": {
+      "supports_web_search": true,
       "cache_creation_input_token_cost": 0.00000125,
       "cache_creation_input_token_cost_above_1hr": 0.000002,
       "cache_creation_input_token_cost_batches": 6.25e-7,
@@ -426,6 +429,7 @@
       "source": "https://platform.claude.com/docs/en/about-claude/pricing"
     },
     "claude-opus-4-5-20251101": {
+      "supports_web_search": true,
       "cache_creation_input_token_cost": 0.00000625,
       "cache_creation_input_token_cost_above_1hr": 0.00001,
       "cache_creation_input_token_cost_batches": 0.000003125,
@@ -460,6 +464,7 @@
       "prompt_cache_min_tokens": 4096
     },
     "claude-opus-4-6": {
+      "supports_web_search": true,
       "supports_anthropic_compaction": true,
       "cache_creation_input_token_cost": 0.00000625,
       "cache_creation_input_token_cost_above_1hr": 0.00001,
@@ -545,6 +550,7 @@
       "prompt_cache_min_tokens": 4096
     },
     "claude-opus-4-7": {
+      "supports_web_search": true,
       "supports_anthropic_compaction": true,
       "cache_creation_input_token_cost": 0.00000625,
       "cache_creation_input_token_cost_above_1hr": 0.00001,
@@ -632,6 +638,7 @@
       "prompt_cache_min_tokens": 2048
     },
     "claude-opus-4-8": {
+      "supports_web_search": true,
       "supports_anthropic_compaction": true,
       "cache_creation_input_token_cost": 0.00000625,
       "cache_creation_input_token_cost_above_1hr": 0.00001,
@@ -679,6 +686,7 @@
       "source": "https://platform.claude.com/docs/en/about-claude/pricing"
     },
     "claude-opus-5": {
+      "supports_web_search": true,
       "supports_anthropic_compaction": true,
       "cache_creation_input_token_cost": 0.00000625,
       "cache_creation_input_token_cost_above_1hr": 0.00001,
@@ -726,6 +734,7 @@
       "source": "https://platform.claude.com/docs/en/about-claude/pricing"
     },
     "claude-opus-5-5": {
+      "supports_web_search": true,
       "supports_anthropic_compaction": true,
       "cache_creation_input_token_cost": 0.000005,
       "cache_creation_input_token_cost_above_1hr": 0.000008,
@@ -861,6 +870,7 @@
       "source": "https://docs.anthropic.com/en/docs/about-claude/pricing"
     },
     "claude-sonnet-4-6": {
+      "supports_web_search": true,
       "supports_anthropic_compaction": true,
       "cache_creation_input_token_cost": 0.00000375,
       "cache_creation_input_token_cost_above_1hr": 0.000006,
@@ -903,6 +913,7 @@
       "source": "https://platform.claude.com/docs/en/about-claude/pricing"
     },
     "claude-sonnet-5": {
+      "supports_web_search": true,
       "supports_anthropic_compaction": true,
       "cache_creation_input_token_cost": 0.0000025,
       "cache_creation_input_token_cost_above_1hr": 0.000004,
@@ -4462,25 +4473,31 @@
       "cache_creation_input_token_cost_above_272k_tokens_batches": 0.0000025,
       "cache_creation_input_token_cost_above_272k_tokens_flex": 0.0000025,
       "cache_creation_input_token_cost_above_272k_tokens_priority": 0.00001,
+      "cache_creation_input_token_cost_above_272k_tokens_ultrafast": 0.00003,
       "cache_creation_input_token_cost_batches": 0.00000125,
       "cache_creation_input_token_cost_flex": 0.00000125,
       "cache_creation_input_token_cost_priority": 0.000005,
+      "cache_creation_input_token_cost_ultrafast": 0.000015,
       "cache_read_input_token_cost": 1e-7,
       "cache_read_input_token_cost_above_272k_tokens": 2e-7,
       "cache_read_input_token_cost_above_272k_tokens_batches": 1e-7,
       "cache_read_input_token_cost_above_272k_tokens_flex": 1e-7,
       "cache_read_input_token_cost_above_272k_tokens_priority": 4e-7,
+      "cache_read_input_token_cost_above_272k_tokens_ultrafast": 0.0000012,
       "cache_read_input_token_cost_batches": 5e-8,
       "cache_read_input_token_cost_flex": 5e-8,
       "cache_read_input_token_cost_priority": 2e-7,
+      "cache_read_input_token_cost_ultrafast": 6e-7,
       "input_cost_per_token": 0.000002,
       "input_cost_per_token_above_272k_tokens": 0.000004,
       "input_cost_per_token_above_272k_tokens_batches": 0.000002,
       "input_cost_per_token_above_272k_tokens_flex": 0.000002,
       "input_cost_per_token_above_272k_tokens_priority": 0.000008,
+      "input_cost_per_token_above_272k_tokens_ultrafast": 0.000024,
       "input_cost_per_token_batches": 0.000001,
       "input_cost_per_token_flex": 0.000001,
       "input_cost_per_token_priority": 0.000004,
+      "input_cost_per_token_ultrafast": 0.000012,
       "litellm_provider": "openai",
       "max_input_tokens": 922000,
       "max_output_tokens": 128000,
@@ -4491,9 +4508,11 @@
       "output_cost_per_token_above_272k_tokens_batches": 0.0000075,
       "output_cost_per_token_above_272k_tokens_flex": 0.0000075,
       "output_cost_per_token_above_272k_tokens_priority": 0.00003,
+      "output_cost_per_token_above_272k_tokens_ultrafast": 0.00009,
       "output_cost_per_token_batches": 0.000005,
       "output_cost_per_token_flex": 0.000005,
       "output_cost_per_token_priority": 0.00002,
+      "output_cost_per_token_ultrafast": 0.00006,
       "regional_processing_uplift_multiplier_eu": 1.1,
       "regional_processing_uplift_multiplier_us": 1.1,
       "search_context_cost_per_query": {
