@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-08T22:09:20.956Z",
+  "generated_at": "2026-10-09T21:44:23.046Z",
   "upstream": {
     "url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
-    "sha256": "4ed0c2530fc877388f28f49a6d46266750ea26ebc2b1175ece020d0441c6aa8d"
+    "sha256": "6715373e2e97b184982121025feda7320eb395650ffe1d0ee182df07b8a7e1f5"
   },
   "prices": {
     "chat-latest": {
@@ -5141,6 +5141,14 @@
       "supports_system_messages": true,
       "supports_tool_choice": true,
       "deprecation_date": "2027-01-20",
+      "source": "https://developers.openai.com/api/docs/pricing"
+    },
+    "gpt-rosalind-discovery": {
+      "cache_read_input_token_cost": 5e-7,
+      "input_cost_per_token": 0.000005,
+      "litellm_provider": "openai",
+      "mode": "chat",
+      "output_cost_per_token": 0.000025,
       "source": "https://developers.openai.com/api/docs/pricing"
     },
     "gpt-rosalind-research": {
