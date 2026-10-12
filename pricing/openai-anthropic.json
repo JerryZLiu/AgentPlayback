@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-10T01:47:14.816Z",
+  "generated_at": "2026-10-12T19:50:57.147Z",
   "upstream": {
     "url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
-    "sha256": "83c752b8e9016a6200d4dc7bd857e9815f4213204f315ae44f06b40823ab849d"
+    "sha256": "f406430cf1bca20b80dd8b2e31c2aa73ce24115cfdb958d1302f102bef84af6c"
   },
   "prices": {
     "chat-latest": {
@@ -1015,6 +1015,36 @@
       "supports_vision": true,
       "source": "https://platform.openai.com/docs/models/computer-use-preview"
     },
+    "computer-use-preview-2025-03-11": {
+      "deprecation_date": "2026-07-23",
+      "input_cost_per_token": 0.000003,
+      "litellm_provider": "openai",
+      "max_input_tokens": 8192,
+      "max_output_tokens": 1024,
+      "max_tokens": 1024,
+      "mode": "chat",
+      "output_cost_per_token": 0.000012,
+      "supported_endpoints": [
+        "/v1/responses"
+      ],
+      "supported_modalities": [
+        "text",
+        "image"
+      ],
+      "supported_output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": true,
+      "supports_parallel_function_calling": true,
+      "supports_pdf_input": true,
+      "supports_prompt_caching": false,
+      "supports_reasoning": true,
+      "supports_response_schema": false,
+      "supports_system_messages": true,
+      "supports_tool_choice": true,
+      "supports_vision": true,
+      "source": "https://developers.openai.com/api/docs/models/computer-use-preview"
+    },
     "daybreak-blue-latest": {
       "cache_creation_input_token_cost": 0.000005,
       "cache_creation_input_token_cost_above_272k_tokens": 0.00001,
@@ -1947,6 +1977,34 @@
       "supports_vision": true,
       "supports_web_search": true
     },
+    "gpt-4o-mini-search-preview-2025-03-11": {
+      "deprecation_date": "2026-07-23",
+      "cache_read_input_token_cost": 7.5e-8,
+      "input_cost_per_token": 1.5e-7,
+      "input_cost_per_token_batches": 7.5e-8,
+      "litellm_provider": "openai",
+      "max_input_tokens": 128000,
+      "max_output_tokens": 16384,
+      "max_tokens": 16384,
+      "mode": "chat",
+      "output_cost_per_token": 6e-7,
+      "output_cost_per_token_batches": 3e-7,
+      "search_context_cost_per_query": {
+        "search_context_size_high": 0.025,
+        "search_context_size_low": 0.025,
+        "search_context_size_medium": 0.025
+      },
+      "supports_function_calling": true,
+      "supports_parallel_function_calling": true,
+      "supports_pdf_input": true,
+      "supports_prompt_caching": true,
+      "supports_response_schema": true,
+      "supports_system_messages": true,
+      "supports_tool_choice": true,
+      "supports_vision": true,
+      "supports_web_search": true,
+      "source": "https://developers.openai.com/api/docs/models/gpt-4o-mini-search-preview"
+    },
     "gpt-4o-mini-transcribe": {
       "input_cost_per_audio_token": 0.00000125,
       "input_cost_per_token": 0.00000125,
@@ -2075,6 +2133,34 @@
       "supports_tool_choice": true,
       "supports_vision": true,
       "supports_web_search": true
+    },
+    "gpt-4o-search-preview-2025-03-11": {
+      "deprecation_date": "2026-07-23",
+      "cache_read_input_token_cost": 0.00000125,
+      "input_cost_per_token": 0.0000025,
+      "input_cost_per_token_batches": 0.00000125,
+      "litellm_provider": "openai",
+      "max_input_tokens": 128000,
+      "max_output_tokens": 16384,
+      "max_tokens": 16384,
+      "mode": "chat",
+      "output_cost_per_token": 0.00001,
+      "output_cost_per_token_batches": 0.000005,
+      "search_context_cost_per_query": {
+        "search_context_size_high": 0.025,
+        "search_context_size_low": 0.025,
+        "search_context_size_medium": 0.025
+      },
+      "supports_function_calling": true,
+      "supports_parallel_function_calling": true,
+      "supports_pdf_input": true,
+      "supports_prompt_caching": true,
+      "supports_response_schema": true,
+      "supports_system_messages": true,
+      "supports_tool_choice": true,
+      "supports_vision": true,
+      "supports_web_search": true,
+      "source": "https://developers.openai.com/api/docs/models/gpt-4o-search-preview"
     },
     "gpt-4o-transcribe": {
       "input_cost_per_audio_token": 0.0000025,
@@ -4681,6 +4767,44 @@
       "supports_tool_choice": true,
       "supports_vision": false
     },
+    "gpt-audio-mini-2025-10-06": {
+      "deprecation_date": "2026-07-23",
+      "input_cost_per_audio_token": 0.00001,
+      "input_cost_per_token": 6e-7,
+      "litellm_provider": "openai",
+      "max_input_tokens": 128000,
+      "max_output_tokens": 16384,
+      "max_tokens": 16384,
+      "mode": "chat",
+      "output_cost_per_audio_token": 0.00002,
+      "output_cost_per_token": 0.0000024,
+      "source": "https://developers.openai.com/api/docs/models/gpt-audio-mini",
+      "supported_endpoints": [
+        "/v1/chat/completions",
+        "/v1/responses",
+        "/v1/realtime",
+        "/v1/batch"
+      ],
+      "supported_modalities": [
+        "text",
+        "audio"
+      ],
+      "supported_output_modalities": [
+        "text",
+        "audio"
+      ],
+      "supports_audio_input": true,
+      "supports_audio_output": true,
+      "supports_function_calling": true,
+      "supports_native_streaming": true,
+      "supports_parallel_function_calling": true,
+      "supports_prompt_caching": false,
+      "supports_reasoning": false,
+      "supports_response_schema": false,
+      "supports_system_messages": true,
+      "supports_tool_choice": true,
+      "supports_vision": false
+    },
     "gpt-audio-mini-2025-12-15": {
       "input_cost_per_audio_token": 0.00001,
       "input_cost_per_token": 6e-7,
@@ -5380,6 +5504,38 @@
       "supports_pdf_input": true,
       "deprecation_date": "2026-07-23"
     },
+    "o3-deep-research-2025-06-26": {
+      "deprecation_date": "2026-07-23",
+      "cache_read_input_token_cost": 0.0000025,
+      "input_cost_per_token": 0.00001,
+      "litellm_provider": "openai",
+      "max_input_tokens": 200000,
+      "max_output_tokens": 100000,
+      "max_tokens": 100000,
+      "mode": "responses",
+      "output_cost_per_token": 0.00004,
+      "source": "https://developers.openai.com/api/docs/models/o3-deep-research",
+      "supported_endpoints": [
+        "/v1/batch",
+        "/v1/responses"
+      ],
+      "supported_modalities": [
+        "text",
+        "image"
+      ],
+      "supported_output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_native_streaming": true,
+      "supports_parallel_function_calling": false,
+      "supports_prompt_caching": true,
+      "supports_reasoning": true,
+      "supports_response_schema": false,
+      "supports_tool_choice": false,
+      "supports_vision": true,
+      "supports_pdf_input": true
+    },
     "o3-mini": {
       "cache_read_input_token_cost": 5.5e-7,
       "deprecation_date": "2026-10-23",
@@ -5596,6 +5752,38 @@
       "supports_vision": true,
       "supports_pdf_input": true,
       "deprecation_date": "2026-07-23"
+    },
+    "o4-mini-deep-research-2025-06-26": {
+      "deprecation_date": "2026-07-23",
+      "cache_read_input_token_cost": 5e-7,
+      "input_cost_per_token": 0.000002,
+      "litellm_provider": "openai",
+      "max_input_tokens": 200000,
+      "max_output_tokens": 100000,
+      "max_tokens": 100000,
+      "mode": "responses",
+      "output_cost_per_token": 0.000008,
+      "source": "https://developers.openai.com/api/docs/models/o4-mini-deep-research",
+      "supported_endpoints": [
+        "/v1/batch",
+        "/v1/responses"
+      ],
+      "supported_modalities": [
+        "text",
+        "image"
+      ],
+      "supported_output_modalities": [
+        "text"
+      ],
+      "supports_function_calling": false,
+      "supports_native_streaming": true,
+      "supports_parallel_function_calling": false,
+      "supports_prompt_caching": true,
+      "supports_reasoning": true,
+      "supports_response_schema": false,
+      "supports_tool_choice": false,
+      "supports_vision": true,
+      "supports_pdf_input": true
     },
     "omni-moderation-2024-09-26": {
       "input_cost_per_token": 0,
