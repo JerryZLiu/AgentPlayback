@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-12T19:50:57.147Z",
+  "generated_at": "2026-10-13T02:04:41.954Z",
   "upstream": {
     "url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
-    "sha256": "f406430cf1bca20b80dd8b2e31c2aa73ce24115cfdb958d1302f102bef84af6c"
+    "sha256": "376d777e874426079e6798339de470f7b0549261e7a7e119fb5375180e9f7197"
   },
   "prices": {
     "chat-latest": {
@@ -4384,13 +4384,17 @@
     },
     "gpt-6-luna": {
       "cache_creation_input_token_cost": 1.25e-7,
+      "cache_creation_input_token_cost_decisions": 1e-7,
       "cache_creation_input_token_cost_above_272k_tokens": 2.5e-7,
+      "cache_creation_input_token_cost_above_272k_tokens_decisions": 2e-7,
       "cache_creation_input_token_cost_above_272k_tokens_flex": 1.25e-7,
       "cache_creation_input_token_cost_above_272k_tokens_priority": 5e-7,
       "cache_creation_input_token_cost_flex": 6.25e-8,
       "cache_creation_input_token_cost_priority": 2.5e-7,
       "cache_read_input_token_cost": 1e-8,
+      "cache_read_input_token_cost_decisions": 1e-7,
       "cache_read_input_token_cost_above_272k_tokens": 2e-8,
+      "cache_read_input_token_cost_above_272k_tokens_decisions": 2e-7,
       "cache_read_input_token_cost_above_272k_tokens_flex": 1e-8,
       "cache_read_input_token_cost_above_272k_tokens_priority": 4e-8,
       "cache_read_input_token_cost_batches": 5e-9,
@@ -4400,7 +4404,9 @@
       "cache_read_input_token_cost_flex": 5e-9,
       "cache_read_input_token_cost_priority": 2e-8,
       "input_cost_per_token": 1e-7,
+      "input_cost_per_token_decisions": 1e-7,
       "input_cost_per_token_above_272k_tokens": 2e-7,
+      "input_cost_per_token_above_272k_tokens_decisions": 2e-7,
       "input_cost_per_token_above_272k_tokens_flex": 1e-7,
       "input_cost_per_token_above_272k_tokens_priority": 4e-7,
       "input_cost_per_token_batches": 5e-8,
@@ -4413,7 +4419,9 @@
       "max_tokens": 128000,
       "mode": "chat",
       "output_cost_per_token": 5e-7,
+      "output_cost_per_token_decisions": 0,
       "output_cost_per_token_above_272k_tokens": 7.5e-7,
+      "output_cost_per_token_above_272k_tokens_decisions": 0,
       "output_cost_per_token_above_272k_tokens_flex": 3.75e-7,
       "output_cost_per_token_above_272k_tokens_priority": 0.0000015,
       "output_cost_per_token_batches": 2.5e-7,
