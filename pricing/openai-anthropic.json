@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-15T07:31:43.179Z",
+  "generated_at": "2026-10-15T18:21:27.592Z",
   "upstream": {
     "url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
-    "sha256": "6fc1f38bce2adaf89463e1bb9436de227dd78e5b2f6befc1b005c3cd88deb2cb"
+    "sha256": "c9f030205a0c2fd3878c7d7289dbd2c5fe4c8c258ef880a41f94ffcad3e98f2a"
   },
   "prices": {
     "chat-latest": {
@@ -1191,6 +1191,7 @@
     "ft:gpt-4.1-2025-04-14": {
       "cache_read_input_token_cost": 7.5e-7,
       "cache_read_input_token_cost_batches": 5e-7,
+      "deprecation_date": "2027-01-14",
       "input_cost_per_token": 0.000003,
       "input_cost_per_token_batches": 0.0000015,
       "litellm_provider": "openai",
@@ -1211,6 +1212,7 @@
     "ft:gpt-4.1-mini-2025-04-14": {
       "cache_read_input_token_cost": 2e-7,
       "cache_read_input_token_cost_batches": 1e-7,
+      "deprecation_date": "2027-01-14",
       "input_cost_per_token": 8e-7,
       "input_cost_per_token_batches": 4e-7,
       "litellm_provider": "openai",
@@ -1252,6 +1254,7 @@
     "ft:gpt-4o-2024-08-06": {
       "cache_read_input_token_cost": 0.000001875,
       "cache_read_input_token_cost_batches": 9e-7,
+      "deprecation_date": "2027-01-14",
       "input_cost_per_token": 0.00000375,
       "input_cost_per_token_batches": 0.000002225,
       "litellm_provider": "openai",
@@ -1273,6 +1276,7 @@
     },
     "ft:gpt-4o-2024-11-20": {
       "cache_creation_input_token_cost": 0.000001875,
+      "deprecation_date": "2027-01-14",
       "input_cost_per_token": 0.00000375,
       "litellm_provider": "openai",
       "max_input_tokens": 128000,
@@ -1291,6 +1295,7 @@
     "ft:gpt-4o-mini-2024-07-18": {
       "cache_read_input_token_cost": 1.5e-7,
       "cache_read_input_token_cost_batches": 7.5e-8,
+      "deprecation_date": "2027-01-14",
       "input_cost_per_token": 3e-7,
       "input_cost_per_token_batches": 1.5e-7,
       "litellm_provider": "openai",
@@ -1523,6 +1528,7 @@
     "gpt-4.1-2025-04-14": {
       "cache_read_input_token_cost": 5e-7,
       "cache_read_input_token_cost_priority": 8.75e-7,
+      "deprecation_date": "2027-01-14",
       "input_cost_per_token": 0.000002,
       "input_cost_per_token_priority": 0.0000035,
       "input_cost_per_token_batches": 0.000001,
@@ -1609,6 +1615,7 @@
     "gpt-4.1-mini-2025-04-14": {
       "cache_read_input_token_cost": 1e-7,
       "cache_read_input_token_cost_priority": 1.75e-7,
+      "deprecation_date": "2027-01-14",
       "input_cost_per_token": 4e-7,
       "input_cost_per_token_priority": 7e-7,
       "input_cost_per_token_batches": 2e-7,
@@ -1774,6 +1781,7 @@
     "gpt-4o-2024-08-06": {
       "cache_read_input_token_cost": 0.00000125,
       "cache_read_input_token_cost_priority": 0.000002125,
+      "deprecation_date": "2027-01-14",
       "input_cost_per_token": 0.0000025,
       "input_cost_per_token_priority": 0.00000425,
       "input_cost_per_token_batches": 0.00000125,
@@ -1798,6 +1806,7 @@
     "gpt-4o-2024-11-20": {
       "cache_read_input_token_cost": 0.00000125,
       "cache_read_input_token_cost_priority": 0.000002125,
+      "deprecation_date": "2027-01-14",
       "input_cost_per_token": 0.0000025,
       "input_cost_per_token_priority": 0.00000425,
       "input_cost_per_token_batches": 0.00000125,
@@ -1887,6 +1896,7 @@
     "gpt-4o-mini-2024-07-18": {
       "cache_read_input_token_cost": 7.5e-8,
       "cache_read_input_token_cost_priority": 1.25e-7,
+      "deprecation_date": "2027-01-14",
       "input_cost_per_token": 1.5e-7,
       "input_cost_per_token_priority": 2.5e-7,
       "input_cost_per_token_batches": 7.5e-8,
