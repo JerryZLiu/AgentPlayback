@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-16T17:29:43.299Z",
+  "generated_at": "2026-10-19T22:26:13.212Z",
   "upstream": {
     "url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
-    "sha256": "157328445179b5ee136c0e80e3963d79e9af75801f7e55833973b47dc781566e"
+    "sha256": "31beaefdd32edb20b63252d56eac4fad2b4169da47f1b93d2552ccbb56f3f4c1"
   },
   "prices": {
     "chat-latest": {
@@ -3307,9 +3307,9 @@
       "supports_tool_search": true,
       "supports_vision": true,
       "supports_web_search": true,
-      "supports_none_reasoning_effort": false,
-      "supports_xhigh_reasoning_effort": false,
-      "supports_minimal_reasoning_effort": true,
+      "supports_none_reasoning_effort": true,
+      "supports_xhigh_reasoning_effort": true,
+      "supports_minimal_reasoning_effort": false,
       "deprecation_date": "2027-04-01"
     },
     "gpt-5.4": {
