@@ -1,14 +1,14 @@
 import './styles.css'
 import * as tween from './tween'
 import { AgentScene } from './scene'
-import { emptyDay, loadDay, loadDayIndex, MOCK_DAY, PAPER_MOCK_DONUT, threadDur, type DayData, type DayIndex, type Thread } from './data'
+import { activeProviders, emptyDay, loadDay, loadDayIndex, MOCK_DAY, PAPER_MOCK_DONUT, providerHours, providerMeta, threadDur, type DayData, type DayIndex, type Thread } from './data'
 import {
   CENTER, CENTER_X, CENTER_Y, DONUT_FULL, NOTCH_DEG, STAGE_W, STAGE_H, DAY_WIN, polar,
   toPolar, laneRadius, getLaneLayout, grooveOuterR, resolveArcs, resolveDonut, setDayWindow,
   setGrooveSpacing, setLaneLayout,
 } from './geometry'
 import { SKINS, type SkinId } from './skins'
-import { setProjectColorOrder, setProjectColorOverride, setProjectColorOverrides, skinFor, setLook, waveHorizonFor, type Look, type ProjectColorOverrides } from './palette'
+import { bandColors, setProjectColorOrder, setProjectColorOverride, setProjectColorOverrides, skinFor, setLook, waveHorizonsFor, type Look, type ProjectColorOverrides } from './palette'
 import { setVariant, variantId } from './vinylvariants'
 import { buildOverlay, fmtClock, refreshOpenCalendar, type CalendarDaySummary } from './overlay'
 import { setGitHubStarPromptEligible } from './star-prompt'
@@ -156,7 +156,8 @@ async function buildCalendar(index: DayIndex | null): Promise<CalendarDaySummary
     const source = date === selectedDateKey() ? RAW_DAY : await loadDay(date)
     const agents = source?.threads.filter((t) => !t.dotted).length ?? 0
     const cost = source?.tokens?.cost
-    return { date, agents, cost: cost ? cost.openai + cost.claude : 0 }
+    const byProv = source?.tokens?.byProvider
+    return { date, agents, cost: byProv ? Object.values(byProv).reduce((a, p) => a + p.cost, 0) : cost ? cost.openai + cost.claude : 0 }
   }))
 }
 let calendarDays: CalendarDaySummary[] = await buildCalendar(dayIndex)
@@ -250,22 +251,29 @@ setLaneLayout(DAY === MOCK_DAY ? null : grooveCount(DAY))
 let arcs = resolveArcs(DAY.threads)
 scene.buildDisc(skinFor(skinId, DAY))
 scene.buildArcs(arcs, skinFor(skinId, DAY))
-// accurate provider split: the gray openai wedge is centered on 12 o'clock
-// and spans its real share of agent-hours; claude gets the rest at the bottom.
-// The mock keeps its authored Figma art angles.
-function providerSplitDeg(day: DayData): [number, number] {
-  if (day === MOCK_DAY) return [329, 94]
-  const dur = (p: string) => day.threads.filter((t) => t.provider === p).reduce((a, t) => a + threadDur(t), 0)
-  const o = dur('openai')
-  const c = dur('claude')
-  // Out-of-range sentinels tell the center shader to paint one provider's
+// accurate provider split: bands follow the day's active providers in
+// registry order — the first band is centered on 12 o'clock (pie) or floods
+// from the top (wave), each sized by its real share of agent-hours. The mock
+// keeps its authored Figma art angles. Returns flat [w0a, w0b, w1a, w1b]:
+// wedge 1's x < 0 tells the shader to paint one solid field (two bands).
+function providerSplitDeg(day: DayData): number[] {
+  if (day === MOCK_DAY) return [329, 94, -1, -1]
+  const act = activeProviders(day)
+  // Out-of-range sentinels tell the center shader to paint the lone provider's
   // field solid, with no fake sliver or boundary at 0%/100%.
-  if (o > 0 && c === 0) return [-1, -1]
-  if (c > 0 && o === 0) return [361, 361]
-  const half = (o + c > 0 ? o / (o + c) : 0.5) * 180
-  return [360 - half, half]
+  if (act.length <= 1) return [-1, -1, -1, -1]
+  const total = act.reduce((a, p) => a + providerHours(day, p), 0) || 1
+  const share = act.map((p) => providerHours(day, p) / total)
+  const a0 = share[0] * 360
+  if (act.length === 2) {
+    // identical to the legacy two-way split: first wedge centered on 12
+    const half = a0 / 2
+    return [360 - half, half, -1, -1]
+  }
+  const a1 = share[1] * 360
+  return [360 - a0 / 2, a0 / 2, a0 / 2, a0 / 2 + a1]
 }
-let splitDeg = providerSplitDeg(DAY)
+let splitSpec = providerSplitDeg(DAY)
 // every skin shows the real provider share on real days — paper/glass split
 // the pie by wedge angle, vinyl/electric flood the wave from the bottom by
 // disc area, and the bold ring re-shapes into a split gauge on all of them;
@@ -273,7 +281,7 @@ let splitDeg = providerSplitDeg(DAY)
 // authored mock; the other mock skins retain their split gauge artwork.
 const ringGauge = () => DAY !== MOCK_DAY || skinId === 'paper'
 
-let waveHorizon = waveHorizonFor(DAY, skinFor(skinId, DAY))
+let waveSpecs = waveHorizonsFor(DAY, skinFor(skinId, DAY))
 
 // seismograph tuning (the Ticks panel): bar every `spacing` px of arc, rising
 // from `offset` px outside the outermost groove ring, lengths min..max
@@ -340,7 +348,7 @@ const donutRange = (day: DayData) => {
 }
 let donutSegs = resolveDonut(donutData(DAY), ...donutRange(DAY)).map((s) => ({ a0: s.a0, a1: s.a1, category: s.category }))
 scene.buildCenter(skinFor(skinId, DAY), donutSegs)
-scene.setProviderSplit(...splitDeg, ringGauge(), waveHorizon)
+scene.setProviderSplit(splitSpec, waveSpecs, bandColors(skinFor(skinId, DAY), DAY), ringGauge())
 scene.setConcurrency(concurrency(DAY))
 applySeismo()
 
@@ -378,9 +386,9 @@ function applyDay(raw: DayData) {
   scene.buildArcs(arcs, skin)
   donutSegs = resolveDonut(donutData(day), ...donutRange(day)).map((s) => ({ a0: s.a0, a1: s.a1, category: s.category }))
   scene.setDonut(donutSegs, skin)
-  splitDeg = providerSplitDeg(day)
-  waveHorizon = waveHorizonFor(day, skin)
-  scene.setProviderSplit(...splitDeg, ringGauge(), waveHorizon)
+  splitSpec = providerSplitDeg(day)
+  waveSpecs = waveHorizonsFor(day, skin)
+  scene.setProviderSplit(splitSpec, waveSpecs, bandColors(skin, day), ringGauge())
   scene.setConcurrency(concurrency(day))
   applySeismo()
   buildMarkers()
@@ -436,8 +444,8 @@ function setSkin(next: SkinId) {
   // switching skins must update the angles as well as repainting the colors.
   donutSegs = resolveDonut(donutData(DAY), ...donutRange(DAY)).map((s) => ({ a0: s.a0, a1: s.a1, category: s.category }))
   scene.setDonut(donutSegs, skin)
-  waveHorizon = waveHorizonFor(DAY, skin)
-  scene.setProviderSplit(...splitDeg, ringGauge(), waveHorizon)
+  waveSpecs = waveHorizonsFor(DAY, skin)
+  scene.setProviderSplit(splitSpec, waveSpecs, bandColors(skin, DAY), ringGauge())
   applySeismo() // the whisker baseline is the skin's own tick radius
   buildMarkers()
   rebuildOverlay()
@@ -451,8 +459,8 @@ function setLookMode(next: Look) {
   scene.applySkinToDisc(skin)
   scene.applySkinToArcs(skin)
   scene.applySkinToCenter(skin)
-  waveHorizon = waveHorizonFor(DAY, skin)
-  scene.setProviderSplit(...splitDeg, ringGauge(), waveHorizon)
+  waveSpecs = waveHorizonsFor(DAY, skin)
+  scene.setProviderSplit(splitSpec, waveSpecs, bandColors(skin, DAY), ringGauge())
   buildMarkers()
   rebuildOverlay()
 }
@@ -814,7 +822,7 @@ function hoverTip(): HTMLElement {
 type Hover =
   | { kind: 'thread'; id: string }
   | { kind: 'category'; cat: string }
-  | { kind: 'provider'; provider: string }
+  | { kind: 'provider'; provider: string; band: number }
 
 const hoverKey = (h: Hover | null) =>
   h === null ? '' : h.kind === 'thread' ? `t:${h.id}` : h.kind === 'category' ? `c:${h.cat}` : `p:${h.provider}`
@@ -850,13 +858,30 @@ function hitTest(x: number, y: number): Hover | null {
     return null
   }
   if (radius > CENTER.spindleR + 4 && radius < ringR - ringW / 2 - 4) {
-    // pie skins split by wedge angle, wave skins at the horizon chord — both
-    // follow whatever boundary is actually painted
-    if (skin.innerMode === 'wave') {
-      return { kind: 'provider', provider: CENTER_Y - y > waveHorizon ? 'openai' : 'claude' }
+    // bands follow the active providers in registry order — wave skins stack
+    // them top→bottom at the horizon chords, pie skins clockwise from 12
+    const act = activeProviders(DAY)
+    if (!act.length) return null
+    const inWedge = (a: number, a0: number, a1: number) => {
+      let rel = a - a0
+      if (rel < 0) rel += Math.PI * 2
+      let span = a1 - a0
+      if (span < 0) span += Math.PI * 2
+      return rel <= span
     }
-    const openai = angle >= splitDeg[0] * HOVER_DEG || angle < splitDeg[1] * HOVER_DEG
-    return { kind: 'provider', provider: openai ? 'openai' : 'claude' }
+    let band = 0
+    if (skin.innerMode === 'wave') {
+      const yUp = CENTER_Y - y
+      band = act.length - 1
+      for (let i = 0; i < waveSpecs.length; i++) {
+        if (yUp > waveSpecs[i]) { band = i; break }
+      }
+    } else {
+      if (inWedge(angle, splitSpec[0] * HOVER_DEG, splitSpec[1] * HOVER_DEG)) band = 0
+      else if (splitSpec[2] >= 0 && inWedge(angle, splitSpec[2] * HOVER_DEG, splitSpec[3] * HOVER_DEG)) band = 1
+      else band = Math.min(act.length - 1, 2)
+    }
+    return { kind: 'provider', provider: act[Math.min(band, act.length - 1)], band: Math.min(band, act.length - 1) }
   }
   return null
 }
@@ -874,7 +899,7 @@ function setHover(hit: Hover | null, tipAt?: { x: number; y: number }) {
     const idx = donutSegs.findIndex((s) => s.category === hit.cat)
     if (idx >= 0) { scene.setCenterHoverTarget(1, idx, 0); centerAmt = 1 }
   } else if (hit?.kind === 'provider') {
-    scene.setCenterHoverTarget(2, -1, hit.provider === 'openai' ? 0 : 1)
+    scene.setCenterHoverTarget(2, -1, hit.band)
     centerAmt = 1
   }
   // (hovering a single arc deliberately does NOT light up its project's chip —
@@ -891,7 +916,7 @@ function setHover(hit: Hover | null, tipAt?: { x: number; y: number }) {
     const label = DAY.labels[t.category as keyof typeof DAY.labels] ?? t.category
     tip.innerHTML = `
       <div class="tooltip-head">
-        <img src="/assets/${t.provider === 'openai' ? 'openai-mark.svg' : 'claude-spark.png'}" width="14" height="14" alt="" />
+        <img src="${providerMeta(t.provider)?.logo ?? '/assets/claude-spark.png'}" width="14" height="14" alt="" />
         <span class="tooltip-chip">${label}</span>
       </div>
       <div>${t.title ?? t.summary ?? label}</div>

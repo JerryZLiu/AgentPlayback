@@ -5,9 +5,9 @@ import {
   CENTER_X, CENTER_Y, CENTER, DONUT_FULL, NOTCH_DEG, polar, hourToAngle,
   resolveHourLabels, resolveDonut, type ResolvedArc,
 } from './geometry'
-import { MOCK_DAY, PAPER_MOCK_DONUT, threadDur, type DayData, type Thread } from './data'
+import { MOCK_DAY, PAPER_MOCK_DONUT, providerMeta, threadDur, type DayData, type Thread } from './data'
 import { SKINS, type SkinId } from './skins'
-import { skinFor, waveHorizonFor } from './palette'
+import { skinFor, waveHorizonsFor } from './palette'
 import { variantsFor } from './vinylvariants'
 import { buildCodePanel, buildTokenPanel, panelShell, recolorTokenPanel } from './panels'
 import { buildHowItWorks } from './how-it-works'
@@ -105,34 +105,73 @@ export function fmtDur(hours: number): string {
 const esc = (s: string) =>
   s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
 
-const providerIcon = (p: string) =>
-  p === 'openai' ? '/assets/openai-mark.svg' : '/assets/claude-spark.png'
+const providerIcon = (p: string) => providerMeta(p)?.logo ?? '/assets/claude-spark.png'
 
-function providerHours(day: DayData, p: string): number {
-  return day.threads.filter((t) => t.provider === p).reduce((a, t) => a + threadDur(t), 0)
+/** the day's active providers and each band's bisector in degrees clockwise
+ *  from 12 o'clock — the same convention the shader paints wedges in. Wave
+ *  skins bisect each flooded region at the side (top/bottom/upper), pie
+ *  skins the wedge mid-angles, so the overlay can hang labels/logos without
+ *  knowing which split mode the skin paints. addCurvedText's convention is
+ *  90° off (0 = 3 o'clock); callers convert. */
+function providerBands(day: DayData, skin: ReturnType<typeof skinFor>): { id: string; hours: number; midDeg: number }[] {
+  const totals = new Map<string, number>()
+  for (const t of day.threads) totals.set(t.provider, (totals.get(t.provider) ?? 0) + threadDur(t))
+  const act = [...totals.entries()].filter(([, h]) => h > 0).sort((a, b) => PROVIDER_ORDER.indexOf(a[0]) - PROVIDER_ORDER.indexOf(b[0]))
+  const total = act.reduce((a, [, h]) => a + h, 0) || 1
+  // shader wedges: w0 spans −a0/2..+a0/2 around 12, then clockwise — so
+  // bisectors are 0, a0/2+a1/2, … (offset by half the first share)
+  const s0 = (act[0]?.[1] ?? 0) / total
+  let cum = 0
+  const bands = act.map(([id, hours]) => {
+    const mid = ((cum + hours / 2) / total - s0 / 2) * 360
+    cum += hours
+    return { id, hours, midDeg: mid }
+  })
+  if (day === MOCK_DAY) {
+    // the mock keeps its authored art: marks/labels on the vertical axis
+    const DEG = [0, 180, 270]
+    bands.forEach((b, i) => { b.midDeg = DEG[Math.min(i, 2)] })
+  } else if (skin.innerMode === 'wave') {
+    // the wave's regions are horizontal, so marks/labels sit at the sides:
+    // top band at 3 o'clock, bottom at 9, a third band top-center
+    const DEG = [90, 270, 0]
+    bands.forEach((b, i) => { b.midDeg = DEG[Math.min(i, 2)] })
+  }
+  return bands
 }
+const PROVIDER_ORDER = ['openai', 'claude', 'kimi']
 
-/** provider mark anchors inside the split disc, as [x, y] offsets from the
- *  disc center (screen coords, y down). The boundary between the two fields
- *  moves with the real provider share — wave skins flood by area, pie skins
- *  split by wedge — so each logo centers in its own region instead of
- *  sitting at the mock's fixed offsets (where a lopsided day would strand a
- *  logo inside the other provider's field). */
+/** provider mark anchors inside the split disc, one [x, y] offset per active
+ *  provider (disc center origin, screen coords, y down), in registry order.
+ *  The boundaries move with the real provider shares, so each logo centers in
+ *  its own band instead of sitting at the mock's fixed offsets (where a
+ *  lopsided day would strand a logo inside another provider's field). */
 function splitMarkOffsets(
   day: DayData, skin: ReturnType<typeof skinFor>,
-): { openai: [number, number]; claude: [number, number] } {
+): [number, number][] {
   const R = skin.center?.innerR ?? CENTER.innerR
   const clamp = (y: number) => Math.max(-(R - 16), Math.min(R - 16, y))
+  const bands = providerBands(day, skin)
   if (skin.innerMode === 'wave') {
-    const d = waveHorizonFor(day, skin) // horizon height, up-positive
-    return {
-      openai: [0, clamp(-(d + R) / 2)], // midpoint of the region above
-      claude: [0, clamp((R - d) / 2)], // …and below the horizon
+    // region i spans up-positive heights hHi..hLo; its screen-y midpoint is
+    // -(hHi + hLo) / 2. horizons[] holds each boundary top→bottom.
+    const horizons = waveHorizonsFor(day, skin) // mock: the authored one
+    const mids: number[] = []
+    let hHi = R
+    for (const d of horizons) {
+      mids.push(clamp(-(d + hHi) / 2))
+      hHi = d
     }
+    mids.push(clamp((R - hHi) / 2))
+    return mids.slice(0, Math.max(bands.length, 1)).map((my) => [0, my])
   }
-  // In the Paper frame the marks sit at the visual centers of the two fields,
-  // about 53px above/below center inside the 78px disc.
-  return { openai: [0, -R * 0.68], claude: [0, R * 0.68] }
+  // pie skins: marks ride each wedge's bisector at the same r the two-way
+  // split always used (~0.68R)
+  const r68 = R * 0.68
+  return bands.map((b) => {
+    const rad = b.midDeg * Math.PI / 180
+    return [Math.sin(rad) * r68, -Math.cos(rad) * r68] as [number, number]
+  })
 }
 
 // ---- shared pieces ---------------------------------------------------------
@@ -764,26 +803,24 @@ export function buildOverlay(
         overlay.appendChild(row)
       })
     }
-    // percentage labels inside the split disc (real provider share)
-    const oh = providerHours(day, 'openai')
-    const ch = providerHours(day, 'claude')
-    const oPct = oh + ch > 0 ? Math.round((oh / (oh + ch)) * 100) : 50
-    // real days center each label on its wedge bisector (openai wedge sits on
-    // 12 o'clock, claude on 6); the mock keeps the authored diagonal art
-    const p1 = document.createElement('div')
-    p1.className = 'pct-label'
-    p1.style.cssText = day === MOCK_DAY
-      ? `left:${CENTER_X + 40}px;top:${CENTER_Y - 52}px;transform:translate(-50%,-50%) rotate(14deg)`
-      : `left:${CENTER_X}px;top:${CENTER_Y - 74}px;transform:translate(-50%,-50%)`
-    p1.textContent = `${oPct}%`
-    overlay.appendChild(p1)
-    const p2 = document.createElement('div')
-    p2.className = 'pct-label pct-warm'
-    p2.style.cssText = day === MOCK_DAY
-      ? `left:${CENTER_X - 50}px;top:${CENTER_Y + 40}px;transform:translate(-50%,-50%) rotate(-16deg)`
-      : `left:${CENTER_X}px;top:${CENTER_Y + 74}px;transform:translate(-50%,-50%)`
-    p2.textContent = `${100 - oPct}%`
-    overlay.appendChild(p2)
+    // percentage labels inside the split disc — one per active provider,
+    // sitting on its band's bisector (mock keeps the authored diagonal art)
+    const bands = providerBands(day, skin)
+    const totH = bands.reduce((a, b) => a + b.hours, 0)
+    bands.forEach((b, i) => {
+      const p = document.createElement('div')
+      p.className = 'pct-label' + (i === bands.length - 1 && bands.length > 1 ? ' pct-warm' : '')
+      if (day === MOCK_DAY) {
+        const mockPos: [number, number, string][] = [[40, -52, 'rotate(14deg)'], [-50, 40, 'rotate(-16deg)'], [-64, -30, 'rotate(-14deg)']]
+        const [mx, my, rot] = mockPos[Math.min(i, 2)]
+        p.style.cssText = `left:${CENTER_X + mx}px;top:${CENTER_Y + my}px;transform:translate(-50%,-50%) ${rot}`
+      } else {
+        const rad = b.midDeg * Math.PI / 180
+        p.style.cssText = `left:${CENTER_X + Math.sin(rad) * 74}px;top:${CENTER_Y - Math.cos(rad) * 74}px;transform:translate(-50%,-50%)`
+      }
+      p.textContent = `${totH > 0 ? Math.round((b.hours / totH) * 100) : 50}%`
+      overlay.appendChild(p)
+    })
   }
   if (activeSkin !== 'glass' || day !== MOCK_DAY) {
     // leader lines: anchor at the chip's bisector just off the ring, project
@@ -846,23 +883,23 @@ export function buildOverlay(
       pin(catLabel('research'), 924, 771, 'middle', 'M 924.5 745 L 924.5 772.5')
     }
   }
-  // ---- curved gauge text: paper totals curve OUTSIDE the split disc,
-  // chatgpt centered on top / claude on bottom (aligned); the other skins keep
-  // their authored spots — {radius, center angle, half-span, flip}
+  // ---- curved gauge text: paper totals curve OUTSIDE the split disc, one
+  // label per active provider centered on its band (12 / 6 / 9 o'clock); the
+  // other skins keep their authored spots — {radius, center angle, half-span,
+  // flip}, three slots = the three band positions
   const textSpec: Record<string, [number, number, number, boolean][]> = {
     // Node 1120:7170 centers both totals exactly on 12/6 o'clock, on matching
     // 90px baselines in the clear band between disc and category ring.
-    paper: [[90, 0, 30, false], [90, 180, 30, true]],
+    paper: [[90, 0, 30, false], [90, 180, 30, true], [90, 270, 30, false]],
     // the black-label frame (1002:35568) floats both totals mid-band in the
     // dark ring between the split disc (r76) and the project chips (r133)
-    vinyl: [[103, 0, 25, false], [112, 180, 30, true]],
-    electric: [[86, 0, 25, false], [118, 180, 25, true]],
+    vinyl: [[103, 0, 25, false], [112, 180, 30, true], [100, 270, 25, false]],
+    electric: [[86, 0, 25, false], [118, 180, 25, true], [92, 270, 25, false]],
     // glass's top text sat on the ring band — on real days the chips own the
     // whole ring, so it tucks into the gap between pie (r95) and ring (r111.5)
-    glass: [[day === MOCK_DAY ? ringR : 103, 0, 25, false], [62, 180, 44, true]],
+    glass: [[day === MOCK_DAY ? ringR : 103, 0, 25, false], [62, 180, 44, true], [86, 270, 25, false]],
   }
-  const [topSpec, botSpec] = textSpec[activeSkin]
-  // real days name the gauges ("ChatGPT · 43 min") — nothing else identifies
+  // real days name the gauges ("Codex · 43 min") — nothing else identifies
   // the white/periwinkle arcs; the mock's authored art keeps bare totals. The
   // half-span widens with the text so long strings don't clip off the path.
   const gaugeText = (name: string, total: string) => (day === MOCK_DAY ? total : `${name} · ${total}`)
@@ -871,46 +908,41 @@ export function buildOverlay(
   const chW = 9
   const gaugeHalf = (spec: [number, number, number, boolean], text: string) =>
     Math.max(spec[2], (((text.length * chW) / spec[0]) * 57.296) / 2 + 3)
-  // the diagonal centers are the MOCK's authored art; real days pin ChatGPT
-  // dead on 12 o'clock and Claude on 6, matching the accurate wedges, and on
-  // radii that clear both the provider marks and the ring chips
-  const [topC, botC] = day === MOCK_DAY ? [topSpec[1], botSpec[1]] : [0, 180]
-  // flipped bottom text hangs INWARD from its baseline (~17px of glyph), so
-  // it needs a baseline of ~100 to keep the whole word in the clear band
-  // between the split disc (r≈78) and the ring chips (r≈116) — top text
-  // grows outward from its baseline, so 90 already clears
-  const [topR, botR] = day === MOCK_DAY
-    ? [topSpec[0], botSpec[0]]
-    // vinyl's black label gives the text a deeper band to float in
-    : [Math.max(topSpec[0], 90), activeSkin === 'vinyl' ? 112 : 100]
-  const topText = gaugeText('Codex', day.meta.openaiTotal)
-  const botText = gaugeText('Claude', day.meta.claudeTotal)
-  const th = gaugeHalf([topR, topC, topSpec[2], topSpec[3]], topText)
-  const bh = gaugeHalf([botR, botC, botSpec[2], botSpec[3]], botText)
-  const openaiHours = providerHours(day, 'openai')
-  const claudeHours = providerHours(day, 'claude')
-  if (openaiHours > 0) addCurvedText(callouts, 'gauge-top', topR, topC - th, topC + th, topText, topSpec[3])
-  if (claudeHours > 0) addCurvedText(callouts, 'gauge-bot', botR, botC - bh, botC + bh, botText, botSpec[3])
+  const bands = providerBands(day, skin)
+  bands.forEach((band, i) => {
+    const spec = textSpec[activeSkin][Math.min(i, 2)]
+    const name = providerMeta(band.id)?.label ?? band.id
+    const total = day.meta.providerTotals?.[band.id]
+      ?? (band.id === 'openai' ? day.meta.openaiTotal : band.id === 'claude' ? day.meta.claudeTotal : day.meta.kimiTotal)
+    const text = gaugeText(name, total)
+    // real days pin the labels dead on each band's bisector, on radii that
+    // clear both the provider marks and the ring chips; vinyl's black label
+    // gives the text a deeper band to float in
+    // midDeg is already addCurvedText's convention (0 = 12 o'clock, cw): pie
+    // wedges center their label over the wedge, wave bands label at the sides
+    const center = day === MOCK_DAY ? spec[1] : band.midDeg
+    let radius = spec[0]
+    // same radii the two-way split used: top clears the disc, the bottom
+    // label floats deeper (vinyl's black label deepest); the third band
+    // labels from the top spec
+    if (day !== MOCK_DAY) radius = i === 1 ? (activeSkin === 'vinyl' ? 112 : 100) : Math.max(spec[0], 90)
+    if (band.hours <= 0) return
+    const half = gaugeHalf([radius, center, spec[2], spec[3]], text)
+    addCurvedText(callouts, `gauge-${i}`, radius, center - half, center + half, text, spec[3])
+  })
 
   // ---- provider logos in the split disc: each centered in its provider's
-  // real region (wave skins by flooded area, pie skins on the wedge
-  // bisector); the mock keeps its authored diagonal art positions
+  // real band (wave skins by flooded area, pie skins on the wedge bisector);
+  // the mock keeps its authored diagonal art positions
   const marks = splitMarkOffsets(day, skin)
-  if (openaiHours > 0) {
-    const [knotX, knotY] = marks.openai
-    const logoTop = document.createElement('img')
-    logoTop.src = '/assets/openai-mark.svg'
-    logoTop.className = 'knot-logo'
-    logoTop.style.cssText = `position:absolute;left:${CENTER_X + knotX - 7.5}px;top:${CENTER_Y + knotY - 7.5}px;width:15px;height:15px`
-    overlay.appendChild(logoTop)
-  }
-  if (claudeHours > 0) {
-    const [sparkX, sparkY] = marks.claude
-    const logoBot = document.createElement('img')
-    logoBot.src = '/assets/claude-spark.png'
-    logoBot.style.cssText = `position:absolute;left:${CENTER_X + sparkX - 7}px;top:${CENTER_Y + sparkY - 7}px;width:14px;height:14px`
-    overlay.appendChild(logoBot)
-  }
+  bands.forEach((band, i) => {
+    const [mx, my] = marks[Math.min(i, marks.length - 1)] ?? [0, 0]
+    const logo = document.createElement('img')
+    logo.src = providerIcon(band.id)
+    logo.className = 'knot-logo'
+    logo.style.cssText = `position:absolute;left:${CENTER_X + mx - 7.5}px;top:${CENTER_Y + my - 7.5}px;width:15px;height:15px`
+    overlay.appendChild(logo)
+  })
 
   // ---- the frame leaves one tooltip pinned open against the thread it
   // describes (node 552:1350, sitting 6px left and 87px below that thread's
