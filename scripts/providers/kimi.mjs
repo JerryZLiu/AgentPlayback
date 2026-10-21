@@ -218,9 +218,40 @@ function replay(rec, ctx) {
  *  human-readable project name when no tool-call cwd was seen in the wire */
 const projectFromDir = (wd) => wd.replace(/^wd_/, '').replace(/_[0-9a-f]{8,}$/i, '')
 
+// ---- pricing hook: the kernel's wire logs carry Kimi Work's internal model
+// aliases, not LiteLLM keys. Map them to the community table's tencent/*
+// entries (Moonshot's published API rates) and fall back to a snapshot of
+// those rates when the installed price subset doesn't include them yet.
+// Returns { usd } / { unpriced } for keys it owns, null for the rest.
+const KIMI_MODEL_KEYS = {
+  // Kimi K2.8 Preview: $1.00/M in, $4.00/M out, $0.25/M cache read, free writes
+  'k2d8-preview': {
+    litellm: 'tencent/kimi-k2.8-preview',
+    fallback: { input_cost_per_token: 1e-06, output_cost_per_token: 4e-06, cache_read_input_token_cost: 2.5e-07, cache_creation_input_token_cost: 0 },
+  },
+  // Kimi K3 (agent): $3.00/M in, $15.00/M out, $0.30/M cache read, free writes
+  'k3-agent': {
+    litellm: 'tencent/kimi-k3',
+    fallback: { input_cost_per_token: 3e-06, output_cost_per_token: 1.5e-05, cache_read_input_token_cost: 3e-07, cache_creation_input_token_cost: 0 },
+  },
+}
+
 export default {
   id: 'kimi',
   name: 'Kimi Work',
+
+  modelCost(model, b, prices) {
+    const k = KIMI_MODEL_KEYS[model]
+    if (!k) return null
+    const p = prices?.[k.litellm] ?? k.fallback
+    if (!p) return { unpriced: b.i + b.cw + b.cr + b.o }
+    return {
+      usd: b.i * (p.input_cost_per_token ?? 0)
+        + b.cw * (p.cache_creation_input_token_cost ?? p.input_cost_per_token ?? 0)
+        + b.cr * (p.cache_read_input_token_cost ?? p.input_cost_per_token ?? 0)
+        + b.o * (p.output_cost_per_token ?? 0),
+    }
+  },
 
   // Phase A: enumerate wire.jsonl transcripts, resolve the mtime cache,
   // extract changed files, report which days those changes touch
