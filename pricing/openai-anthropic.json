@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-19T22:26:13.212Z",
+  "generated_at": "2026-10-23T22:17:04.442Z",
   "upstream": {
     "url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
-    "sha256": "31beaefdd32edb20b63252d56eac4fad2b4169da47f1b93d2552ccbb56f3f4c1"
+    "sha256": "002e28710cb1166fce43268d5f554ca8e3fbc8c0be1556f2a15389dbcdce818c"
   },
   "prices": {
     "chat-latest": {
@@ -4421,17 +4421,17 @@
     },
     "gpt-6-luna": {
       "cache_creation_input_token_cost": 1.25e-7,
-      "cache_creation_input_token_cost_decisions": 1e-7,
+      "cache_creation_input_token_cost_decisions": 1.25e-7,
       "cache_creation_input_token_cost_above_272k_tokens": 2.5e-7,
-      "cache_creation_input_token_cost_above_272k_tokens_decisions": 2e-7,
+      "cache_creation_input_token_cost_above_272k_tokens_decisions": 2.5e-7,
       "cache_creation_input_token_cost_above_272k_tokens_flex": 1.25e-7,
       "cache_creation_input_token_cost_above_272k_tokens_priority": 5e-7,
       "cache_creation_input_token_cost_flex": 6.25e-8,
       "cache_creation_input_token_cost_priority": 2.5e-7,
       "cache_read_input_token_cost": 1e-8,
-      "cache_read_input_token_cost_decisions": 1e-7,
+      "cache_read_input_token_cost_decisions": 1e-8,
       "cache_read_input_token_cost_above_272k_tokens": 2e-8,
-      "cache_read_input_token_cost_above_272k_tokens_decisions": 2e-7,
+      "cache_read_input_token_cost_above_272k_tokens_decisions": 2e-8,
       "cache_read_input_token_cost_above_272k_tokens_flex": 1e-8,
       "cache_read_input_token_cost_above_272k_tokens_priority": 4e-8,
       "cache_read_input_token_cost_batches": 5e-9,
