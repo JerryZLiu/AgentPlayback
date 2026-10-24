@@ -70,7 +70,7 @@ function daySummary(day) {
     agents: day.threads.filter((t) => !t.dotted).length,
     peakConcurrent: day.stats?.peakConcurrent ?? 0,
     peakConcurrentIncludingSubagents: day.stats?.peakConcurrentIncludingSubagents ?? day.stats?.peakConcurrent ?? 0,
-    cost: cost ? +((cost.openai ?? 0) + (cost.claude ?? 0)).toFixed(2) : 0,
+    cost: cost ? +(Object.entries(cost).filter(([k]) => k !== 'priced').reduce((a, [, v]) => a + (v ?? 0), 0)).toFixed(2) : 0,
   }
 }
 
