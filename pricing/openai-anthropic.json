@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-23T22:17:04.442Z",
+  "generated_at": "2026-10-24T18:12:56.030Z",
   "upstream": {
     "url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
-    "sha256": "002e28710cb1166fce43268d5f554ca8e3fbc8c0be1556f2a15389dbcdce818c"
+    "sha256": "96f0e22080113578ac72bd0f7bf9afe4bcad19f04dc7d7ddc889062891c51a0f"
   },
   "prices": {
     "chat-latest": {
@@ -3997,6 +3997,12 @@
     },
     "gpt-5.6": {
       "cache_creation_input_token_cost": 0.000005,
+      "cache_creation_input_token_cost_above_12hr": 0.00001,
+      "cache_creation_input_token_cost_above_12hr_above_272k_tokens": 0.00002,
+      "cache_creation_input_token_cost_above_12hr_above_272k_tokens_flex": 0.00001,
+      "cache_creation_input_token_cost_above_12hr_above_272k_tokens_priority": 0.00004,
+      "cache_creation_input_token_cost_above_12hr_flex": 0.000005,
+      "cache_creation_input_token_cost_above_12hr_priority": 0.00002,
       "cache_creation_input_token_cost_above_272k_tokens": 0.00001,
       "cache_creation_input_token_cost_above_272k_tokens_flex": 0.000005,
       "cache_creation_input_token_cost_above_272k_tokens_priority": 0.00002,
@@ -4110,6 +4116,12 @@
     },
     "gpt-5.6-luna": {
       "cache_creation_input_token_cost": 2.5e-7,
+      "cache_creation_input_token_cost_above_12hr": 5e-7,
+      "cache_creation_input_token_cost_above_12hr_above_272k_tokens": 0.000001,
+      "cache_creation_input_token_cost_above_12hr_above_272k_tokens_flex": 5e-7,
+      "cache_creation_input_token_cost_above_12hr_above_272k_tokens_priority": 0.000002,
+      "cache_creation_input_token_cost_above_12hr_flex": 2.5e-7,
+      "cache_creation_input_token_cost_above_12hr_priority": 0.000001,
       "cache_creation_input_token_cost_above_272k_tokens": 5e-7,
       "cache_creation_input_token_cost_above_272k_tokens_flex": 2.5e-7,
       "cache_creation_input_token_cost_above_272k_tokens_priority": 0.000001,
@@ -4185,6 +4197,12 @@
     },
     "gpt-5.6-sol": {
       "cache_creation_input_token_cost": 0.000005,
+      "cache_creation_input_token_cost_above_12hr": 0.00001,
+      "cache_creation_input_token_cost_above_12hr_above_272k_tokens": 0.00002,
+      "cache_creation_input_token_cost_above_12hr_above_272k_tokens_flex": 0.00001,
+      "cache_creation_input_token_cost_above_12hr_above_272k_tokens_priority": 0.00004,
+      "cache_creation_input_token_cost_above_12hr_flex": 0.000005,
+      "cache_creation_input_token_cost_above_12hr_priority": 0.00002,
       "cache_creation_input_token_cost_above_272k_tokens": 0.00001,
       "cache_creation_input_token_cost_above_272k_tokens_flex": 0.000005,
       "cache_creation_input_token_cost_above_272k_tokens_priority": 0.00002,
@@ -4261,6 +4279,12 @@
     },
     "gpt-5.6-terra": {
       "cache_creation_input_token_cost": 0.0000025,
+      "cache_creation_input_token_cost_above_12hr": 0.000005,
+      "cache_creation_input_token_cost_above_12hr_above_272k_tokens": 0.00001,
+      "cache_creation_input_token_cost_above_12hr_above_272k_tokens_flex": 0.000005,
+      "cache_creation_input_token_cost_above_12hr_above_272k_tokens_priority": 0.00002,
+      "cache_creation_input_token_cost_above_12hr_flex": 0.0000025,
+      "cache_creation_input_token_cost_above_12hr_priority": 0.00001,
       "cache_creation_input_token_cost_above_272k_tokens": 0.000005,
       "cache_creation_input_token_cost_above_272k_tokens_flex": 0.0000025,
       "cache_creation_input_token_cost_above_272k_tokens_priority": 0.00001,
@@ -4336,6 +4360,12 @@
     },
     "gpt-6-astra": {
       "cache_creation_input_token_cost": 0.0000125,
+      "cache_creation_input_token_cost_above_12hr": 0.000025,
+      "cache_creation_input_token_cost_above_12hr_above_272k_tokens": 0.00005,
+      "cache_creation_input_token_cost_above_12hr_above_272k_tokens_flex": 0.000025,
+      "cache_creation_input_token_cost_above_12hr_above_272k_tokens_priority": 0.0001,
+      "cache_creation_input_token_cost_above_12hr_flex": 0.0000125,
+      "cache_creation_input_token_cost_above_12hr_priority": 0.00005,
       "cache_creation_input_token_cost_above_272k_tokens": 0.000025,
       "cache_creation_input_token_cost_above_272k_tokens_flex": 0.0000125,
       "cache_creation_input_token_cost_above_272k_tokens_priority": 0.00005,
@@ -4421,6 +4451,12 @@
     },
     "gpt-6-luna": {
       "cache_creation_input_token_cost": 1.25e-7,
+      "cache_creation_input_token_cost_above_12hr": 2.5e-7,
+      "cache_creation_input_token_cost_above_12hr_above_272k_tokens": 5e-7,
+      "cache_creation_input_token_cost_above_12hr_above_272k_tokens_flex": 2.5e-7,
+      "cache_creation_input_token_cost_above_12hr_above_272k_tokens_priority": 0.000001,
+      "cache_creation_input_token_cost_above_12hr_flex": 1.25e-7,
+      "cache_creation_input_token_cost_above_12hr_priority": 5e-7,
       "cache_creation_input_token_cost_decisions": 1.25e-7,
       "cache_creation_input_token_cost_above_272k_tokens": 2.5e-7,
       "cache_creation_input_token_cost_above_272k_tokens_decisions": 2.5e-7,
@@ -4507,6 +4543,12 @@
     },
     "gpt-6-sol": {
       "cache_creation_input_token_cost": 0.0000025,
+      "cache_creation_input_token_cost_above_12hr": 0.000005,
+      "cache_creation_input_token_cost_above_12hr_above_272k_tokens": 0.00001,
+      "cache_creation_input_token_cost_above_12hr_above_272k_tokens_flex": 0.000005,
+      "cache_creation_input_token_cost_above_12hr_above_272k_tokens_priority": 0.00002,
+      "cache_creation_input_token_cost_above_12hr_flex": 0.0000025,
+      "cache_creation_input_token_cost_above_12hr_priority": 0.00001,
       "cache_creation_input_token_cost_above_272k_tokens": 0.000005,
       "cache_creation_input_token_cost_above_272k_tokens_flex": 0.0000025,
       "cache_creation_input_token_cost_above_272k_tokens_priority": 0.00001,
@@ -4584,6 +4626,12 @@
     },
     "gpt-6.1-sol": {
       "cache_creation_input_token_cost": 0.0000025,
+      "cache_creation_input_token_cost_above_12hr": 0.000005,
+      "cache_creation_input_token_cost_above_12hr_above_272k_tokens": 0.00001,
+      "cache_creation_input_token_cost_above_12hr_above_272k_tokens_flex": 0.000005,
+      "cache_creation_input_token_cost_above_12hr_above_272k_tokens_priority": 0.00002,
+      "cache_creation_input_token_cost_above_12hr_flex": 0.0000025,
+      "cache_creation_input_token_cost_above_12hr_priority": 0.00001,
       "cache_creation_input_token_cost_above_272k_tokens": 0.000005,
       "cache_creation_input_token_cost_above_272k_tokens_batches": 0.0000025,
       "cache_creation_input_token_cost_above_272k_tokens_flex": 0.0000025,
