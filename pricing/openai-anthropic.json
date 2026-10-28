@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-27T00:31:47.446Z",
+  "generated_at": "2026-10-28T13:06:53.403Z",
   "upstream": {
     "url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
-    "sha256": "646027f5463ea6df25487dde62eac4511e86a6923410e68f8ea67b5bdd8860aa"
+    "sha256": "6c17aeb5c34a3432f6fc94fc2578c7bf703588567a3b3f245a57b78e3c220285"
   },
   "prices": {
     "chat-latest": {
@@ -576,7 +576,6 @@
         "us": 1.1
       },
       "supports_output_config": true,
-      "supports_speed": true,
       "prompt_cache_min_tokens": 2048,
       "source": "https://platform.claude.com/docs/en/about-claude/pricing"
     },
@@ -619,7 +618,6 @@
         "us": 1.1
       },
       "supports_output_config": true,
-      "supports_speed": true,
       "prompt_cache_min_tokens": 2048
     },
     "claude-opus-4-8": {
@@ -2440,7 +2438,6 @@
       "input_cost_per_token": 5e-8,
       "input_cost_per_token_batches": 2.5e-8,
       "input_cost_per_token_flex": 2.5e-8,
-      "input_cost_per_token_priority": 0.0000025,
       "litellm_provider": "openai",
       "max_input_tokens": 272000,
       "max_output_tokens": 128000,
@@ -2488,7 +2485,6 @@
       "deprecation_date": "2026-12-11",
       "input_cost_per_token": 5e-8,
       "input_cost_per_token_batches": 2.5e-8,
-      "input_cost_per_token_priority": 0.0000025,
       "input_cost_per_token_flex": 2.5e-8,
       "litellm_provider": "openai",
       "max_input_tokens": 272000,
