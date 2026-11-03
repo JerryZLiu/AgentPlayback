@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-31T18:37:29.877Z",
+  "generated_at": "2026-11-03T09:39:56.070Z",
   "upstream": {
     "url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
-    "sha256": "a00d6bdf774672924f61344a8c0a5e19ed4cd19061a02cef7b3734719c42fb49"
+    "sha256": "a9c185f9646bf2430278a5ad13966fdf1931de3e97961dd46d73eaa321748e78"
   },
   "prices": {
     "chat-latest": {
@@ -1443,6 +1443,7 @@
     "gpt-4.1": {
       "cache_read_input_token_cost": 5e-7,
       "cache_read_input_token_cost_priority": 8.75e-7,
+      "deprecation_date": "2027-01-14",
       "input_cost_per_token": 0.000002,
       "input_cost_per_token_batches": 0.000001,
       "input_cost_per_token_priority": 0.0000035,
@@ -1528,6 +1529,7 @@
     "gpt-4.1-mini": {
       "cache_read_input_token_cost": 1e-7,
       "cache_read_input_token_cost_priority": 1.75e-7,
+      "deprecation_date": "2027-01-14",
       "input_cost_per_token": 4e-7,
       "input_cost_per_token_batches": 2e-7,
       "input_cost_per_token_priority": 7e-7,
@@ -1687,6 +1689,7 @@
     "gpt-4o": {
       "cache_read_input_token_cost": 0.00000125,
       "cache_read_input_token_cost_priority": 0.000002125,
+      "deprecation_date": "2027-01-14",
       "input_cost_per_token": 0.0000025,
       "input_cost_per_token_batches": 0.00000125,
       "input_cost_per_token_priority": 0.00000425,
@@ -1813,6 +1816,7 @@
     "gpt-4o-mini": {
       "cache_read_input_token_cost": 7.5e-8,
       "cache_read_input_token_cost_priority": 1.25e-7,
+      "deprecation_date": "2027-01-14",
       "input_cost_per_token": 1.5e-7,
       "input_cost_per_token_batches": 7.5e-8,
       "input_cost_per_token_priority": 2.5e-7,
@@ -5504,6 +5508,9 @@
       "max_input_tokens": 128000,
       "max_output_tokens": 32000,
       "mode": "realtime",
+      "provider_specific_entry": {
+        "realtime_ga_only": 1
+      },
       "output_cost_per_audio_token": 0.000064,
       "output_cost_per_token": 0.000024,
       "source": "https://developers.openai.com/api/docs/pricing",
@@ -5559,6 +5566,8 @@
       "supports_audio_output": true,
       "supports_function_calling": true,
       "supports_parallel_function_calling": true,
+      "supports_prompt_caching": true,
+      "supports_reasoning": true,
       "supports_system_messages": true,
       "supports_tool_choice": true
     },
@@ -5595,6 +5604,8 @@
       "supports_audio_output": true,
       "supports_function_calling": true,
       "supports_parallel_function_calling": true,
+      "supports_prompt_caching": true,
+      "supports_reasoning": true,
       "supports_system_messages": true,
       "supports_tool_choice": true
     },
