@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-03T23:28:33.197Z",
+  "generated_at": "2026-11-04T06:37:09.396Z",
   "upstream": {
     "url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
-    "sha256": "6dd4990f1f6ec406ac2c5e477a78322e509c100530da1a4c300e81e99743b332"
+    "sha256": "363799541e3cf722b0a5c9317bebb070b417fc4a932313aeedc6d37f26af23c9"
   },
   "prices": {
     "chat-latest": {
@@ -54,6 +54,7 @@
       "cache_read_input_token_cost": 0.00000125,
       "cache_read_input_token_cost_batches": 6.3e-7,
       "deprecation_date": "2026-12-01",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-image-2.5-sunburst",
       "input_cost_per_image_token": 0.000008,
       "input_cost_per_image_token_batches": 0.000004,
@@ -356,6 +357,7 @@
     },
     "claude-mythos-preview": {
       "deprecation_date": "2026-06-09",
+      "deprecation_source": "https://platform.claude.com/docs/en/about-claude/model-deprecations",
       "supports_anthropic_compaction": true,
       "cache_creation_input_token_cost": 0.0000125,
       "cache_creation_input_token_cost_above_1hr": 0.00002,
@@ -779,6 +781,7 @@
       "cache_creation_input_token_cost_batches": 0.000001875,
       "cache_read_input_token_cost_batches": 1.5e-7,
       "deprecation_date": "2026-11-30",
+      "deprecation_source": "https://platform.claude.com/docs/en/about-claude/model-deprecations",
       "successor_model": "claude-sonnet-5-5",
       "input_cost_per_token_batches": 0.0000015,
       "litellm_provider": "anthropic",
@@ -813,6 +816,7 @@
       "cache_creation_input_token_cost_batches": 0.000001875,
       "cache_read_input_token_cost_batches": 1.5e-7,
       "deprecation_date": "2026-11-30",
+      "deprecation_source": "https://platform.claude.com/docs/en/about-claude/model-deprecations",
       "successor_model": "claude-sonnet-5-5",
       "input_cost_per_token_batches": 0.0000015,
       "litellm_provider": "anthropic",
@@ -973,6 +977,7 @@
     },
     "computer-use-preview": {
       "deprecation_date": "2026-07-23",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-5.6-terra",
       "input_cost_per_token": 0.000003,
       "litellm_provider": "openai",
@@ -1003,6 +1008,7 @@
     },
     "computer-use-preview-2025-03-11": {
       "deprecation_date": "2026-07-23",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-5.6-terra",
       "input_cost_per_token": 0.000003,
       "litellm_provider": "openai",
@@ -1109,6 +1115,7 @@
     },
     "ft:gpt-3.5-turbo": {
       "deprecation_date": "2026-10-23",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-5.6-terra",
       "input_cost_per_token": 0.000003,
       "input_cost_per_token_batches": 0.0000015,
@@ -1124,6 +1131,7 @@
     },
     "ft:gpt-3.5-turbo-0125": {
       "deprecation_date": "2026-10-23",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-5.6-terra",
       "input_cost_per_token": 0.000003,
       "litellm_provider": "openai",
@@ -1136,6 +1144,7 @@
     },
     "ft:gpt-3.5-turbo-0613": {
       "deprecation_date": "2026-10-23",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "ft:gpt-3.5-turbo",
       "input_cost_per_token": 0.000003,
       "litellm_provider": "openai",
@@ -1148,6 +1157,7 @@
     },
     "ft:gpt-3.5-turbo-1106": {
       "deprecation_date": "2026-10-23",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-5.6-terra",
       "input_cost_per_token": 0.000003,
       "litellm_provider": "openai",
@@ -1160,6 +1170,7 @@
     },
     "ft:gpt-4-0613": {
       "deprecation_date": "2026-10-23",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-5.6-sol",
       "input_cost_per_token": 0.00003,
       "litellm_provider": "openai",
@@ -1176,6 +1187,7 @@
       "cache_read_input_token_cost": 7.5e-7,
       "cache_read_input_token_cost_batches": 5e-7,
       "deprecation_date": "2027-01-14",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-6-luna",
       "input_cost_per_token": 0.000003,
       "input_cost_per_token_batches": 0.0000015,
@@ -1197,6 +1209,7 @@
       "cache_read_input_token_cost": 2e-7,
       "cache_read_input_token_cost_batches": 1e-7,
       "deprecation_date": "2027-01-14",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-6-luna",
       "input_cost_per_token": 8e-7,
       "input_cost_per_token_batches": 4e-7,
@@ -1218,6 +1231,7 @@
       "cache_read_input_token_cost": 5e-8,
       "cache_read_input_token_cost_batches": 2.5e-8,
       "deprecation_date": "2026-10-23",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-5.6-luna",
       "input_cost_per_token": 2e-7,
       "input_cost_per_token_batches": 1e-7,
@@ -1239,6 +1253,7 @@
       "cache_read_input_token_cost": 0.000001875,
       "cache_read_input_token_cost_batches": 9e-7,
       "deprecation_date": "2027-01-14",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-6-luna",
       "input_cost_per_token": 0.00000375,
       "input_cost_per_token_batches": 0.000002225,
@@ -1261,6 +1276,7 @@
     "ft:gpt-4o-2024-11-20": {
       "cache_creation_input_token_cost": 0.000001875,
       "deprecation_date": "2027-01-14",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-6-luna",
       "input_cost_per_token": 0.00000375,
       "litellm_provider": "openai",
@@ -1280,6 +1296,7 @@
       "cache_read_input_token_cost": 1.5e-7,
       "cache_read_input_token_cost_batches": 7.5e-8,
       "deprecation_date": "2027-01-14",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-6-luna",
       "input_cost_per_token": 3e-7,
       "input_cost_per_token_batches": 1.5e-7,
@@ -1302,6 +1319,7 @@
       "cache_read_input_token_cost": 0.000001,
       "cache_read_input_token_cost_batches": 5e-7,
       "deprecation_date": "2026-10-23",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-5.6-terra",
       "input_cost_per_token": 0.000004,
       "input_cost_per_token_batches": 0.000002,
@@ -1321,6 +1339,7 @@
     },
     "gpt-3.5-turbo": {
       "deprecation_date": "2026-10-23",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-5.6-terra",
       "input_cost_per_token": 5e-7,
       "litellm_provider": "openai",
@@ -1336,6 +1355,7 @@
     },
     "gpt-3.5-turbo-0125": {
       "deprecation_date": "2026-10-23",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-5.6-terra",
       "input_cost_per_token": 5e-7,
       "input_cost_per_token_batches": 2.5e-7,
@@ -1354,6 +1374,7 @@
     },
     "gpt-3.5-turbo-1106": {
       "deprecation_date": "2026-09-28",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-5.6-terra",
       "input_cost_per_token": 0.000001,
       "input_cost_per_token_batches": 0.000001,
@@ -1372,6 +1393,7 @@
     },
     "gpt-3.5-turbo-16k": {
       "deprecation_date": "2026-10-23",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "input_cost_per_token": 0.000003,
       "litellm_provider": "openai",
       "max_input_tokens": 16385,
@@ -1384,6 +1406,7 @@
     },
     "gpt-4": {
       "deprecation_date": "2026-10-23",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-5.6-sol",
       "input_cost_per_token": 0.00003,
       "litellm_provider": "openai",
@@ -1398,6 +1421,7 @@
     },
     "gpt-4-0613": {
       "deprecation_date": "2026-10-23",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-5.6-sol",
       "input_cost_per_token": 0.00003,
       "input_cost_per_token_batches": 0.000015,
@@ -1415,6 +1439,7 @@
     },
     "gpt-4-1106-preview": {
       "deprecation_date": "2026-10-23",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-5.6-sol",
       "input_cost_per_token": 0.00001,
       "litellm_provider": "openai",
@@ -1430,6 +1455,7 @@
     },
     "gpt-4-turbo": {
       "deprecation_date": "2026-10-23",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-5.6-sol",
       "input_cost_per_token": 0.00001,
       "litellm_provider": "openai",
@@ -1447,6 +1473,7 @@
     },
     "gpt-4-turbo-2024-04-09": {
       "deprecation_date": "2026-10-23",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-5.6-sol",
       "input_cost_per_token": 0.00001,
       "input_cost_per_token_batches": 0.000005,
@@ -1469,6 +1496,7 @@
       "cache_read_input_token_cost": 5e-7,
       "cache_read_input_token_cost_priority": 8.75e-7,
       "deprecation_date": "2027-01-14",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-6-luna",
       "input_cost_per_token": 0.000002,
       "input_cost_per_token_batches": 0.000001,
@@ -1513,6 +1541,7 @@
       "cache_read_input_token_cost": 5e-7,
       "cache_read_input_token_cost_priority": 8.75e-7,
       "deprecation_date": "2027-01-14",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-6-luna",
       "input_cost_per_token": 0.000002,
       "input_cost_per_token_priority": 0.0000035,
@@ -1557,6 +1586,7 @@
       "cache_read_input_token_cost": 1e-7,
       "cache_read_input_token_cost_priority": 1.75e-7,
       "deprecation_date": "2027-01-14",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-6-luna",
       "input_cost_per_token": 4e-7,
       "input_cost_per_token_batches": 2e-7,
@@ -1601,6 +1631,7 @@
       "cache_read_input_token_cost": 1e-7,
       "cache_read_input_token_cost_priority": 1.75e-7,
       "deprecation_date": "2027-01-14",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-6-luna",
       "input_cost_per_token": 4e-7,
       "input_cost_per_token_priority": 7e-7,
@@ -1645,6 +1676,7 @@
       "cache_read_input_token_cost": 2.5e-8,
       "cache_read_input_token_cost_priority": 5e-8,
       "deprecation_date": "2026-10-23",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-5.6-luna",
       "input_cost_per_token": 1e-7,
       "input_cost_per_token_batches": 5e-8,
@@ -1683,6 +1715,7 @@
       "cache_read_input_token_cost": 2.5e-8,
       "cache_read_input_token_cost_priority": 5e-8,
       "deprecation_date": "2026-10-23",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-5.6-luna",
       "input_cost_per_token": 1e-7,
       "input_cost_per_token_priority": 2e-7,
@@ -1721,6 +1754,7 @@
       "cache_read_input_token_cost": 0.00000125,
       "cache_read_input_token_cost_priority": 0.000002125,
       "deprecation_date": "2027-01-14",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-6-luna",
       "input_cost_per_token": 0.0000025,
       "input_cost_per_token_batches": 0.00000125,
@@ -1744,6 +1778,7 @@
     },
     "gpt-4o-2024-05-13": {
       "deprecation_date": "2026-10-23",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-5.6-sol",
       "input_cost_per_token": 0.000005,
       "input_cost_per_token_batches": 0.0000025,
@@ -1768,6 +1803,7 @@
       "cache_read_input_token_cost": 0.00000125,
       "cache_read_input_token_cost_priority": 0.000002125,
       "deprecation_date": "2027-01-14",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-6-luna",
       "input_cost_per_token": 0.0000025,
       "input_cost_per_token_priority": 0.00000425,
@@ -1793,6 +1829,7 @@
       "cache_read_input_token_cost": 0.00000125,
       "cache_read_input_token_cost_priority": 0.000002125,
       "deprecation_date": "2027-01-14",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-6-luna",
       "input_cost_per_token": 0.0000025,
       "input_cost_per_token_priority": 0.00000425,
@@ -1816,6 +1853,7 @@
     },
     "gpt-4o-audio-preview-2024-12-17": {
       "deprecation_date": "2027-01-20",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-audio-1.5",
       "input_cost_per_audio_token": 0.00004,
       "input_cost_per_token": 0.0000025,
@@ -1834,6 +1872,7 @@
     },
     "gpt-4o-audio-preview-2025-06-03": {
       "deprecation_date": "2027-01-20",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-audio-1.5",
       "input_cost_per_audio_token": 0.00004,
       "input_cost_per_token": 0.0000025,
@@ -1854,6 +1893,7 @@
       "cache_read_input_token_cost": 7.5e-8,
       "cache_read_input_token_cost_priority": 1.25e-7,
       "deprecation_date": "2027-01-14",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-6-luna",
       "input_cost_per_token": 1.5e-7,
       "input_cost_per_token_batches": 7.5e-8,
@@ -1884,6 +1924,7 @@
       "cache_read_input_token_cost": 7.5e-8,
       "cache_read_input_token_cost_priority": 1.25e-7,
       "deprecation_date": "2027-01-14",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-6-luna",
       "input_cost_per_token": 1.5e-7,
       "input_cost_per_token_priority": 2.5e-7,
@@ -1912,6 +1953,7 @@
     },
     "gpt-4o-mini-audio-preview-2024-12-17": {
       "deprecation_date": "2027-01-20",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "input_cost_per_audio_token": 0.00001,
       "input_cost_per_token": 1.5e-7,
       "litellm_provider": "openai",
@@ -1931,6 +1973,7 @@
       "cache_creation_input_audio_token_cost": 3e-7,
       "cache_read_input_token_cost": 3e-7,
       "deprecation_date": "2027-01-20",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "input_cost_per_audio_token": 0.00001,
       "input_cost_per_token": 6e-7,
       "litellm_provider": "openai",
@@ -1973,6 +2016,7 @@
     },
     "gpt-4o-mini-search-preview-2025-03-11": {
       "deprecation_date": "2026-07-23",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-5.6-terra",
       "cache_read_input_token_cost": 7.5e-8,
       "input_cost_per_token": 1.5e-7,
@@ -2011,12 +2055,14 @@
         "/v1/audio/transcriptions"
       ],
       "deprecation_date": "2027-02-26",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-live-transcribe",
       "input_cost_per_second": 0.00005,
       "source": "https://developers.openai.com/api/docs/pricing"
     },
     "gpt-4o-mini-transcribe-2025-03-20": {
       "deprecation_date": "2027-01-20",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-4o-mini-transcribe-2025-12-15",
       "input_cost_per_audio_token": 0.00000125,
       "input_cost_per_second": 0.00005,
@@ -2033,6 +2079,7 @@
     },
     "gpt-4o-mini-transcribe-2025-12-15": {
       "deprecation_date": "2027-02-26",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-live-transcribe",
       "input_cost_per_audio_token": 0.00000125,
       "input_cost_per_second": 0.00005,
@@ -2049,6 +2096,7 @@
     },
     "gpt-4o-mini-tts": {
       "deprecation_date": "2027-01-06",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-realtime-2.1-mini",
       "input_cost_per_token": 6e-7,
       "litellm_provider": "openai",
@@ -2070,6 +2118,7 @@
     },
     "gpt-4o-mini-tts-2025-03-20": {
       "deprecation_date": "2027-01-06",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-realtime-2.1-mini",
       "input_cost_per_token": 6e-7,
       "litellm_provider": "openai",
@@ -2091,6 +2140,7 @@
     },
     "gpt-4o-mini-tts-2025-12-15": {
       "deprecation_date": "2027-01-06",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-realtime-2.1-mini",
       "input_cost_per_token": 6e-7,
       "litellm_provider": "openai",
@@ -2137,6 +2187,7 @@
     },
     "gpt-4o-search-preview-2025-03-11": {
       "deprecation_date": "2026-07-23",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-5.6-terra",
       "cache_read_input_token_cost": 0.00000125,
       "input_cost_per_token": 0.0000025,
@@ -2175,6 +2226,7 @@
         "/v1/audio/transcriptions"
       ],
       "deprecation_date": "2027-02-26",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-live-transcribe",
       "input_cost_per_second": 0.0001,
       "source": "https://developers.openai.com/api/docs/pricing"
@@ -2191,6 +2243,7 @@
         "/v1/audio/transcriptions"
       ],
       "deprecation_date": "2027-02-26",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-live-transcribe",
       "input_cost_per_second": 0.0001,
       "source": "https://developers.openai.com/api/docs/pricing"
@@ -2201,6 +2254,7 @@
       "cache_read_input_token_cost_flex": 6.25e-8,
       "cache_read_input_token_cost_priority": 2.5e-7,
       "deprecation_date": "2026-12-11",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-5.6-sol",
       "input_cost_per_token": 0.00000125,
       "input_cost_per_token_batches": 6.25e-7,
@@ -2260,6 +2314,7 @@
       "cache_read_input_token_cost_flex": 6.25e-8,
       "cache_read_input_token_cost_priority": 2.5e-7,
       "deprecation_date": "2026-12-11",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-5.6-sol",
       "input_cost_per_token": 0.00000125,
       "input_cost_per_token_batches": 6.25e-7,
@@ -2316,6 +2371,7 @@
     "gpt-5-chat": {
       "cache_read_input_token_cost": 1.25e-7,
       "deprecation_date": "2026-07-23",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-5.2-chat-latest",
       "input_cost_per_token": 0.00000125,
       "litellm_provider": "openai",
@@ -2352,6 +2408,7 @@
     "gpt-5-chat-latest": {
       "cache_read_input_token_cost": 1.25e-7,
       "deprecation_date": "2026-07-23",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-5.6-sol",
       "input_cost_per_token": 0.00000125,
       "litellm_provider": "openai",
@@ -2384,6 +2441,7 @@
     "gpt-5-codex": {
       "cache_read_input_token_cost": 1.25e-7,
       "deprecation_date": "2026-07-23",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-5.6-sol",
       "input_cost_per_token": 0.00000125,
       "litellm_provider": "openai",
@@ -2419,6 +2477,7 @@
       "cache_read_input_token_cost_flex": 1.25e-8,
       "cache_read_input_token_cost_priority": 4.5e-8,
       "deprecation_date": "2026-12-11",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-5.6-terra",
       "input_cost_per_token": 2.5e-7,
       "input_cost_per_token_batches": 1.25e-7,
@@ -2478,6 +2537,7 @@
       "cache_read_input_token_cost_flex": 1.25e-8,
       "cache_read_input_token_cost_priority": 4.5e-8,
       "deprecation_date": "2026-12-11",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-5.6-terra",
       "input_cost_per_token": 2.5e-7,
       "input_cost_per_token_batches": 1.25e-7,
@@ -2536,6 +2596,7 @@
       "cache_read_input_token_cost_batches": 2.5e-9,
       "cache_read_input_token_cost_flex": 2.5e-9,
       "deprecation_date": "2026-12-11",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-5.6-luna",
       "input_cost_per_token": 5e-8,
       "input_cost_per_token_batches": 2.5e-8,
@@ -2592,6 +2653,7 @@
       "cache_read_input_token_cost_batches": 2.5e-9,
       "cache_read_input_token_cost_flex": 2.5e-9,
       "deprecation_date": "2026-12-11",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-5.6-luna",
       "input_cost_per_token": 5e-8,
       "input_cost_per_token_batches": 2.5e-8,
@@ -2645,6 +2707,7 @@
     },
     "gpt-5-pro": {
       "deprecation_date": "2026-12-11",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-5.6-sol",
       "input_cost_per_token": 0.000015,
       "input_cost_per_token_batches": 0.0000075,
@@ -2695,6 +2758,7 @@
     },
     "gpt-5-pro-2025-10-06": {
       "deprecation_date": "2026-12-11",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-5.6-sol",
       "input_cost_per_token": 0.000015,
       "input_cost_per_token_batches": 0.0000075,
@@ -2854,6 +2918,7 @@
       "supports_xhigh_reasoning_effort": false,
       "supports_minimal_reasoning_effort": false,
       "deprecation_date": "2027-04-01",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-6-sol"
     },
     "gpt-5.1-2025-11-13": {
@@ -2862,6 +2927,7 @@
       "cache_read_input_token_cost_flex": 6.25e-8,
       "cache_read_input_token_cost_priority": 2.5e-7,
       "deprecation_date": "2027-04-01",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-6-sol",
       "input_cost_per_token": 0.00000125,
       "input_cost_per_token_priority": 0.0000025,
@@ -2919,6 +2985,7 @@
     "gpt-5.1-chat-latest": {
       "cache_read_input_token_cost": 1.25e-7,
       "deprecation_date": "2026-07-23",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-5.6-sol",
       "input_cost_per_token": 0.00000125,
       "litellm_provider": "openai",
@@ -2951,6 +3018,7 @@
     "gpt-5.1-codex": {
       "cache_read_input_token_cost": 1.25e-7,
       "deprecation_date": "2026-07-23",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-5.6-sol",
       "input_cost_per_token": 0.00000125,
       "litellm_provider": "openai",
@@ -2983,6 +3051,7 @@
     "gpt-5.1-codex-max": {
       "cache_read_input_token_cost": 1.25e-7,
       "deprecation_date": "2026-07-23",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-5.6-sol",
       "input_cost_per_token": 0.00000125,
       "litellm_provider": "openai",
@@ -3015,6 +3084,7 @@
     "gpt-5.1-codex-mini": {
       "cache_read_input_token_cost": 2.5e-8,
       "deprecation_date": "2026-07-23",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-5.6-terra",
       "input_cost_per_token": 2.5e-7,
       "litellm_provider": "openai",
@@ -3166,6 +3236,7 @@
     "gpt-5.2-chat-latest": {
       "cache_read_input_token_cost": 1.75e-7,
       "deprecation_date": "2026-08-10",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-5.6-sol",
       "input_cost_per_token": 0.00000175,
       "litellm_provider": "openai",
@@ -3198,6 +3269,7 @@
     "gpt-5.2-codex": {
       "cache_read_input_token_cost": 1.75e-7,
       "deprecation_date": "2026-07-23",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-5.6-sol",
       "input_cost_per_token": 0.00000175,
       "litellm_provider": "openai",
@@ -3326,6 +3398,7 @@
     "gpt-5.3-chat-latest": {
       "cache_read_input_token_cost": 1.75e-7,
       "deprecation_date": "2026-08-10",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-5.6-sol",
       "input_cost_per_token": 0.00000175,
       "litellm_provider": "openai",
@@ -3405,6 +3478,7 @@
       "supports_xhigh_reasoning_effort": true,
       "supports_minimal_reasoning_effort": false,
       "deprecation_date": "2027-04-01",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-6-sol"
     },
     "gpt-5.4": {
@@ -3719,6 +3793,7 @@
       "supports_xhigh_reasoning_effort": true,
       "supports_minimal_reasoning_effort": false,
       "deprecation_date": "2027-04-01",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-6-luna"
     },
     "gpt-5.4-nano-2026-03-17": {
@@ -3726,6 +3801,7 @@
       "cache_read_input_token_cost_batches": 1e-8,
       "cache_read_input_token_cost_flex": 1e-8,
       "deprecation_date": "2027-04-01",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-6-luna",
       "input_cost_per_token": 2e-7,
       "input_cost_per_token_flex": 1e-7,
@@ -5167,6 +5243,7 @@
     },
     "gpt-audio": {
       "deprecation_date": "2027-01-20",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-audio-1.5",
       "input_cost_per_audio_token": 0.000032,
       "input_cost_per_token": 0.0000025,
@@ -5238,6 +5315,7 @@
     },
     "gpt-audio-2025-08-28": {
       "deprecation_date": "2027-01-20",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-audio-1.5",
       "input_cost_per_audio_token": 0.000032,
       "input_cost_per_token": 0.0000025,
@@ -5276,6 +5354,7 @@
     },
     "gpt-audio-mini": {
       "deprecation_date": "2027-01-20",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-audio-1.5",
       "input_cost_per_audio_token": 0.00001,
       "input_cost_per_token": 6e-7,
@@ -5314,6 +5393,7 @@
     },
     "gpt-audio-mini-2025-10-06": {
       "deprecation_date": "2026-07-23",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-audio-1.5",
       "input_cost_per_audio_token": 0.00001,
       "input_cost_per_token": 6e-7,
@@ -5385,6 +5465,7 @@
       "supports_tool_choice": true,
       "supports_vision": false,
       "deprecation_date": "2027-01-20",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-audio-1.5",
       "source": "https://developers.openai.com/api/docs/pricing"
     },
@@ -5467,6 +5548,7 @@
       "cache_read_input_token_cost": 0.00000125,
       "cache_read_input_token_cost_batches": 6.3e-7,
       "deprecation_date": "2026-12-01",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-image-2.5-sunburst",
       "input_cost_per_token": 0.000005,
       "litellm_provider": "openai",
@@ -5489,6 +5571,7 @@
       "cache_read_input_token_cost": 0.00000125,
       "cache_read_input_token_cost_batches": 6.3e-7,
       "deprecation_date": "2026-12-01",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-image-2.5-sunburst",
       "input_cost_per_token": 0.000005,
       "litellm_provider": "openai",
@@ -5512,6 +5595,7 @@
       "cache_read_input_image_token_cost": 5e-7,
       "cache_read_input_token_cost": 4e-7,
       "deprecation_date": "2027-01-20",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-realtime-2.1",
       "input_cost_per_audio_token": 0.000032,
       "input_cost_per_image_token": 0.000005,
@@ -5695,6 +5779,7 @@
       "cache_read_input_image_token_cost": 5e-7,
       "cache_read_input_token_cost": 4e-7,
       "deprecation_date": "2027-01-20",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-realtime-2.1",
       "input_cost_per_audio_token": 0.000032,
       "input_cost_per_image_token": 0.000005,
@@ -5731,6 +5816,7 @@
       "cache_read_input_image_token_cost": 8e-8,
       "cache_read_input_token_cost": 6e-8,
       "deprecation_date": "2027-01-20",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-realtime-2.1-mini",
       "input_cost_per_audio_token": 0.00001,
       "input_cost_per_image_token": 8e-7,
@@ -5794,6 +5880,7 @@
       "supports_system_messages": true,
       "supports_tool_choice": true,
       "deprecation_date": "2027-01-20",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-realtime-2.1-mini",
       "source": "https://developers.openai.com/api/docs/pricing"
     },
@@ -5839,6 +5926,7 @@
     "o1-2024-12-17": {
       "cache_read_input_token_cost": 0.0000075,
       "deprecation_date": "2026-10-23",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-5.6-sol",
       "input_cost_per_token": 0.000015,
       "input_cost_per_token_batches": 0.0000075,
@@ -5861,6 +5949,7 @@
     },
     "o1-pro": {
       "deprecation_date": "2026-10-23",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-5.6-sol",
       "input_cost_per_token": 0.00015,
       "input_cost_per_token_batches": 0.000075,
@@ -5895,6 +5984,7 @@
     },
     "o1-pro-2025-03-19": {
       "deprecation_date": "2026-10-23",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-5.6-sol",
       "input_cost_per_token": 0.00015,
       "input_cost_per_token_batches": 0.000075,
@@ -5986,6 +6076,7 @@
       "cache_read_input_token_cost_flex": 2.5e-7,
       "cache_read_input_token_cost_priority": 8.75e-7,
       "deprecation_date": "2026-12-11",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-5.6-sol",
       "input_cost_per_token": 0.000002,
       "input_cost_per_token_batches": 0.000001,
@@ -6065,10 +6156,12 @@
       "supports_vision": true,
       "supports_pdf_input": true,
       "deprecation_date": "2026-07-23",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-5.6-sol"
     },
     "o3-deep-research-2025-06-26": {
       "deprecation_date": "2026-07-23",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-5.6-sol",
       "cache_read_input_token_cost": 0.0000025,
       "input_cost_per_token": 0.00001,
@@ -6102,6 +6195,7 @@
     "o3-mini": {
       "cache_read_input_token_cost": 5.5e-7,
       "deprecation_date": "2026-10-23",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-5.6-sol",
       "input_cost_per_token": 0.0000011,
       "input_cost_per_token_batches": 5.5e-7,
@@ -6123,6 +6217,7 @@
     "o3-mini-2025-01-31": {
       "cache_read_input_token_cost": 5.5e-7,
       "deprecation_date": "2026-10-23",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-5.6-sol",
       "input_cost_per_token": 0.0000011,
       "input_cost_per_token_batches": 5.5e-7,
@@ -6143,6 +6238,7 @@
     },
     "o3-pro": {
       "deprecation_date": "2026-12-11",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-5.6-sol",
       "input_cost_per_token": 0.00002,
       "input_cost_per_token_batches": 0.00001,
@@ -6188,6 +6284,7 @@
     },
     "o3-pro-2025-06-10": {
       "deprecation_date": "2026-12-11",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-5.6-sol",
       "input_cost_per_token": 0.00002,
       "input_cost_per_token_batches": 0.00001,
@@ -6236,6 +6333,7 @@
       "cache_read_input_token_cost_flex": 1.38e-7,
       "cache_read_input_token_cost_priority": 5e-7,
       "deprecation_date": "2026-10-23",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-5.6-terra",
       "input_cost_per_token": 0.0000011,
       "input_cost_per_token_batches": 5.5e-7,
@@ -6270,6 +6368,7 @@
       "cache_read_input_token_cost_flex": 1.38e-7,
       "cache_read_input_token_cost_priority": 5e-7,
       "deprecation_date": "2026-10-23",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-5.6-terra",
       "input_cost_per_token": 0.0000011,
       "input_cost_per_token_batches": 5.5e-7,
@@ -6329,10 +6428,12 @@
       "supports_vision": true,
       "supports_pdf_input": true,
       "deprecation_date": "2026-07-23",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-5.6-sol"
     },
     "o4-mini-deep-research-2025-06-26": {
       "deprecation_date": "2026-07-23",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-5.6-sol",
       "cache_read_input_token_cost": 5e-7,
       "input_cost_per_token": 0.000002,
