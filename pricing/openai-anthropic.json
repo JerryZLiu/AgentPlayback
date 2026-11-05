@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-04T21:56:28.553Z",
+  "generated_at": "2026-11-05T02:32:35.488Z",
   "upstream": {
     "url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
-    "sha256": "d645f6ee613f0a1216290ecebadaf3fba24f28252fc4a77f0068bb0413820c58"
+    "sha256": "ad89880d689559515afdc15c613be4eb53dcbd35c4ce11c12cddc4d32454c1d2"
   },
   "prices": {
     "chat-latest": {
@@ -64,6 +64,7 @@
       "litellm_provider": "openai",
       "mode": "image_generation",
       "output_cost_per_image_token": 0.000032,
+      "output_cost_per_image_token_batches": 0.000016,
       "output_cost_per_token": 0.00001,
       "output_cost_per_token_batches": 0.000005,
       "source": "https://developers.openai.com/api/docs/pricing",
@@ -5654,6 +5655,7 @@
       "input_cost_per_image_token_batches": 0.000004,
       "input_cost_per_token_batches": 0.0000025,
       "output_cost_per_image_token": 0.000032,
+      "output_cost_per_image_token_batches": 0.000016,
       "output_cost_per_token_batches": 0.000005,
       "source": "https://developers.openai.com/api/docs/pricing",
       "supported_endpoints": [
@@ -5677,6 +5679,7 @@
       "input_cost_per_image_token_batches": 0.000004,
       "input_cost_per_token_batches": 0.0000025,
       "output_cost_per_image_token": 0.000032,
+      "output_cost_per_image_token_batches": 0.000016,
       "output_cost_per_token_batches": 0.000005,
       "source": "https://developers.openai.com/api/docs/pricing",
       "supported_endpoints": [
