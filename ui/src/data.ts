@@ -8,7 +8,42 @@ export type Category =
   | 'personal'
   | 'pixel-art'
 
-export type Provider = 'claude' | 'openai'
+export type Provider = 'claude' | 'openai' | 'kimi'
+
+/** the dial's provider registry: every provider ids itself in the scanner's
+ *  day JSON (thread.provider, tokens.byProvider, meta.providerTotals), and
+ *  the UI reads display name/logo from here — adding a provider is a scanner
+ *  module plus one row in this list */
+export interface ProviderMeta {
+  id: Provider
+  /** gauge label, e.g. "Codex, 33 hr 4 min" */
+  label: string
+  logo: string
+}
+
+export const PROVIDERS: ProviderMeta[] = [
+  { id: 'openai', label: 'Codex', logo: '/assets/openai-mark.svg' },
+  { id: 'claude', label: 'Claude', logo: '/assets/claude-spark.png' },
+  { id: 'kimi', label: 'Kimi Work', logo: '/assets/kimi-mark.svg' },
+]
+
+export const providerMeta = (id: string): ProviderMeta | undefined =>
+  PROVIDERS.find((p) => p.id === id)
+
+/** a provider "ran today" when the dial draws its threads — token-only
+ *  sessions shorter than the 5-minute block minimum still count via their
+ *  threads' blocked/dotted presence, so this keys off hours */
+export function providerHours(day: DayData, id: string): number {
+  return day.threads.filter((t) => t.provider === id).reduce((a, t) => a + threadDur(t), 0)
+}
+
+/** providers with real hours today, in registry order — the center disc
+ *  stacks its bands top→bottom (wave) or clockwise from 12 (pie) in this
+ *  order. The mock keeps its authored two-field art. */
+export function activeProviders(day: DayData): Provider[] {
+  if (day === MOCK_DAY) return ['openai', 'claude']
+  return PROVIDERS.filter((p) => providerHours(day, p.id) > 0).map((p) => p.id)
+}
 
 export type ThreadState = 'done' | 'active' | 'unfinished' | 'blocked'
 
@@ -133,6 +168,8 @@ export const MOCK_META = {
   dateLabel: 'Today, Sep 29',
   claudeTotal: '6 hr 25 min',
   openaiTotal: '6 hr 25 min',
+  kimiTotal: '0 min',
+  providerTotals: {} as Record<string, string>,
   tooltipThread: 't07',
   tooltipTime: '1:52PM - 4:32 PM',
   dayStart: 0,
@@ -163,13 +200,23 @@ export interface CodeTotal {
 /** real token usage from the logs: provider totals (cache reads included),
  *  real USD cost (each bucket priced at its model's LiteLLM rate; `priced`
  *  is false when a model was missing from the table), the model ids that
- *  ran, and the per-project split */
+ *  ran, and the per-project split. `byProvider` is the registry-driven form
+ *  the scanner now writes; the openai/claude fields are the legacy
+ *  two-provider shape, kept in sync for older day files */
 export interface TokenStats {
   openai: number
   claude: number
   cost?: { openai: number; claude: number; priced: boolean }
   models: { openai: string[]; claude: string[] }
-  byCategory: { category: string; openai: number; claude: number; openaiCost?: number; claudeCost?: number }[]
+  byProvider?: Record<string, { tok: number; cost: number; models: string[] }>
+  byCategory: ({
+    category: string
+    openai: number
+    claude: number
+    openaiCost?: number
+    claudeCost?: number
+    byProvider?: Record<string, { tok: number; cost: number }>
+  })[]
 }
 
 export interface DayData {
@@ -221,6 +268,8 @@ const EMPTY_META: typeof MOCK_META = {
   dateLabel: '',
   claudeTotal: '0 min',
   openaiTotal: '0 min',
+  kimiTotal: '0 min',
+  providerTotals: {},
   tooltipThread: '',
   tooltipTime: '',
   dayStart: 8,

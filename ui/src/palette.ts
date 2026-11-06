@@ -3,7 +3,7 @@
 // rank selects the same palette position on every viewed day. The mock day
 // keeps the hand-picked Figma palettes untouched.
 
-import { MOCK_DAY, type Category, type DayData } from './data'
+import { activeProviders, MOCK_DAY, providerHours, type Category, type DayData } from './data'
 import { arcWidth, arcWidthRaw, CENTER, getLaneLayout, GROOVE_TOP, laneRadius } from './geometry'
 import { labColor, labPalettes } from './labpal'
 import { SKINS, type RingField, type SkinId, type SkinScene } from './skins'
@@ -265,31 +265,52 @@ function withLab(skin: SkinScene): SkinScene {
     // audition slots so the center ring auditions along with everything else
     gaugeTop: labColor(0, skin.gaugeTop),
     gaugeBottom: labColor(1, skin.gaugeBottom),
+    innerMid: labColor(2, skin.innerMid),
   }
 }
 
-/** the wave skins' horizon height (up-positive, disc coords): the circular
- *  segment above it holds OpenAI's real share of agent-hours, solved by area
- *  so the split reads true. Mock and pie skins keep the authored y. Shared
- *  by the scene (which floods the wave) and the overlay (which anchors each
- *  provider's mark inside its own region). */
-export function waveHorizonFor(day: DayData, skin: SkinScene): number {
-  if (day === MOCK_DAY || skin.innerMode !== 'wave') return skin.wave?.y ?? 8
+/** the wave skins' horizon heights (up-positive, disc coords), one boundary
+ *  per adjacent pair of active providers: the circular segment above each
+ *  boundary holds that provider's cumulative share of agent-hours, solved by
+ *  area so the split reads true. Bands stack top→bottom in registry order.
+ *  Mock and pie skins keep the authored single horizon. Shared by the scene
+ *  (which floods the wave) and the overlay (which anchors each provider's
+ *  mark inside its own region). */
+export function waveHorizonsFor(day: DayData, skin: SkinScene): number[] {
+  if (day === MOCK_DAY || skin.innerMode !== 'wave') return [skin.wave?.y ?? 8]
   const R = skin.center?.innerR ?? CENTER.innerR
-  const dur = (p: string) => day.threads.filter((t) => t.provider === p).reduce((a, t) => a + t.end - t.start, 0)
-  const o = dur('openai')
-  const c = dur('claude')
-  const fc = o + c > 0 ? c / (o + c) : 0.5
-  // horizon height d whose circular segment above it holds openai's share:
-  // R²·acos(d/R) − d·√(R²−d²) = (1−fc)·πR², bisected (area-true, not height)
-  const target = (1 - fc) * Math.PI * R * R
-  let lo = -R
-  let hi = R
-  for (let i = 0; i < 40; i++) {
-    const d = (lo + hi) / 2
-    const above = R * R * Math.acos(Math.max(-1, Math.min(1, d / R))) - d * Math.sqrt(Math.max(R * R - d * d, 0))
-    if (above > target) lo = d
-    else hi = d
+  const act = activeProviders(day)
+  if (act.length <= 1) return []
+  const total = act.reduce((a, p) => a + providerHours(day, p), 0)
+  let cum = 0
+  const out: number[] = []
+  for (let i = 0; i < act.length - 1; i++) {
+    cum += providerHours(day, act[i])
+    // horizon height d whose circular segment above it holds the cumulative
+    // share: R²·acos(d/R) − d·√(R²−d²) = share·πR², bisected (area-true,
+    // not height)
+    const target = (cum / (total || 1)) * Math.PI * R * R
+    let lo = -R
+    let hi = R
+    for (let j = 0; j < 40; j++) {
+      const d = (lo + hi) / 2
+      const above = R * R * Math.acos(Math.max(-1, Math.min(1, d / R))) - d * Math.sqrt(Math.max(R * R - d * d, 0))
+      if (above > target) lo = d
+      else hi = d
+    }
+    out.push((lo + hi) / 2)
   }
-  return (lo + hi) / 2
+  return out
+}
+
+/** the disc's three band colors for today: each provider owns one canonical
+ *  inner color (openai=innerTop, claude=innerBottom, kimi=innerMid) and the
+ *  bands stack in registry order, so band i takes active provider i's color.
+ *  With fewer than three active providers the unused slots repeat a neighbor
+ *  (a lone provider floods the whole disc in its own color). */
+export function bandColors(skin: SkinScene, day: DayData): [string, string, string] {
+  const canon: Record<string, string> = { openai: skin.innerTop, claude: skin.innerBottom, kimi: skin.innerMid }
+  const act = activeProviders(day)
+  const of = (i: number) => canon[act[Math.min(i, Math.max(act.length - 1, 0))] ?? 'openai']
+  return act.length === 0 ? [skin.innerTop, skin.innerMid, skin.innerBottom] : [of(0), of(1), of(2)]
 }

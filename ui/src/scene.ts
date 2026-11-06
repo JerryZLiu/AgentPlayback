@@ -708,8 +708,10 @@ const CENTER_FRAG = /* glsl */ `
   uniform sampler2D uSpindleTex;
   uniform float uSpindleTexA;
   uniform vec2 uWave;                      // horizon px above center, wobble amp
-  uniform vec3 uWhite, uGauge, uInnerTop, uInnerBottom, uSpindle;
+  uniform vec2 uWave2;                     // second horizon (3-band days); y < -900 = off
+  uniform vec3 uWhite, uGauge, uInnerTop, uInnerMid, uInnerBottom, uSpindle;
   uniform vec2 uSplit;
+  uniform vec2 uSplit2;                    // second wedge (3-way days); x < 0 = off
   uniform float uRingGauge;   // 1 = bold ring mirrors the provider split
   uniform float uRoundCaps;   // Paper center-chip corner radius in pixels
   uniform vec4 uSegs[6];      // a0, a1, 0, 0
@@ -717,8 +719,9 @@ const CENTER_FRAG = /* glsl */ `
   uniform int uSegCount;
   uniform float uDim;
   // center hover: which element the pointer is on and how to show it.
-  // uHovKind 0 = none, 1 = ring segment (uHovIdx), 2 = provider field
-  // (uHovProv 0 = top/openai, 1 = bottom/claude). uHovAmt animates 0..1;
+  // uHovKind 0 = none, 1 = ring segment (uHovIdx), 2 = provider band
+  // (uHovProv = band index 0 top/first-wedge .. 2 bottom/rest, in the active
+  // providers' registry order). uHovAmt animates 0..1;
   // uHovFx picks the treatment (0 outline, 1 pop, 2 sonar, 3 spotlight);
   // uHovTime runs only while sonar needs to animate.
   uniform float uHovKind, uHovIdx, uHovProv, uHovAmt, uHovFx, uHovTime;
@@ -750,6 +753,20 @@ const CENTER_FRAG = /* glsl */ `
     return mix(flatM, rounded, step(0.01, uRoundCaps));
   }
 
+  // 1 when deg lies in the cw wedge a0..a1 (degrees cw from 12, wrapping)
+  float inWedge(float deg, float a0, float a1) {
+    float rel = deg - a0; if (rel < 0.0) rel += 360.0;
+    float span = a1 - a0; if (span < 0.0) span += 360.0;
+    return 1.0 - step(span, rel);
+  }
+  // px distance from deg to the nearer of the wedge's two edges (caller scales
+  // by r — same convention as the old edge terms)
+  float wedgeEdgeDist(float deg, float a0, float a1) {
+    float e0 = min(abs(deg - a0), 360.0 - abs(deg - a0));
+    float e1 = min(abs(deg - a1), 360.0 - abs(deg - a1));
+    return min(e0, e1);
+  }
+
   void main() {
     vec4 col = vec4(0.0);
     float r = length(vPos);
@@ -757,52 +774,76 @@ const CENTER_FRAG = /* glsl */ `
     if (a < 0.0) a += 6.28318530718;
     float deg = a * 57.29577951;
 
-    // inner disc: provider split — pie (paper) or wave hemisphere (vinyl/electric).
-    // The guard runs a few px past the disc edge so pop's growth, its shadow,
-    // and sonar's ripples have room to paint outside the resting radius.
+    // inner disc: provider bands — pie (paper/glass) or stacked waves
+    // (vinyl/electric). Bands follow the day's active providers in registry
+    // order; each band's color is that provider's canonical inner color, so
+    // the disc recolors per day (a lone provider floods it whole). The guard
+    // runs a few px past the disc edge so pop's growth, its shadow, and
+    // sonar's ripples have room to paint outside the resting radius.
     if (r < uInnerR + 34.0) {
       vec3 c;
-      float regTop = 0.0; // 1 where the pixel sits in the top/openai field
-      float bDist = 1e3;  // px to the split boundary, for outline's ink line
+      float regId = 0.0;  // band index 0..2 (top→bottom / wedge order)
+      float bDist = 1e3;  // px to the nearest split boundary, for outline's ink line
       if (uSplit.x < 0.0) {
         c = uInnerTop;
-        regTop = 1.0;
       } else if (uSplit.x > 360.0) {
         c = uInnerBottom;
-        regTop = 0.0;
       } else if (uInnerMode < 0.5) {
-        // pie split: gray openai wedge uSplit.x°..uSplit.y° (cw, wrapping 0),
-        // warm salmon the rest — real days size it by actual agent-hours
-        float inGray = 0.0;
-        if (deg >= uSplit.x || deg <= uSplit.y) inGray = 1.0;
-        float e1 = min(abs(deg - uSplit.x), 360.0 - abs(deg - uSplit.x)) * r * 0.01745;
-        float e2 = min(abs(deg - uSplit.y), 360.0 - abs(deg - uSplit.y)) * r * 0.01745;
-        float soft = clamp(min(e1, e2) / 1.5, 0.0, 1.0) * 0.5 + 0.5;
-        c = mix(uInnerBottom, uInnerTop, inGray * soft + inGray * (1.0 - soft) * 0.5);
-        regTop = inGray;
-        bDist = min(e1, e2);
+        // pie split: wedge 0 = uSplit.x°..uSplit.y°, wedge 1 = uSplit2 (off on
+        // two-band days), wedge 2 = the rest — each sized by its provider's
+        // real share of agent-hours
+        float in0 = inWedge(deg, uSplit.x, uSplit.y);
+        float has1 = step(-0.5, uSplit2.x) * (1.0 - step(360.5, uSplit2.x));
+        float in1 = inWedge(deg, uSplit2.x, uSplit2.y) * has1;
+        vec3 hard = in0 > 0.5 ? uInnerTop : (in1 > 0.5 ? uInnerMid : uInnerBottom);
+        // feather each active boundary toward a 50/50 mix of its neighbors,
+        // the same soft edge the two-way pie always had
+        c = hard;
+        float f0 = clamp(wedgeEdgeDist(deg, uSplit.x, uSplit.y) * r * 0.01745 / 1.5, 0.0, 1.0) * 0.5 + 0.5;
+        c = mix(mix(uInnerTop, uInnerMid, 0.5), c, f0);
+        bDist = wedgeEdgeDist(deg, uSplit.x, uSplit.y) * r * 0.01745;
+        if (has1 > 0.5) {
+          float f1 = clamp(wedgeEdgeDist(deg, uSplit2.x, uSplit2.y) * r * 0.01745 / 1.5, 0.0, 1.0) * 0.5 + 0.5;
+          c = mix(mix(uInnerMid, uInnerBottom, 0.5), c, f1);
+          bDist = min(bDist, wedgeEdgeDist(deg, uSplit2.x, uSplit2.y) * r * 0.01745);
+        }
+        regId = in0 > 0.5 ? 0.0 : (in1 > 0.5 ? 1.0 : 2.0);
       } else {
         float yUp2 = -vPos.y;
-        // horizon domes gently upward at center like the mock
-        float horizon = uWave.x + cos(vPos.x * 3.14159 / max(uInnerR, 1.0)) * uWave.y;
-        float t = smoothstep(horizon - 3.0, horizon + 3.0, yUp2);
-        c = mix(uInnerBottom, uInnerTop, t);
-        regTop = t;
-        bDist = abs(yUp2 - horizon);
+        // horizons dome gently upward at center like the mock; uWave2's
+        // horizon sits below uWave's (second boundary of a 3-band day)
+        float h1 = uWave.x + cos(vPos.x * 3.14159 / max(uInnerR, 1.0)) * uWave.y;
+        float hOn = step(-900.0, uWave2.x);
+        float h2 = (uWave2.x + cos(vPos.x * 3.14159 / max(uInnerR, 1.0)) * uWave2.y) * hOn + (-uInnerR - 100.0) * (1.0 - hOn);
+        float t1 = smoothstep(h1 - 3.0, h1 + 3.0, yUp2);
+        float t2 = smoothstep(h2 - 3.0, h2 + 3.0, yUp2) * hOn;
+        // band 0 above h1, band 1 between the horizons, band 2 below h2
+        vec3 hard = t1 > 0.5 ? uInnerTop : (t2 > 0.5 ? uInnerMid : uInnerBottom);
+        c = hard;
+        float f1 = clamp(abs(yUp2 - h1) / 3.0, 0.0, 1.0) * 0.5 + 0.5;
+        c = mix(mix(uInnerTop, uInnerMid, 0.5), c, f1);
+        bDist = abs(yUp2 - h1);
+        if (hOn > 0.5) {
+          float f2 = clamp(abs(yUp2 - h2) / 3.0, 0.0, 1.0) * 0.5 + 0.5;
+          c = mix(mix(uInnerMid, uInnerBottom, 0.5), c, f2);
+          bDist = min(bDist, abs(yUp2 - h2));
+        }
+        regId = (1.0 - t1) * (2.0 - t2);
+        float horizon = abs(yUp2 - h1) < abs(yUp2 - h2) ? h1 : h2;
         if (uOrb > 0.5) {
           c += uInnerBottom * exp(-abs(yUp2 - horizon) / 1.8) * 0.5;
           // dark core, luminous rim: silver up top, orange below
           c *= 0.3 + 0.7 * pow(r / uInnerR, 1.9);
           float rim = exp(-distance(vPos, vec2(0.0, uInnerR * 0.85)) / (uInnerR * 0.45));
-          c += uInnerBottom * rim * 0.9 * (1.0 - t);
+          c += uInnerBottom * rim * 0.9 * (1.0 - t1);
         }
       }
-      // hover treatment on the provider fields (kind 2); when a ring chip is
+      // hover treatment on the provider bands (kind 2); when a ring chip is
       // hovered instead, spotlight recedes the whole disc so the chip carries.
-      // hm: 1 where this pixel belongs to the hovered field (regTop is
+      // hm: 1 where this pixel belongs to the hovered band (regId is
       // angle/height-based, so it stays valid past the disc edge — pop's
       // growth and sonar's ripples rely on that)
-      float hm = (uHovKind > 1.5) ? mix(regTop, 1.0 - regTop, uHovProv) : 0.0;
+      float hm = (uHovKind > 1.5) ? (1.0 - step(0.5, abs(regId - uHovProv))) : 0.0;
       int cfx = int(uHovFx + 0.5);
       float rEff = uInnerR;
       if (uHovAmt > 0.001) {
@@ -1386,17 +1427,20 @@ export class AgentScene {
       uPearl: { value: skin.pearl ? 1 : 0 },
       uCGlow: { value: skin.centerGlow ?? 0 },
       uWave: { value: new THREE.Vector2(skin.wave?.y ?? 8, skin.wave?.amp ?? 6) },
+      uWave2: { value: new THREE.Vector2(-999, 0) },
       uInnerMode: { value: skin.innerMode === 'wave' ? 1 : 0 },
       uOrb: { value: skin.orb ? 1 : 0 },
       uWhite: { value: c3(skin.gaugeTop) },
       uGauge: { value: c3(skin.gaugeBottom) },
       uInnerTop: { value: c3(skin.innerTop) },
+      uInnerMid: { value: c3(skin.innerMid) },
       uInnerBottom: { value: c3(skin.innerBottom) },
       uSpindle: { value: c3(skin.spindle) },
       uSegs: { value: segVecs },
       uSegCols: { value: segCols },
       uSegCount: { value: segs.length },
       uSplit: { value: new THREE.Vector2(329, 94) },
+      uSplit2: { value: new THREE.Vector2(-1, -1) },
       uRingGauge: { value: 0 },
       uRoundCaps: { value: ['paper', 'vinyl', 'electric'].includes(skin.id) ? 2 : 0 },
       uDim: { value: 1 },
@@ -1417,8 +1461,9 @@ export class AgentScene {
     this.invalidate()
   }
 
-  /** aim the center hover at a ring segment (kind 1, idx) or a provider field
-   *  (kind 2, prov 0 = top/openai, 1 = bottom); intensity animates via uHovAmt */
+  /** aim the center hover at a ring segment (kind 1, idx) or a provider band
+   *  (kind 2, prov = band index in the active providers' registry order);
+   *  intensity animates via uHovAmt */
   setCenterHoverTarget(kind: number, idx: number, prov: number) {
     const u = this.centerUniforms
     if (!u.uHovKind) return
@@ -1428,13 +1473,21 @@ export class AgentScene {
     this.invalidate()
   }
 
-  /** provider wedge boundaries in degrees cw from 12 o'clock (mock art: 329/94);
-      gauge re-shapes the bold ring into a split-driven provider gauge, and
-      waveY moves the wave skins' horizon (px above center) to the real share */
-  setProviderSplit(a: number, b: number, gauge = false, waveY: number | null = null) {
-    ;(this.centerUniforms.uSplit.value as THREE.Vector2).set(a, b)
-    this.centerUniforms.uRingGauge.value = gauge ? 1 : 0
-    if (waveY !== null) (this.centerUniforms.uWave.value as THREE.Vector2).x = waveY
+  /** provider split for the inner disc: pie wedge boundaries in degrees cw
+   *  from 12 o'clock (wedges[0..1], x < 0 = one solid field), wave horizon
+   *  heights in px above center (1-2 entries), and the three band colors
+   *  (top/mid/bottom, already mapped from the day's active providers).
+   *  gauge re-shapes the bold ring into a split-driven provider gauge. */
+  setProviderSplit(pie: number[], wave: number[], cols: [string, string, string], gauge = false) {
+    const u = this.centerUniforms
+    ;(u.uSplit.value as THREE.Vector2).set(pie[0], pie[1])
+    ;(u.uSplit2.value as THREE.Vector2).set(pie[2] ?? -1, pie[3] ?? -1)
+    u.uRingGauge.value = gauge ? 1 : 0
+    ;(u.uWave.value as THREE.Vector2).x = wave[0] ?? -999
+    ;(u.uWave2.value as THREE.Vector2).x = wave[1] ?? -999
+    ;(u.uInnerTop.value as THREE.Vector3).copy(c3(cols[0]))
+    ;(u.uInnerMid.value as THREE.Vector3).copy(c3(cols[1]))
+    ;(u.uInnerBottom.value as THREE.Vector3).copy(c3(cols[2]))
     this.invalidate()
   }
 
@@ -1443,6 +1496,7 @@ export class AgentScene {
     ;(u.uWhite.value as THREE.Vector3).copy(c3(skin.gaugeTop))
     ;(u.uGauge.value as THREE.Vector3).copy(c3(skin.gaugeBottom))
     ;(u.uInnerTop.value as THREE.Vector3).copy(c3(skin.innerTop))
+    ;(u.uInnerMid.value as THREE.Vector3).copy(c3(skin.innerMid))
     ;(u.uInnerBottom.value as THREE.Vector3).copy(c3(skin.innerBottom))
     ;(u.uSpindle.value as THREE.Vector3).copy(c3(skin.spindle))
     u.uSpindleA.value = skin.spindleAlpha

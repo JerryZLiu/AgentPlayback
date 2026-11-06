@@ -9,13 +9,13 @@
 // placeholder rates, to keep the authored art intact. Real days that predate
 // the scanner's token support say so instead of estimating.
 
-import { MOCK_DAY, projectHours, type DayData } from './data'
+import { MOCK_DAY, projectHours, PROVIDERS, type DayData } from './data'
 
 type SkinLike = { id?: string; donutPalette: Record<string, string> }
 
 /** mock-only placeholder rates, calibrated to land near the frame's numbers */
 const TOK_PER_HR = 5_650_000
-const USD_PER_MTOK: Record<string, number> = { openai: 1.1, claude: 2.2 }
+const USD_PER_MTOK: Record<string, number> = { openai: 1.1, claude: 2.2, kimi: 1.5 }
 
 const fmtInt = (n: number) => Math.round(n).toLocaleString('en-US')
 /** compact token count for the tight legend grid: 8.5M / 531k / 180 */
@@ -137,7 +137,11 @@ export function buildTokenPanel(day: DayData, skin: SkinLike): HTMLElement {
   const catLabel = (cat: string) => day.labels[cat as keyof typeof day.labels] ?? cat
 
   const mock = day === MOCK_DAY
-  const real = day.tokens && day.tokens.openai + day.tokens.claude > 0 ? day.tokens : null
+  // registry-driven days carry tokens.byProvider; older day files have only
+  // the legacy two-provider fields — read whichever exists
+  const legacyTok = (p: string) => p === 'openai' ? day.tokens?.openai ?? 0 : p === 'claude' ? day.tokens?.claude ?? 0 : 0
+  const anyTok = PROVIDERS.some((p) => (day.tokens?.byProvider?.[p.id]?.tok ?? legacyTok(p.id)) > 0)
+  const real = day.tokens && anyTok ? day.tokens : null
 
   // a real day without token data predates the scanner's usage support —
   // say so rather than inventing an estimate that reads as measured
@@ -154,24 +158,28 @@ export function buildTokenPanel(day: DayData, skin: SkinLike): HTMLElement {
   const provHours = (p: string) =>
     day.threads.filter((t) => t.provider === p).reduce((a, t) => a + t.end - t.start, 0)
   const mockCost = (n: number, p: string) => (n / 1e6) * USD_PER_MTOK[p]
-  const oTok = real ? real.openai : provHours('openai') * TOK_PER_HR
-  const cTok = real ? real.claude : provHours('claude') * TOK_PER_HR
-  const totalTok = oTok + cTok
-  const costs = mock
-    ? { openai: mockCost(oTok, 'openai'), claude: mockCost(cTok, 'claude') }
-    : real?.cost ?? null
-  const modelName = (p: 'openai' | 'claude', fallback: string) => {
-    const ids = real?.models[p] ?? []
+  const provRows = PROVIDERS.map((p) => {
+    const bp = real?.byProvider?.[p.id]
+    const tok = real ? (bp?.tok ?? legacyTok(p.id)) : provHours(p.id) * TOK_PER_HR
+    const usd = mock ? mockCost(tok, p.id) : bp?.cost ?? (p.id === 'openai' ? real?.cost?.openai : p.id === 'claude' ? real?.cost?.claude : 0) ?? 0
+    return { ...p, tok, usd }
+  }).filter((r) => r.tok > 0)
+  const totalTok = provRows.reduce((a, r) => a + r.tok, 0)
+  const costs = real?.cost ?? (mock ? { openai: 0, claude: 0, priced: true } : null)
+  const modelName = (p: string, fallback: string) => {
+    const ids = real?.byProvider?.[p]?.models ?? (p === 'openai' || p === 'claude' ? real?.models[p] : undefined) ?? []
     return ids.length ? ids.map(prettyModel).join('<br/>') : fallback
   }
 
   const cats = real
-    ? real.byCategory.filter((c) => c.openai + c.claude > 0).map((c) => ({
-      cat: c.category,
-      color: skin.donutPalette[c.category] ?? '#cccccc',
-      tok: c.openai + c.claude,
-      usd: (c.openaiCost ?? 0) + (c.claudeCost ?? 0),
-    }))
+    ? real.byCategory
+      .map((c) => ({
+        cat: c.category,
+        color: skin.donutPalette[c.category] ?? '#cccccc',
+        tok: c.byProvider ? Object.values(c.byProvider).reduce((a, v) => a + v.tok, 0) : c.openai + c.claude,
+        usd: c.byProvider ? Object.values(c.byProvider).reduce((a, v) => a + v.cost, 0) : (c.openaiCost ?? 0) + (c.claudeCost ?? 0),
+      }))
+      .filter((c) => c.tok > 0)
     : projectHours(day).map((d) => {
       const co = day.threads.filter((t) => t.category === d.category && t.provider === 'openai')
         .reduce((a, t) => a + t.end - t.start, 0)
@@ -188,7 +196,7 @@ export function buildTokenPanel(day: DayData, skin: SkinLike): HTMLElement {
   // model bars: heights in true proportion to each provider's token count —
   // the logo tucks inside only when the bar is tall enough to hold it. The
   // mock keeps the frame's authored share-compressed heights.
-  const mxTok = Math.max(oTok, cTok, 1)
+  const mxTok = Math.max(...provRows.map((r) => r.tok), 1)
   const barH = (v: number) => mock
     ? Math.round(30 + (totalTok > 0 ? v / totalTok : 0.5) * 56)
     : Math.max(Math.round((v / mxTok) * 86), 5)
@@ -209,25 +217,21 @@ export function buildTokenPanel(day: DayData, skin: SkinLike): HTMLElement {
     <div class="tp-total">
       <div class="tp-cap">Total token use</div>
       <div class="tp-big${fmtInt(totalTok).length > 8 ? ' tp-big-compact' : ''}">${fmtInt(totalTok)}</div>
-      ${costs ? `<div class="tp-cost">${fmtUSD(costs.openai + costs.claude)}</div>` : ''}
+      ${costs ? `<div class="tp-cost">${fmtUSD(provRows.reduce((a, r) => a + r.usd, 0))}</div>` : ''}
     </div>
     <div class="tp-models">
+      ${provRows.map((r) => `
       <div class="tp-model">
-        <b>${fmtInt(oTok)} Tokens</b>
-        ${usd(costs?.openai)}
-        ${bar(oTok, 'tp-bar-openai', '/assets/openai-mark.svg')}
-      </div>
-      <div class="tp-model">
-        <b>${fmtInt(cTok)} Tokens</b>
-        ${usd(costs?.claude)}
-        ${bar(cTok, 'tp-bar-claude', '/assets/claude-spark.png')}
-      </div>
+        <b>${fmtInt(r.tok)} Tokens</b>
+        ${usd(r.usd)}
+        ${bar(r.tok, `tp-bar-${r.id}`, r.logo)}
+      </div>`).join('')}
     </div>
     <div class="tp-axis"></div>
     <div class="tp-names">
-      <span>${modelName('openai', 'Codex')}</span>
-      <span>${modelName('claude', 'Claude')}</span>
+      ${provRows.map((r) => `<span>${modelName(r.id, r.label)}</span>`).join('')}
     </div>
+    ${costs && costs.priced === false ? '<div class="tp-cap tp-cap-mid">Some models are missing from the price table; their cost shows as $0.</div>' : ''}
     <div class="tp-cap tp-cap-mid">Token usage${costs ? ' and cost' : ''} by category</div>
     <svg class="tp-donuts" viewBox="0 0 258 168">
       ${costs
