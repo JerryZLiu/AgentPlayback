@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-06T00:22:45.500Z",
+  "generated_at": "2026-11-06T15:58:44.322Z",
   "upstream": {
     "url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
-    "sha256": "89804bb773d43046a02498ebd7e97cec95760aec482452c5641a95eba914cdff"
+    "sha256": "7b170e23b096f7076be400462587410832ac70283a87737366d88d79b78a77e5"
   },
   "prices": {
     "chat-latest": {
@@ -6040,6 +6040,7 @@
     "o1": {
       "cache_read_input_token_cost": 0.0000075,
       "deprecation_date": "2026-10-23",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "successor_model": "gpt-5.6-sol",
       "input_cost_per_token": 0.000015,
       "input_cost_per_token_batches": 0.0000075,
