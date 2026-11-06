@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-05T11:05:56.507Z",
+  "generated_at": "2026-11-06T00:22:45.500Z",
   "upstream": {
     "url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
-    "sha256": "70a7588ce5053f6ef706b61fb9e799a42c40a3218474e382906cc44c6b037c74"
+    "sha256": "89804bb773d43046a02498ebd7e97cec95760aec482452c5641a95eba914cdff"
   },
   "prices": {
     "chat-latest": {
@@ -4212,6 +4212,8 @@
     },
     "gpt-5.5-cyber-preview": {
       "cache_read_input_token_cost": 0.00000125,
+      "deprecation_date": "2027-02-01",
+      "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "input_cost_per_token": 0.0000125,
       "litellm_provider": "openai",
       "mode": "chat",
@@ -4906,6 +4908,39 @@
       "supports_vision": true,
       "supports_web_search": true,
       "supports_xhigh_reasoning_effort": true
+    },
+    "gpt-6-cyber": {
+      "cache_creation_input_token_cost": 0.000025,
+      "cache_creation_input_token_cost_above_12hr": 0.00005,
+      "cache_read_input_token_cost": 0.000002,
+      "input_cost_per_token": 0.00002,
+      "litellm_provider": "openai",
+      "max_input_tokens": 922000,
+      "max_output_tokens": 128000,
+      "mode": "chat",
+      "output_cost_per_token": 0.0001,
+      "source": "https://developers.openai.com/api/docs/models/gpt-6-cyber",
+      "supported_endpoints": [
+        "/v1/chat/completions",
+        "/v1/responses"
+      ],
+      "supported_modalities": [
+        "text",
+        "image"
+      ],
+      "supported_output_modalities": [
+        "text"
+      ],
+      "supports_computer_use": true,
+      "supports_function_calling": true,
+      "supports_native_streaming": true,
+      "supports_pdf_input": true,
+      "supports_prompt_caching": true,
+      "supports_reasoning": true,
+      "supports_response_schema": true,
+      "supports_tool_search": true,
+      "supports_vision": true,
+      "supports_web_search": true
     },
     "gpt-6-luna": {
       "cache_creation_input_token_cost": 1.25e-7,
