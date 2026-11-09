@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-07T20:17:04.921Z",
+  "generated_at": "2026-11-09T22:28:06.149Z",
   "upstream": {
     "url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
-    "sha256": "3af8aa23def253b2a74a57d687022700dff6b04a89fb79b48caaec94dfd18405"
+    "sha256": "13d1609a2d0aa559474e3e9cd0df24db25656018cf25effbe61753887a8d156d"
   },
   "prices": {
     "chat-latest": {
@@ -161,6 +161,54 @@
       "prompt_cache_min_tokens": 512,
       "supports_native_structured_output": true,
       "source": "https://platform.claude.com/docs/en/about-claude/pricing"
+    },
+    "claude-fable-5-2": {
+      "cache_creation_input_token_cost": 0.00001,
+      "cache_creation_input_token_cost_above_1hr": 0.000016,
+      "cache_creation_input_token_cost_batches": 0.000005,
+      "cache_read_input_token_cost": 2e-7,
+      "cache_read_input_token_cost_batches": 1e-7,
+      "input_cost_per_token": 0.000008,
+      "input_cost_per_token_batches": 0.000004,
+      "litellm_provider": "anthropic",
+      "max_input_tokens": 1000000,
+      "max_output_tokens": 128000,
+      "mode": "chat",
+      "output_cost_per_token": 0.00004,
+      "output_cost_per_token_batches": 0.00002,
+      "prompt_cache_min_tokens": 512,
+      "provider_specific_entry": {
+        "us": 1.1,
+        "fast": 2
+      },
+      "search_context_cost_per_query": {
+        "search_context_size_high": 0.01,
+        "search_context_size_low": 0.01,
+        "search_context_size_medium": 0.01
+      },
+      "source": "https://platform.claude.com/docs/en/about-claude/pricing",
+      "supports_adaptive_thinking": true,
+      "supports_anthropic_compaction": true,
+      "supports_assistant_prefill": false,
+      "supports_computer_use": true,
+      "supports_fast_mode": true,
+      "supports_forced_tool_use": false,
+      "supports_function_calling": true,
+      "supports_max_reasoning_effort": true,
+      "supports_mid_conversation_system": true,
+      "supports_native_structured_output": true,
+      "supports_output_config": true,
+      "supports_pdf_input": true,
+      "supports_prompt_caching": true,
+      "supports_reasoning": true,
+      "supports_response_schema": true,
+      "supports_sampling_params": false,
+      "supports_speed": true,
+      "supports_tool_choice": true,
+      "supports_vision": true,
+      "supports_web_search": true,
+      "supports_xhigh_reasoning_effort": true,
+      "thinking_always_on": true
     },
     "claude-haiku-4-5": {
       "cache_creation_input_token_cost": 0.00000125,
