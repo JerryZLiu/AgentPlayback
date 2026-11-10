@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-09T22:28:06.149Z",
+  "generated_at": "2026-11-10T04:39:29.477Z",
   "upstream": {
     "url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
-    "sha256": "13d1609a2d0aa559474e3e9cd0df24db25656018cf25effbe61753887a8d156d"
+    "sha256": "39af0e0101370f51f15c1d55b65214a5d4dc601005800fc3d0b7ef3d2ecefec0"
   },
   "prices": {
     "chat-latest": {
@@ -4961,13 +4961,16 @@
       "cache_creation_input_token_cost": 0.000025,
       "cache_creation_input_token_cost_above_12hr": 0.00005,
       "cache_read_input_token_cost": 0.000002,
+      "cache_read_input_token_cost_above_272k_tokens": 0.000004,
       "input_cost_per_token": 0.00002,
+      "input_cost_per_token_above_272k_tokens": 0.00004,
       "litellm_provider": "openai",
       "max_input_tokens": 922000,
       "max_output_tokens": 128000,
       "mode": "chat",
       "output_cost_per_token": 0.0001,
-      "source": "https://developers.openai.com/api/docs/models/gpt-6-cyber",
+      "output_cost_per_token_above_272k_tokens": 0.00015,
+      "source": "https://developers.openai.com/api/docs/pricing",
       "supported_endpoints": [
         "/v1/chat/completions",
         "/v1/responses"
