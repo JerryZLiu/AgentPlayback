@@ -1137,6 +1137,7 @@ body[data-skin='electric'] {
 .tp-bar img { position: absolute; right: 8px; bottom: 6px; }
 .tp-bar-openai { background: #fffdfa; border: 1px solid #e8e8e8; border-bottom: none; }
 .tp-bar-claude { background: #ffc7b1; }
+.tp-bar-kimi { background: #dce6f6; }
 /* Exact Figma 1120:10892 bar fills:
    OpenAI: #fff 70% at 0% -> #fff 5% at 93%.
    Claude: #ff662a 100% at 0% -> #ff662a 0% at 100%. */
@@ -1150,11 +1151,17 @@ body[data-skin='electric'] .tp-bar-claude {
   border: 0.5px solid rgba(255, 122, 79, 0.72);
   border-bottom: none;
 }
+body[data-skin='electric'] .tp-bar-kimi {
+  background: linear-gradient(180deg, rgba(127, 212, 201, 0.7) 0%, rgba(127, 212, 201, 0.05) 93%);
+  border: 0.5px solid rgba(127, 212, 201, 0.72);
+  border-bottom: none;
+}
 /* Provider marks lose contrast against Electric's dark center and translucent
    charts in their source charcoal/orange. Preserve their alpha silhouettes,
    but paint every OpenAI and Claude mark pure white on this skin. */
 body[data-skin='electric'] img[src$='openai-mark.svg'],
-body[data-skin='electric'] img[src$='claude-spark.png'] {
+body[data-skin='electric'] img[src$='claude-spark.png'],
+body[data-skin='electric'] img[src$='kimi-mark.svg'] {
   filter: brightness(0) saturate(100%) invert(1);
   opacity: 1;
 }

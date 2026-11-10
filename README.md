@@ -31,7 +31,7 @@ Data is processed locally and stays local.
 
 ## Supported agents
 
-AgentPlayback currently supports **Codex** and **Claude Code**.
+AgentPlayback currently supports **Codex**, **Claude Code**, and **Kimi Work**.
 
 Contributions adding other agents are welcome. Please include screenshots verifying that the UI and data look right. The interface is intentionally opinionated, though, so integrations that require a substantially different presentation may be better maintained as forks.
 

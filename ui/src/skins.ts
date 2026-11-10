@@ -135,6 +135,10 @@ export interface SkinScene {
   gaugeBottom: string
   innerTop: string
   innerBottom: string
+  /** the third provider band's canonical color (Kimi on a three-way day);
+   *  each provider owns one inner color: openai=innerTop, claude=innerBottom,
+   *  kimi=innerMid — the disc recolors per day from the active set */
+  innerMid: string
   innerMode: 'pie' | 'wave'
   /** wave horizon: px above center + wobble amplitude */
   wave?: { y: number; amp: number }
@@ -217,6 +221,7 @@ export const SKINS: Record<SkinId, SkinScene> = {
     gaugeBottom: '#b5bcff',
     innerTop: '#ffffff',
     innerBottom: '#f2cebe',
+    innerMid: '#dce6f6',
     innerMode: 'pie',
     spindle: '#8a8a8a',
     // Node 1120:7170 at 100%: 268px outer category ring, 11px stroke,
@@ -285,6 +290,7 @@ export const SKINS: Record<SkinId, SkinScene> = {
     gaugeBottom: '#b5bcfa',
     innerTop: '#fdfdfd',
     innerBottom: '#fcc7b1',
+    innerMid: '#dbe4f5',
     innerMode: 'pie',
     spindle: '#1f1f1f',
     // Copy Paper's provider middle: white annulus, duration-proportional
@@ -357,6 +363,7 @@ export const SKINS: Record<SkinId, SkinScene> = {
     gaugeBottom: '#3ec6e8',
     innerTop: '#8a9099',
     innerBottom: '#8f3f18',
+    innerMid: '#7c85d8',
     // the provider split reads as paper's pie wedge now, not the flooded wave
     innerMode: 'wave',
     wave: { y: 8, amp: 4 },
@@ -419,6 +426,7 @@ export const SKINS: Record<SkinId, SkinScene> = {
     gaugeBottom: '#c6cdf9',
     innerTop: '#b9c1dc',
     innerBottom: '#f2b3aa',
+    innerMid: '#7fd4c9',
     innerMode: 'pie',
     spindle: '#dfe3f4',
     center: { ringR: 120, ringW: 17, innerR: 95, holeA: 0 },
