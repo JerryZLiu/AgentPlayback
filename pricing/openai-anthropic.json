@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-10T20:53:04.908Z",
+  "generated_at": "2026-11-13T01:53:52.349Z",
   "upstream": {
     "url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
-    "sha256": "f03b475d858b7018ec1421640dd9cdce1e6e73529bd35adba2f9ea899f375dc0"
+    "sha256": "96c931d1aaf097046449ea1ceacd892f89498b7c94de70b325e7f2a275c98356"
   },
   "prices": {
     "chat-latest": {
@@ -57,7 +57,7 @@
       "cache_read_input_token_cost_batches": 6.3e-7,
       "deprecation_date": "2026-12-01",
       "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
-      "successor_model": "gpt-image-2.5-sunburst",
+      "successor_model": "gpt-image-2.6-sunburst",
       "input_cost_per_image_token": 0.000008,
       "input_cost_per_image_token_batches": 0.000004,
       "input_cost_per_token": 0.000005,
@@ -5784,7 +5784,7 @@
       "cache_read_input_token_cost_batches": 6.3e-7,
       "deprecation_date": "2026-12-01",
       "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
-      "successor_model": "gpt-image-2.5-sunburst",
+      "successor_model": "gpt-image-2.6-sunburst",
       "input_cost_per_token": 0.000005,
       "litellm_provider": "openai",
       "mode": "image_generation",
@@ -5808,7 +5808,7 @@
       "cache_read_input_token_cost_batches": 6.3e-7,
       "deprecation_date": "2026-12-01",
       "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
-      "successor_model": "gpt-image-2.5-sunburst",
+      "successor_model": "gpt-image-2.6-sunburst",
       "input_cost_per_token": 0.000005,
       "litellm_provider": "openai",
       "mode": "image_generation",
