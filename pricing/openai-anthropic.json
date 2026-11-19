@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-18T22:03:32.318Z",
+  "generated_at": "2026-11-19T03:37:11.755Z",
   "upstream": {
     "url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
-    "sha256": "ef40e9c2a6a48bf1be74caec320a7e7de360c3c81c65ec5ba2faa3a178d314e5"
+    "sha256": "f66b01471916ec37beb106bffb4e6be32f2c5915f5d661304336248d58cdeea1"
   },
   "prices": {
     "chat-latest": {
@@ -1511,6 +1511,7 @@
       "supports_tool_choice": true
     },
     "gpt-3.5-turbo-16k": {
+      "successor_model": "gpt-6.1-terra",
       "deprecation_date": "2026-10-23",
       "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "input_cost_per_token": 0.000003,
@@ -4309,6 +4310,7 @@
     },
     "gpt-5.5-cyber-preview": {
       "cache_read_input_token_cost": 0.00000125,
+      "successor_model": "gpt-6-cyber",
       "deprecation_date": "2027-02-01",
       "deprecation_source": "https://developers.openai.com/api/docs/deprecations",
       "input_cost_per_token": 0.0000125,
