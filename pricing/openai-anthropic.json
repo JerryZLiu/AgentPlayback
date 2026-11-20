@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-20T13:03:38.528Z",
+  "generated_at": "2026-11-20T21:13:56.695Z",
   "upstream": {
     "url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
-    "sha256": "82ce7aaa65178efe4f2fa46a0f67cd889ce0717bf563f02be3ece2c48dbc72a0"
+    "sha256": "afbb50753937db89016b7e0855d79a1ba97ca5dc22c5f6c0a2204a9a3e16becc"
   },
   "prices": {
     "chat-latest": {
@@ -75,6 +75,7 @@
       ]
     },
     "claude-fable-5": {
+      "supports_low_reasoning_effort": true,
       "supports_web_search": true,
       "supports_anthropic_compaction": true,
       "cache_creation_input_token_cost": 0.0000125,
@@ -119,6 +120,7 @@
       "source": "https://platform.claude.com/docs/en/about-claude/pricing"
     },
     "claude-fable-5-1": {
+      "supports_low_reasoning_effort": true,
       "supports_web_search": true,
       "supports_anthropic_compaction": true,
       "cache_creation_input_token_cost": 0.0000125,
@@ -164,6 +166,7 @@
       "source": "https://platform.claude.com/docs/en/about-claude/pricing"
     },
     "claude-fable-5-2": {
+      "supports_low_reasoning_effort": true,
       "cache_creation_input_token_cost": 0.00001,
       "cache_creation_input_token_cost_above_1hr": 0.000016,
       "cache_creation_input_token_cost_batches": 0.000005,
@@ -266,6 +269,7 @@
       "prompt_cache_min_tokens": 4096
     },
     "claude-haiku-5-5": {
+      "supports_low_reasoning_effort": true,
       "input_cost_per_token_above_100k_tokens_batches": 2.5e-7,
       "output_cost_per_token_above_100k_tokens_batches": 0.00000125,
       "cache_creation_input_token_cost_above_100k_tokens_batches": 3.125e-7,
@@ -528,6 +532,7 @@
       "source": "https://platform.claude.com/docs/en/about-claude/pricing"
     },
     "claude-opus-4-5-20251101": {
+      "supports_low_reasoning_effort": true,
       "supports_web_search": true,
       "cache_creation_input_token_cost": 0.00000625,
       "cache_creation_input_token_cost_above_1hr": 0.00001,
@@ -562,6 +567,7 @@
       "prompt_cache_min_tokens": 4096
     },
     "claude-opus-4-6": {
+      "supports_low_reasoning_effort": true,
       "supports_web_search": true,
       "supports_anthropic_compaction": true,
       "cache_creation_input_token_cost": 0.00000625,
@@ -646,6 +652,7 @@
       "prompt_cache_min_tokens": 4096
     },
     "claude-opus-4-7": {
+      "supports_low_reasoning_effort": true,
       "supports_web_search": true,
       "supports_anthropic_compaction": true,
       "cache_creation_input_token_cost": 0.00000625,
@@ -730,6 +737,7 @@
       "prompt_cache_min_tokens": 2048
     },
     "claude-opus-4-8": {
+      "supports_low_reasoning_effort": true,
       "supports_web_search": true,
       "supports_anthropic_compaction": true,
       "cache_creation_input_token_cost": 0.00000625,
@@ -777,6 +785,7 @@
       "source": "https://platform.claude.com/docs/en/about-claude/pricing"
     },
     "claude-opus-5": {
+      "supports_low_reasoning_effort": true,
       "supports_web_search": true,
       "supports_anthropic_compaction": true,
       "cache_creation_input_token_cost": 0.00000625,
@@ -825,6 +834,7 @@
       "source": "https://platform.claude.com/docs/en/about-claude/pricing"
     },
     "claude-opus-5-5": {
+      "supports_low_reasoning_effort": true,
       "supports_web_search": true,
       "supports_anthropic_compaction": true,
       "cache_creation_input_token_cost": 0.000005,
@@ -944,6 +954,7 @@
       "source": "https://docs.anthropic.com/en/docs/about-claude/pricing"
     },
     "claude-sonnet-4-6": {
+      "supports_low_reasoning_effort": true,
       "supports_web_search": true,
       "supports_anthropic_compaction": true,
       "cache_creation_input_token_cost": 0.00000375,
@@ -986,6 +997,7 @@
       "source": "https://platform.claude.com/docs/en/about-claude/pricing"
     },
     "claude-sonnet-5": {
+      "supports_low_reasoning_effort": true,
       "supports_web_search": true,
       "supports_anthropic_compaction": true,
       "cache_creation_input_token_cost": 0.0000025,
@@ -1031,6 +1043,7 @@
       "source": "https://platform.claude.com/docs/en/about-claude/pricing"
     },
     "claude-sonnet-5-5": {
+      "supports_low_reasoning_effort": true,
       "supports_anthropic_compaction": true,
       "cache_creation_input_token_cost": 0.0000025,
       "cache_creation_input_token_cost_above_1hr": 0.000004,
@@ -5155,6 +5168,7 @@
       "cache_creation_input_token_cost_above_272k_tokens": 0.000025,
       "cache_read_input_token_cost": 0.000001,
       "cache_read_input_token_cost_above_272k_tokens": 0.000002,
+      "comment": "These are OpenAI's promotional rates, which the pricing page says are available at least through 2026-12-31. Recheck on 2027-01-01.",
       "input_cost_per_token": 0.00001,
       "input_cost_per_token_above_272k_tokens": 0.00002,
       "litellm_provider": "openai",
