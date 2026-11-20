@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-19T03:37:11.755Z",
+  "generated_at": "2026-11-20T13:03:38.528Z",
   "upstream": {
     "url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
-    "sha256": "f66b01471916ec37beb106bffb4e6be32f2c5915f5d661304336248d58cdeea1"
+    "sha256": "82ce7aaa65178efe4f2fa46a0f67cd889ce0717bf563f02be3ece2c48dbc72a0"
   },
   "prices": {
     "chat-latest": {
@@ -5149,20 +5149,20 @@
       "supports_xhigh_reasoning_effort": true
     },
     "gpt-6-rosalind": {
-      "cache_creation_input_token_cost": 0.00001875,
-      "cache_creation_input_token_cost_above_12hr": 0.0000375,
-      "cache_creation_input_token_cost_above_12hr_above_272k_tokens": 0.000075,
-      "cache_creation_input_token_cost_above_272k_tokens": 0.0000375,
+      "cache_creation_input_token_cost": 0.0000125,
+      "cache_creation_input_token_cost_above_12hr": 0.000025,
+      "cache_creation_input_token_cost_above_12hr_above_272k_tokens": 0.00005,
+      "cache_creation_input_token_cost_above_272k_tokens": 0.000025,
       "cache_read_input_token_cost": 0.000001,
-      "cache_read_input_token_cost_above_272k_tokens": 0.000003,
+      "cache_read_input_token_cost_above_272k_tokens": 0.000002,
       "input_cost_per_token": 0.00001,
-      "input_cost_per_token_above_272k_tokens": 0.00003,
+      "input_cost_per_token_above_272k_tokens": 0.00002,
       "litellm_provider": "openai",
       "max_input_tokens": 922000,
       "max_output_tokens": 128000,
       "mode": "chat",
       "output_cost_per_token": 0.00005,
-      "output_cost_per_token_above_272k_tokens": 0.0001125,
+      "output_cost_per_token_above_272k_tokens": 0.000075,
       "regional_processing_uplift_multiplier_eu": 1.1,
       "regional_processing_uplift_multiplier_us": 1.1,
       "source": "https://developers.openai.com/api/docs/pricing",
