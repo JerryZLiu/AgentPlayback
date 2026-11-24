@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-20T21:13:56.695Z",
+  "generated_at": "2026-11-24T02:16:29.163Z",
   "upstream": {
     "url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
-    "sha256": "afbb50753937db89016b7e0855d79a1ba97ca5dc22c5f6c0a2204a9a3e16becc"
+    "sha256": "26d1498a04fedfa3f7e14407ddc72458eaf671a6485f4980c47891db18d4312e"
   },
   "prices": {
     "chat-latest": {
@@ -503,6 +503,8 @@
       "cache_creation_input_token_cost_batches": 0.000003125,
       "cache_read_input_token_cost": 5e-7,
       "cache_read_input_token_cost_batches": 2.5e-7,
+      "deprecation_date": "2027-01-22",
+      "deprecation_source": "https://platform.claude.com/docs/en/about-claude/model-deprecations",
       "input_cost_per_token": 0.000005,
       "input_cost_per_token_batches": 0.0000025,
       "litellm_provider": "anthropic",
@@ -529,7 +531,8 @@
       "supports_vision": true,
       "supports_output_config": true,
       "prompt_cache_min_tokens": 4096,
-      "source": "https://platform.claude.com/docs/en/about-claude/pricing"
+      "source": "https://platform.claude.com/docs/en/about-claude/pricing",
+      "successor_model": "claude-opus-5-5"
     },
     "claude-opus-4-5-20251101": {
       "supports_low_reasoning_effort": true,
@@ -539,6 +542,8 @@
       "cache_creation_input_token_cost_batches": 0.000003125,
       "cache_read_input_token_cost": 5e-7,
       "cache_read_input_token_cost_batches": 2.5e-7,
+      "deprecation_date": "2027-01-22",
+      "deprecation_source": "https://platform.claude.com/docs/en/about-claude/model-deprecations",
       "input_cost_per_token": 0.000005,
       "input_cost_per_token_batches": 0.0000025,
       "litellm_provider": "anthropic",
@@ -564,7 +569,9 @@
       "supports_tool_choice": true,
       "supports_vision": true,
       "supports_output_config": true,
-      "prompt_cache_min_tokens": 4096
+      "prompt_cache_min_tokens": 4096,
+      "source": "https://platform.claude.com/docs/en/about-claude/pricing",
+      "successor_model": "claude-opus-5-5"
     },
     "claude-opus-4-6": {
       "supports_low_reasoning_effort": true,
