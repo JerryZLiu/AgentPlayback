@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-24T02:16:29.163Z",
+  "generated_at": "2026-11-24T23:03:29.497Z",
   "upstream": {
     "url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
-    "sha256": "26d1498a04fedfa3f7e14407ddc72458eaf671a6485f4980c47891db18d4312e"
+    "sha256": "db398058a2100b95e76604f8c3cf2986de639d2f23a1d4e7f629d431d91bd3a8"
   },
   "prices": {
     "chat-latest": {
@@ -4969,6 +4969,70 @@
       "supports_web_search": true,
       "supports_xhigh_reasoning_effort": true
     },
+    "gpt-6-astra-healthcare": {
+      "cache_read_input_token_cost": 0.000001,
+      "cache_read_input_token_cost_above_272k_tokens": 0.000002,
+      "cache_read_input_token_cost_above_272k_tokens_priority": 0.000004,
+      "cache_read_input_token_cost_priority": 0.000002,
+      "fedramp_uplift_multiplier": 1.1,
+      "input_cost_per_token": 0.00001,
+      "input_cost_per_token_above_272k_tokens": 0.00002,
+      "input_cost_per_token_above_272k_tokens_priority": 0.00004,
+      "input_cost_per_token_priority": 0.00002,
+      "litellm_provider": "openai",
+      "max_input_tokens": 922000,
+      "max_output_tokens": 128000,
+      "mode": "responses",
+      "output_cost_per_token": 0.00005,
+      "output_cost_per_token_above_272k_tokens": 0.000075,
+      "output_cost_per_token_above_272k_tokens_priority": 0.00015,
+      "output_cost_per_token_priority": 0.0001,
+      "reasoning_contexts": [
+        "auto",
+        "current_turn",
+        "all_turns"
+      ],
+      "reasoning_modes": [
+        "standard",
+        "pro"
+      ],
+      "regional_processing_uplift_multiplier_eu": 1.1,
+      "regional_processing_uplift_multiplier_us": 1.1,
+      "search_context_cost_per_query": {
+        "search_context_size_high": 0.01,
+        "search_context_size_low": 0.01,
+        "search_context_size_medium": 0.01
+      },
+      "source": "https://developers.openai.com/api/docs/pricing",
+      "supported_endpoints": [
+        "/v1/responses"
+      ],
+      "supported_modalities": [
+        "text",
+        "image"
+      ],
+      "supported_output_modalities": [
+        "text"
+      ],
+      "supports_computer_use": true,
+      "supports_function_calling": true,
+      "supports_max_reasoning_effort": true,
+      "supports_minimal_reasoning_effort": false,
+      "supports_native_streaming": true,
+      "supports_none_reasoning_effort": false,
+      "supports_parallel_function_calling": true,
+      "supports_pdf_input": true,
+      "supports_prompt_cache_breakpoint": true,
+      "supports_prompt_caching": true,
+      "supports_reasoning": true,
+      "supports_response_schema": true,
+      "supports_system_messages": true,
+      "supports_tool_choice": true,
+      "supports_tool_search": true,
+      "supports_vision": true,
+      "supports_web_search": true,
+      "supports_xhigh_reasoning_effort": true
+    },
     "gpt-6-astra-law": {
       "cache_read_input_token_cost": 0.000001,
       "cache_read_input_token_cost_above_272k_tokens": 0.000002,
@@ -5404,6 +5468,70 @@
       "supports_web_search": true,
       "supports_xhigh_reasoning_effort": true
     },
+    "gpt-6.1-sol-healthcare": {
+      "cache_read_input_token_cost": 1e-7,
+      "cache_read_input_token_cost_above_272k_tokens": 2e-7,
+      "cache_read_input_token_cost_above_272k_tokens_priority": 4e-7,
+      "cache_read_input_token_cost_priority": 2e-7,
+      "fedramp_uplift_multiplier": 1.1,
+      "input_cost_per_token": 0.000002,
+      "input_cost_per_token_above_272k_tokens": 0.000004,
+      "input_cost_per_token_above_272k_tokens_priority": 0.000008,
+      "input_cost_per_token_priority": 0.000004,
+      "litellm_provider": "openai",
+      "max_input_tokens": 922000,
+      "max_output_tokens": 128000,
+      "mode": "responses",
+      "output_cost_per_token": 0.00001,
+      "output_cost_per_token_above_272k_tokens": 0.000015,
+      "output_cost_per_token_above_272k_tokens_priority": 0.00003,
+      "output_cost_per_token_priority": 0.00002,
+      "reasoning_contexts": [
+        "auto",
+        "current_turn",
+        "all_turns"
+      ],
+      "reasoning_modes": [
+        "standard",
+        "pro"
+      ],
+      "regional_processing_uplift_multiplier_eu": 1.1,
+      "regional_processing_uplift_multiplier_us": 1.1,
+      "search_context_cost_per_query": {
+        "search_context_size_high": 0.01,
+        "search_context_size_low": 0.01,
+        "search_context_size_medium": 0.01
+      },
+      "source": "https://developers.openai.com/api/docs/pricing",
+      "supported_endpoints": [
+        "/v1/responses"
+      ],
+      "supported_modalities": [
+        "text",
+        "image"
+      ],
+      "supported_output_modalities": [
+        "text"
+      ],
+      "supports_computer_use": true,
+      "supports_function_calling": true,
+      "supports_max_reasoning_effort": true,
+      "supports_minimal_reasoning_effort": false,
+      "supports_native_streaming": true,
+      "supports_none_reasoning_effort": false,
+      "supports_parallel_function_calling": true,
+      "supports_pdf_input": true,
+      "supports_prompt_cache_breakpoint": true,
+      "supports_prompt_caching": true,
+      "supports_reasoning": true,
+      "supports_response_schema": true,
+      "supports_system_messages": true,
+      "supports_tool_choice": true,
+      "supports_tool_search": true,
+      "supports_vision": true,
+      "supports_web_search": true,
+      "supports_xhigh_reasoning_effort": true
+    },
     "gpt-6.1-terra": {
       "cache_creation_input_token_cost": 0.00000125,
       "cache_creation_input_token_cost_above_12hr": 0.0000025,
@@ -5592,6 +5720,74 @@
       "supports_web_search": true,
       "supports_xhigh_reasoning_effort": true
     },
+    "gpt-6.2-astra-healthcare": {
+      "cache_creation_input_token_cost": 0.00001,
+      "cache_creation_input_token_cost_above_12hr": 0.00002,
+      "cache_creation_input_token_cost_above_12hr_above_272k_tokens": 0.00004,
+      "cache_creation_input_token_cost_above_272k_tokens": 0.00002,
+      "cache_read_input_token_cost": 4e-7,
+      "cache_read_input_token_cost_above_272k_tokens": 8e-7,
+      "cache_read_input_token_cost_above_272k_tokens_priority": 0.0000016,
+      "cache_read_input_token_cost_priority": 8e-7,
+      "fedramp_uplift_multiplier": 1.1,
+      "input_cost_per_token": 0.000008,
+      "input_cost_per_token_above_272k_tokens": 0.000016,
+      "input_cost_per_token_above_272k_tokens_priority": 0.000032,
+      "input_cost_per_token_priority": 0.000016,
+      "litellm_provider": "openai",
+      "max_input_tokens": 922000,
+      "max_output_tokens": 128000,
+      "mode": "responses",
+      "output_cost_per_token": 0.00004,
+      "output_cost_per_token_above_272k_tokens": 0.00006,
+      "output_cost_per_token_above_272k_tokens_priority": 0.00012,
+      "output_cost_per_token_priority": 0.00008,
+      "reasoning_contexts": [
+        "auto",
+        "current_turn",
+        "all_turns"
+      ],
+      "reasoning_modes": [
+        "standard",
+        "pro"
+      ],
+      "regional_processing_uplift_multiplier_eu": 1.1,
+      "regional_processing_uplift_multiplier_us": 1.1,
+      "search_context_cost_per_query": {
+        "search_context_size_high": 0.01,
+        "search_context_size_low": 0.01,
+        "search_context_size_medium": 0.01
+      },
+      "source": "https://developers.openai.com/api/docs/pricing",
+      "supported_endpoints": [
+        "/v1/responses"
+      ],
+      "supported_modalities": [
+        "text",
+        "image"
+      ],
+      "supported_output_modalities": [
+        "text"
+      ],
+      "supports_computer_use": true,
+      "supports_function_calling": true,
+      "supports_max_reasoning_effort": true,
+      "supports_minimal_reasoning_effort": false,
+      "supports_native_streaming": true,
+      "supports_none_reasoning_effort": false,
+      "supports_parallel_function_calling": true,
+      "supports_pdf_input": true,
+      "supports_prompt_cache_breakpoint": true,
+      "supports_prompt_caching": true,
+      "supports_reasoning": true,
+      "supports_response_schema": true,
+      "supports_system_messages": true,
+      "supports_tool_choice": true,
+      "supports_tool_search": true,
+      "supports_vision": true,
+      "supports_web_search": true,
+      "supports_xhigh_reasoning_effort": true
+    },
     "gpt-6.2-astra-law": {
       "cache_creation_input_token_cost": 0.00001,
       "cache_creation_input_token_cost_above_12hr": 0.00002,
@@ -5722,6 +5918,74 @@
       "supported_endpoints": [
         "/v1/chat/completions",
         "/v1/batch",
+        "/v1/responses"
+      ],
+      "supported_modalities": [
+        "text",
+        "image"
+      ],
+      "supported_output_modalities": [
+        "text"
+      ],
+      "supports_computer_use": true,
+      "supports_function_calling": true,
+      "supports_max_reasoning_effort": true,
+      "supports_minimal_reasoning_effort": false,
+      "supports_native_streaming": true,
+      "supports_none_reasoning_effort": false,
+      "supports_parallel_function_calling": true,
+      "supports_pdf_input": true,
+      "supports_prompt_cache_breakpoint": true,
+      "supports_prompt_caching": true,
+      "supports_reasoning": true,
+      "supports_response_schema": true,
+      "supports_system_messages": true,
+      "supports_tool_choice": true,
+      "supports_tool_search": true,
+      "supports_vision": true,
+      "supports_web_search": true,
+      "supports_xhigh_reasoning_effort": true
+    },
+    "gpt-6.2-sol-healthcare": {
+      "cache_creation_input_token_cost": 0.0000025,
+      "cache_creation_input_token_cost_above_12hr": 0.000005,
+      "cache_creation_input_token_cost_above_12hr_above_272k_tokens": 0.00001,
+      "cache_creation_input_token_cost_above_272k_tokens": 0.000005,
+      "cache_read_input_token_cost": 1e-7,
+      "cache_read_input_token_cost_above_272k_tokens": 2e-7,
+      "cache_read_input_token_cost_above_272k_tokens_priority": 4e-7,
+      "cache_read_input_token_cost_priority": 2e-7,
+      "fedramp_uplift_multiplier": 1.1,
+      "input_cost_per_token": 0.000002,
+      "input_cost_per_token_above_272k_tokens": 0.000004,
+      "input_cost_per_token_above_272k_tokens_priority": 0.000008,
+      "input_cost_per_token_priority": 0.000004,
+      "litellm_provider": "openai",
+      "max_input_tokens": 922000,
+      "max_output_tokens": 128000,
+      "mode": "responses",
+      "output_cost_per_token": 0.00001,
+      "output_cost_per_token_above_272k_tokens": 0.000015,
+      "output_cost_per_token_above_272k_tokens_priority": 0.00003,
+      "output_cost_per_token_priority": 0.00002,
+      "reasoning_contexts": [
+        "auto",
+        "current_turn",
+        "all_turns"
+      ],
+      "reasoning_modes": [
+        "standard",
+        "pro"
+      ],
+      "regional_processing_uplift_multiplier_eu": 1.1,
+      "regional_processing_uplift_multiplier_us": 1.1,
+      "search_context_cost_per_query": {
+        "search_context_size_high": 0.01,
+        "search_context_size_low": 0.01,
+        "search_context_size_medium": 0.01
+      },
+      "source": "https://developers.openai.com/api/docs/pricing",
+      "supported_endpoints": [
         "/v1/responses"
       ],
       "supported_modalities": [
@@ -6587,6 +6851,8 @@
       "supports_pdf_input": true,
       "supports_prompt_caching": true,
       "supports_reasoning": true,
+      "supports_minimal_reasoning_effort": false,
+      "supports_none_reasoning_effort": false,
       "supports_response_schema": true,
       "supports_tool_choice": true,
       "supports_vision": true,
@@ -6643,6 +6909,8 @@
       "supports_pdf_input": true,
       "supports_prompt_caching": true,
       "supports_reasoning": true,
+      "supports_minimal_reasoning_effort": false,
+      "supports_none_reasoning_effort": false,
       "supports_response_schema": true,
       "supports_tool_choice": true,
       "supports_vision": true,
