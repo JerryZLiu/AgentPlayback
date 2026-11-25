@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-24T23:03:29.497Z",
+  "generated_at": "2026-11-25T05:28:29.146Z",
   "upstream": {
     "url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
-    "sha256": "db398058a2100b95e76604f8c3cf2986de639d2f23a1d4e7f629d431d91bd3a8"
+    "sha256": "a9870b4a07a44bcc70b8e6be5a4d57e0290447081fe415564e204d8db19fe4a7"
   },
   "prices": {
     "chat-latest": {
       "cache_read_input_token_cost": 5e-7,
       "input_cost_per_token": 0.000005,
       "litellm_provider": "openai",
-      "max_input_tokens": 400000,
+      "max_input_tokens": 272000,
       "max_output_tokens": 128000,
       "mode": "chat",
       "output_cost_per_token": 0.00003,
