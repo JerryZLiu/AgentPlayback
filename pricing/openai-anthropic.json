@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-25T05:28:29.146Z",
+  "generated_at": "2026-11-26T10:59:59.539Z",
   "upstream": {
     "url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
-    "sha256": "a9870b4a07a44bcc70b8e6be5a4d57e0290447081fe415564e204d8db19fe4a7"
+    "sha256": "18e272e7fb74ca04a3eb640bff0d9afd7f649e791523fa896161ccaf6a752157"
   },
   "prices": {
     "chat-latest": {
@@ -2895,6 +2895,9 @@
         "auto",
         "current_turn"
       ],
+      "reasoning_effort_levels": [
+        "high"
+      ],
       "reasoning_modes": [
         "pro"
       ],
@@ -2928,7 +2931,8 @@
       "supports_web_search": true,
       "supports_none_reasoning_effort": false,
       "supports_xhigh_reasoning_effort": false,
-      "supports_minimal_reasoning_effort": true
+      "supports_low_reasoning_effort": false,
+      "supports_minimal_reasoning_effort": false
     },
     "gpt-5-pro-2025-10-06": {
       "deprecation_date": "2026-12-11",
@@ -2947,6 +2951,9 @@
         "auto",
         "current_turn"
       ],
+      "reasoning_effort_levels": [
+        "high"
+      ],
       "reasoning_modes": [
         "pro"
       ],
@@ -2980,7 +2987,8 @@
       "supports_web_search": true,
       "supports_none_reasoning_effort": false,
       "supports_xhigh_reasoning_effort": false,
-      "supports_minimal_reasoning_effort": true
+      "supports_low_reasoning_effort": false,
+      "supports_minimal_reasoning_effort": false
     },
     "gpt-5-search-api": {
       "cache_read_input_token_cost": 1.25e-7,
@@ -3533,7 +3541,8 @@
       "supports_web_search": true,
       "supports_none_reasoning_effort": false,
       "supports_xhigh_reasoning_effort": true,
-      "supports_minimal_reasoning_effort": true
+      "supports_low_reasoning_effort": false,
+      "supports_minimal_reasoning_effort": false
     },
     "gpt-5.2-pro-2025-12-11": {
       "input_cost_per_token": 0.000021,
@@ -3582,7 +3591,8 @@
       "supports_web_search": true,
       "supports_none_reasoning_effort": false,
       "supports_xhigh_reasoning_effort": true,
-      "supports_minimal_reasoning_effort": true
+      "supports_low_reasoning_effort": false,
+      "supports_minimal_reasoning_effort": false
     },
     "gpt-5.3-chat-latest": {
       "cache_read_input_token_cost": 1.75e-7,
@@ -4110,6 +4120,7 @@
       "supports_web_search": true,
       "supports_none_reasoning_effort": false,
       "supports_xhigh_reasoning_effort": true,
+      "supports_low_reasoning_effort": false,
       "supports_minimal_reasoning_effort": false,
       "input_cost_per_token_above_272k_tokens_flex": 0.00003,
       "output_cost_per_token_above_272k_tokens_flex": 0.000135,
@@ -4171,6 +4182,7 @@
       "supports_web_search": true,
       "supports_none_reasoning_effort": false,
       "supports_xhigh_reasoning_effort": true,
+      "supports_low_reasoning_effort": false,
       "supports_minimal_reasoning_effort": false,
       "input_cost_per_token_above_272k_tokens_flex": 0.00003,
       "output_cost_per_token_above_272k_tokens_flex": 0.000135,
